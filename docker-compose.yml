@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  bot:
+    build:
+      context: ./bahamas-tickets-bot
+    container_name: bahamas-bot-container
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - ./bahamas-tickets-bot/.env
+    ports:
+      - "8081:8081"
+
+  site:
+    build:
+      context: ./site
+    container_name: denuncia_app
+    restart: unless-stopped
+    ports:
+      - "3003:3003"
+    env_file:
+      - ./site/.env
+    depends_on:
+      - bot
+
+networks:
+  default:
+    driver: bridge

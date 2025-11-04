@@ -1,0 +1,44 @@
+<div id="step-1" class="form-step">
+    <h2><span class="step-number">1</span>Informações Iniciais</h2>
+    <div class="form-group">
+        <label for="punished-count">Resultado do Ticket:</label>
+        <select id="punished-count" name="punished-count">
+            <option value="negado">Ticket Negado</option>
+            <option value="1" selected>1 Pessoa Punida</option>
+            <option value="2">2 Pessoas Punidas</option>
+            <option value="3">3 Pessoas Punidas</option>
+            <option value="4">4 Pessoas Punidas</option>
+            <option value="5">5 Pessoas Punidas</option>
+            <option value="6">6 Pessoas Punidas</option>
+            <option value="7">7 Pessoas Punidas</option>
+            <option value="8">8 Pessoas Punidas</option>
+            <option value="9">9 Pessoas Punidas</option>
+            <option value="10">10 Pessoas Punidas</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="reporter-id">ID do Denunciante:</label>
+        <input type="text" id="reporter-id" name="reporter-id" placeholder="ID in-game do denunciante...">
+    </div>
+    <div class="form-group">
+        <label for="ticket-channel">Canal do Ticket:</label>
+        <div class="custom-select-wrapper" id="custom-ticket-select">
+            <div class="custom-select-trigger">
+                <span>Selecione um canal</span>
+            </div>
+            <div class="custom-select-options">
+                <input type="text" class="custom-select-search" placeholder="Buscar canal...">
+                <div class="options-list">
+                    </div>
+            </div>
+            <input type="hidden" id="ticket-channel" name="ticket-channel">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="video-links">Links do Vídeo (um por linha):</label>
+        <textarea id="video-links" name="video-links" rows="3" placeholder="Cole aqui os links dos vídeos, um por linha..."></textarea>
+    </div>
+    <div class="form-navigation">
+        <button id="btn-step1-next" class="btn-primary" disabled>Avançar</button>
+    </div>
+</div>

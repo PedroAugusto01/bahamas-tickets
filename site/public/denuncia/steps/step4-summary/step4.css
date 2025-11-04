@@ -1,0 +1,98 @@
+/* Tickets/site/public/denuncia/steps/step4-summary/step4.css */
+.step4-summary-container {
+    padding: 18px;
+    font-family: 'Consolas', 'Menlo', monospace;
+    color: #e6eef6;
+}
+
+.step4-summary-container h3 {
+    margin: 0 0 20px 0;
+    text-align: center;
+    font-size: 1.5em;
+    color: #7289da;
+}
+
+.step4-sections {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.step4-section {
+    background-color: #2c2f33;
+    border-radius: 8px;
+    padding: 20px 25px;
+    border: 1px solid #40444b;
+    position: relative;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.step4-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.step4-section h4 {
+    display: inline-block;
+    margin: 0 0 15px 0;
+    color: #00ffff;
+    background: rgba(0, 255, 255, 0.08);
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 2px solid #a020f0;
+    font-weight: 900;
+}
+
+.copy-section-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: #40444b;
+    color: #b9bbbe;
+    border: 1px solid #5c6168;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.copy-section-btn:hover {
+    background: #5865F2;
+    color: #ffffff;
+    border-color: #5865F2;
+}
+
+.section-content {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.section-content pre {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+    color: #dcddde;
+    font-weight: 500;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.image-wrapper canvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.devolucao-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 0;
+}

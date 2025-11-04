@@ -1,0 +1,42 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Passe o mouse sobre a descrição dos atributos existentes.
+    // Para obter mais informações, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Iniciar Bot",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/bahamas-tickets-bot/main.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/bahamas-tickets-bot",
+            "justMyCode": true,
+            "env": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+            }
+        },
+        {
+            "name": "Node: Iniciar Site",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "dev"
+            ],
+            "cwd": "${workspaceFolder}/bahamas-tickets/site",
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Iniciar Tudo (Bot + Site)",
+            "configurations": [
+                "Python: Iniciar Bot",
+                "Node: Iniciar Site"
+            ],
+            "stopAll": true
+        }
+    ]
+}

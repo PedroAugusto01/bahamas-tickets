@@ -1,0 +1,92 @@
+/* Ficheiro: public/css/base.css */
+
+body {
+    font-family: sans-serif;
+    background: #2c2f33;
+    color: white;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #202225;
+    padding: 8px 20px;
+    border-bottom: 1px solid #36393f;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-logo {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nav-button {
+    background-color: #40444b;
+    color: #dcddde;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9em;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-button:hover {
+    background-color: #4f545c;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.nav-button.active {
+    background-color: #5865F2;
+    color: #ffffff;
+}
+
+.logout-button {
+    background-color: #36393f;
+}
+
+.nav-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #dcddde;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.nav-user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+a {
+    color: #7289da;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}

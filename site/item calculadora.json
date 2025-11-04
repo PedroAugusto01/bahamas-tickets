@@ -1,0 +1,622 @@
+[
+    {
+        "name": "fal",
+        "price": 10000
+    },
+    {
+        "name": "cigarro",
+        "price": 10000
+    },
+    {
+        "name": "sementedeabacaxi",
+        "price": 50
+    },
+    {
+        "name": "sementedeabobora",
+        "price": 50
+    },
+    {
+        "name": "WEAPON_PARACHUTE",
+        "price": 10000
+    },
+    {
+        "name": "specialcarbine_mk2",
+        "price": 720000
+    },
+    {
+        "name": "snspistol",
+        "price": 300000
+    },
+    {
+        "name": "scarh",
+        "price": 240000
+    },
+    {
+        "name": "carbinerifle",
+        "price": 2200000
+    },
+    {
+        "name": "assaultsmg",
+        "price": 210000
+    },
+    {
+        "name": "assaultrifle_mk2",
+        "price": 1275000
+    },
+    {
+        "name": "ak47",
+        "price": 1150000
+    },
+    {
+        "name": "assaultrifle",
+        "price": 1350000
+    },
+    {
+        "name": "navycarbine",
+        "price": 1062000
+    },
+    {
+        "name": "machinepistol",
+        "price": 150000
+    },
+    {
+        "name": "mp9",
+        "price": 180000
+    },
+    {
+        "name": "pistol_mk2",
+        "price": 90000
+    },
+    {
+        "name": "combatpistol",
+        "price": 120000
+    },
+    {
+        "name": "microsmg",
+        "price": 350000
+    },
+    {
+        "name": "smg",
+        "price": 1120000
+    },
+    {
+        "name": "gusenberg",
+        "price": 1100000
+    },
+    {
+        "name": "stungun",
+        "price": 400000
+    },
+    {
+        "name": "hk416",
+        "price": 1500000
+    },
+    {
+        "name": "pistol50",
+        "price": 500000
+    },
+    {
+        "name": "m9a3",
+        "price": 380000
+    },
+    {
+        "name": "nsr",
+        "price": 1680000
+    },
+    {
+        "name": "scorpionevo",
+        "price": 1000000
+    },
+    {
+        "name": "carbinerifle_mk2",
+        "price": 2200000
+    },
+    {
+        "name": "combtpdw",
+        "price": 1300000
+    },
+    {
+        "name": "ar10a4",
+        "price": 2400000
+    },
+    {
+        "name": "pumpshotgun",
+        "price": 800000
+    },
+    {
+        "name": "ammo_fal",
+        "price": 6375
+    },
+    {
+        "name": "ammo_specialcarbine_mk2",
+        "price": 3000
+    },
+    {
+        "name": "ammo_hk416",
+        "price": 4875
+    },
+    {
+        "name": "ammo_scarh",
+        "price": 1200
+    },
+    {
+        "name": "ammo_m4a1",
+        "price": 4000
+    },
+    {
+        "name": "ammo_mtar",
+        "price": 1050
+    },
+    {
+        "name": "ammo_assaultrifle_mk2",
+        "price": 3750
+    },
+    {
+        "name": "ammo_navycarbine",
+        "price": 3650
+    },
+    {
+        "name": "ammo_machinepistol",
+        "price": 750
+    },
+    {
+        "name": "ammo_mp9",
+        "price": 900
+    },
+    {
+        "name": "ammo_pistol_mk2",
+        "price": 450
+    },
+    {
+        "name": "ammo_combatpistol",
+        "price": 600
+    },
+    {
+        "name": "ammo_microsmg",
+        "price": 3000
+    },
+    {
+        "name": "ammo_smg",
+        "price": 3000
+    },
+    {
+        "name": "ammo_assaultsmg",
+        "price": 1050
+    },
+    {
+        "name": "ammo_gusenberg",
+        "price": 3000
+    },
+    {
+        "name": "ammo_snspistol",
+        "price": 1000
+    },
+    {
+        "name": "ammo_pistol50",
+        "price": 2500
+    },
+    {
+        "name": "ammo_nsr",
+        "price": 3500
+    },
+    {
+        "name": "ammo_scorpionevo",
+        "price": 3100
+    },
+    {
+        "name": "ammo_m4a4",
+        "price": 4350
+    },
+    {
+        "name": "ammo_combatpdw",
+        "price": 2500
+    },
+    {
+        "name": "ammo_ar10a4",
+        "price": 5500
+    },
+    {
+        "name": "ammo_shotgun",
+        "price": 3500
+    },
+    {
+        "name": "knife",
+        "price": 150000
+    },
+    {
+        "name": "bat",
+        "price": 150000
+    },
+    {
+        "name": "ticket",
+        "price": 60000
+    },
+    {
+        "name": "notebook",
+        "price": 100000
+    },
+    {
+        "name": "battleaxe",
+        "price": 350000
+    },
+    {
+        "name": "knucckle",
+        "price": 150000
+    },
+    {
+        "name": "switchblade",
+        "price": 220000
+    },
+    {
+        "name": "algemas",
+        "price": 60000
+    },
+    {
+        "name": "chavealgemas",
+        "price": 20000
+    },
+    {
+        "name": "masterpick",
+        "price": 900000
+    },
+    {
+        "name": "c4",
+        "price": 60000
+    },
+    {
+        "name": "lockpick",
+        "price": 60000
+    },
+    {
+        "name": "nitro",
+        "price": 30000
+    },
+    {
+        "name": "colete",
+        "price": 74400
+    },
+    {
+        "name":"pé de cabra",
+        "price": 0
+    },
+    {
+        "name": "garrafavazia",
+        "price": 50
+    },
+    {
+        "name":"energêtico",
+        "price": 20000
+    },
+    {
+        "name": "roupas",
+        "price": 15000
+    },
+    {
+        "name": "radio",
+        "price": 10000
+    },
+    {
+        "name": "binoculos",
+        "price": 15000
+    },
+    {
+        "name": "repairkit",
+        "price": 50000
+    },
+    {
+        "name": "pneus",
+        "price": 10000
+    },
+    {
+        "name": "celular",
+        "price": 10000
+    },
+    {
+        "name": "militec",
+        "price": 15000
+    },
+    {
+        "name": "isqueiro",
+        "price": 20000
+    },
+    {
+        "name":"oxigênio",
+        "price": 2000
+    },
+    {
+        "name": "dorflex",
+        "price": 30000
+    },
+    {
+        "name": "alianca",
+        "price": 500000
+    },
+    {
+        "name": "aliancadenoivado",
+        "price": 3500000
+    },
+    {
+        "name": "aliancacasamento",
+        "price": 5500000
+    },
+    {
+        "name": "cordas",
+        "price": 15000
+    },
+    {
+        "name": "mochila",
+        "price": 60000
+    },
+    {
+        "name": "mochilax",
+        "price": 120000
+    },
+    {
+        "name": "paraquedas",
+        "price": 10000
+    },
+    {
+        "name": "bandagem",
+        "price": 135000
+    },
+    {
+        "name": "farm",
+        "price": 1000
+    },
+    {
+        "name": "capuz",
+        "price": 60000
+    },
+    {
+        "name": "kitsequestro",
+        "price": 120000
+    },
+    {
+        "name": "placa",
+        "price": 70000
+    },
+    {
+        "name": "blacklistl",
+        "price": 720000
+    },
+    {
+        "name": "adrenalina",
+        "price": 500000
+    },
+    {
+        "name": "pedradecrack",
+        "price": 0
+    },
+    {
+        "name": "lancaperfume",
+        "price": 0
+    },
+    {
+        "name": "ecstasy",
+        "price": 0
+    },
+    {
+        "name": "skunk",
+        "price": 0
+    },
+    {
+        "name": "primeirossocorros",
+        "price": 0
+    },
+    {
+        "name": "rose",
+        "price": 30000
+    },
+    {
+        "name": "teddy",
+        "price": 40000
+    },
+    {
+        "name": "cpxcoin",
+        "price": 100000
+    },
+    {
+        "name": "rastreador",
+        "price": 100000
+    },
+    {
+        "name": "caminhao750kg",
+        "price": 10000000
+    },
+    {
+        "name": "bombarelogio",
+        "price": 180000
+    },
+    {
+        "name": "tuningilegal",
+        "price": 700000
+    },
+    {
+        "name": "maconha [para uso]",
+        "price": 2000
+    },
+    {
+        "name": "maconha [para venda]",
+        "price": 11000
+    },
+    {
+        "name": "maconha",
+        "price": 11000
+    },
+    {
+        "name": "cocaina",
+        "price": 2000
+    },
+    {
+        "name": "cocainaparavenda",
+        "price": 10000
+    },
+    {
+        "name": "lsd",
+        "price": 10000
+    },
+    {
+        "name": "esmeralda",
+        "price": 800
+    },
+    {
+        "name": "ouro",
+        "price": 800
+    },
+    {
+        "name": "bronze",
+        "price": 600
+    },
+    {
+        "name": "topazio",
+        "price": 700
+    },
+    {
+        "name": "ferro",
+        "price": 600
+    },
+    {
+        "name": "ametista",
+        "price": 600
+    },
+    {
+        "name": "diamante",
+        "price": 900
+    },
+    {
+        "name": "safira",
+        "price": 700
+    },
+    {
+        "name": "rubi",
+        "price": 900
+    },
+    {
+        "name": "tucunare",
+        "price": 580
+    },
+    {
+        "name": "salmao",
+        "price": 500
+    },
+    {
+        "name": "dourado",
+        "price": 550
+    },
+    {
+        "name": "tilapia",
+        "price": 480
+    },
+    {
+        "name": "pirarucui",
+        "price": 500
+    },
+    {
+        "name": "corvina",
+        "price": 500
+    },
+    {
+        "name": "lambari",
+        "price": 100
+    },
+    {
+        "name": "pintado",
+        "price": 480
+    },
+    {
+        "name": "pacu",
+        "price": 480
+    },
+    {
+        "name": "polvora",
+        "price": 1000
+    },
+    {
+        "name": "capsula",
+        "price": 1000
+    },
+    {
+        "name": "linha",
+        "price": 1000
+    },
+    {
+        "name": "dollars",
+        "price": 1
+    },
+    {
+        "name": "pano",
+        "price": 1000
+    },
+    {
+        "name": "adubo",
+        "price": 1000
+    },
+    {
+        "name": "pecadearma",
+        "price": 1000
+    },
+    {
+        "name": "molas",
+        "price": 1000
+    },
+    {
+        "name": "placa-metal",
+        "price": 1000
+    },
+    {
+        "name": "metal",
+        "price": 1000
+    },
+    {
+        "name": "gatilho",
+        "price": 1000
+    },
+    {
+        "name": "dinheirosujo",
+        "price": 2
+    },
+    {
+        "name": "aluminio",
+        "price": 1000
+    },
+    {
+        "name": "tinta",
+        "price": 1000
+    },
+    {
+        "name": "papel",
+        "price": 1000
+    },
+    {
+        "name": "semente",
+        "price": 1000
+    },
+    {
+        "name": "pastabase",
+        "price": 1000
+    },
+    {
+        "name": "cafeina",
+        "price": 1000
+    },
+    {
+        "name": "soda",
+        "price": 1000
+    },
+    {
+        "name": "bicarbonatodesodio",
+        "price": 1000
+    },
+    {
+        "name": "anfetamina",
+        "price": 1000
+    },
+    {
+        "name": "medalhadominacao",
+        "price": 1000
+    },
+    {
+        "name": "moedadominas",
+        "price": 1000
+    }
+]

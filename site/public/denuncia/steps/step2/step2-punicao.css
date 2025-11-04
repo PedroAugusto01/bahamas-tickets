@@ -1,0 +1,146 @@
+/* Card para cada pessoa punida */
+.punished-user-block {
+    background-color: rgba(18, 19, 29, 0.6);
+    padding: 25px 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid #4a4e69;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.punished-user-block h4 {
+    margin: 0 0 30px 0; /* Aumenta a margem inferior */
+    font-size: 1.2em;
+    color: #e0e0e0;
+    border-bottom: 1px solid #4a4e69;
+    padding-bottom: 15px;
+}
+
+/* Layout vertical com espaçamento entre os campos */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px; /* Espaço entre o rótulo e o campo */
+    font-weight: 600;
+    color: #aeb2d5;
+}
+
+/* Estilo geral para inputs e selects dentro do card */
+.punished-user-block input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #4a4e69;
+    background-color: rgba(18, 19, 29, 0.8);
+    color: #f0f0f5;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.punished-user-block input[type="text"]:focus {
+    border-color: #a07eff;
+    box-shadow: 0 0 15px rgba(160, 126, 255, 0.3);
+    outline: none;
+}
+
+/* Container do seletor de regras */
+.rules-selector {
+    border-radius: 6px;
+    border: 1px solid #4a4e69;
+    background-color: rgba(18, 19, 29, 0.8);
+    overflow: hidden;
+}
+
+/* Campo de filtro para as regras */
+.rule-filter-input {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-bottom: 1px solid #4a4e69;
+    background-color: transparent;
+    color: #f0f0f5;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+.rule-filter-input:focus {
+    outline: none;
+    border-bottom-color: #a07eff;
+}
+
+/* Lista de regras */
+.rules-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 220px;
+    overflow-y: auto;
+}
+.rules-list::-webkit-scrollbar { width: 8px; }
+.rules-list::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+.rules-list::-webkit-scrollbar-thumb { background-color: #4a4e69; border-radius: 4px; }
+
+.rules-list li {
+    padding: 12px 20px 12px 45px;
+    cursor: pointer;
+    border-bottom: 1px solid #3a3d52;
+    transition: background-color 0.2s;
+    position: relative;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    color: #aeb2d5;
+}
+.rules-list li:last-child { border-bottom: none; }
+.rules-list li:hover { background-color: rgba(118, 75, 224, 0.2); color: #ffffff; }
+.rules-list li.selected { background-color: rgba(96, 128, 246, 0.2); color: #ffffff; font-weight: 500; }
+.rules-selector .rules-list li.selected::before {
+    content: '✔';
+    position: absolute; left: 15px; top: 50%;
+    transform: translateY(-50%); color: #6080f6;
+    font-size: 1.2em; font-weight: bold;
+}
+
+/* Avisos */
+.log-warning, .sub-rule-warning { font-size: 0.8em; margin-top: 5px; font-weight: normal; opacity: 0.8; }
+.log-warning { color: #f0ad4e; }
+.sub-rule-warning { color: #60a5fa; }
+.rules-list li.selected .log-warning, .rules-list li.selected .sub-rule-warning { opacity: 1; }
+
+/* Seletor de sub-regras */
+.sub-rule-selector-container {
+    margin-top: 15px; /* Espaço entre seletor principal e o de sub-regra */
+}
+.sub-rule-selector {
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #a07eff;
+    background-color: rgba(18, 19, 29, 0.9);
+    color: #f0f0f5;
+    font-size: 1em;
+    cursor: pointer;
+}
+.sub-rule-selector:focus { outline: none; box-shadow: 0 0 15px rgba(160, 126, 255, 0.3); }
+
+/* Checkbox personalizado (Mantido) */
+.optional-log-container { margin-top: 25px; }
+.checkbox-group { display: flex; align-items: center; cursor: pointer; user-select: none; }
+.checkbox-group input[type="checkbox"] { display: none; }
+.checkbox-group label { position: relative; padding-left: 32px; font-size: 1em; color: #aeb2d5; font-weight: 500; }
+.checkbox-group label::before {
+    content: ''; position: absolute; left: 0; top: 50%;
+    transform: translateY(-50%); width: 22px; height: 22px;
+    border: 2px solid #4a4e69; background-color: rgba(18, 19, 29, 0.8);
+    border-radius: 4px; transition: all 0.2s ease;
+}
+.checkbox-group label::after {
+    content: '✔'; position: absolute; left: 5px; top: 50%;
+    transform: translateY(-50%) scale(0); font-size: 16px;
+    color: #1e1f2c; transition: transform 0.2s ease; font-weight: bold;
+}
+.checkbox-group input[type="checkbox"]:checked + label::before { background-color: #a07eff; border-color: #a07eff; }
+.checkbox-group input[type="checkbox"]:checked + label::after { transform: translateY(-50%) scale(1); }

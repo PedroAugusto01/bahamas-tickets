@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil</title>
+    <link rel="icon" href="/images/bahamas.gif" type="image/gif">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="nav-left">
+            <img src="/images/logo.png" alt="Logo" class="nav-logo">
+            <img src="/images/bahamas.gif" alt="Logo Bahamas" class="nav-logo">
+            <a href="/denuncia/" class="nav-button">Denuncia</a>
+            <a href="/relatorio/" class="nav-button">Ver ADV</a>
+            <a href="/calculadora/" class="nav-button">Calculadora</a>
+            <a href="/metas/" class="nav-button">Metas</a>
+            <a href="/profile/" class="nav-button active">Perfil</a>
+        </div>
+        <div class="nav-right">
+            <div id="nav-user-profile" class="nav-user-profile">
+                </div>
+            <a href="/logout" class="nav-button logout-button">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Meu Perfil</h1>
+
+        <div class="profile-card">
+            <div class="profile-header">
+                <img id="profile-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar do usuário" class="profile-avatar">
+                <h2 id="profile-username" class="profile-name">Carregando...</h2>
+                <p id="profile-discord-id" class="profile-id">ID Discord: Carregando...</p>
+            </div>
+
+            <div class="roles-section">
+                <h3>Cargos no Servidor</h3>
+                <ul id="roles-list" class="profile-tags">
+                    <li>Carregando cargos...</li>
+                </ul>
+            </div>
+
+            <hr class="card-divider">
+
+            <div class="ingame-id-section">
+                <h3>ID no Jogo (Complexo RJ)</h3>
+                <div id="ingame-id-content">
+                    <p>Verificando ID vinculado...</p>
+                </div>
+                <p id="ingame-id-message" class="message"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

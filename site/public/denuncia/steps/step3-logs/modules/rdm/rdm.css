@@ -1,0 +1,57 @@
+/* Estilos para RDM. Reutiliza estilos de loot e standard */
+@import url('/denuncia/steps/step3-logs/step3-logs.css');
+@import url('/denuncia/steps/step3-logs/modules/revistou/revistou.css');
+
+/* Regras de cor de rótulos de log com prioridade */
+.key-red {
+    color: #ff4444 !important;
+    font-weight: 800;
+}
+
+.key-default {
+    color: #ff4444;
+}
+
+.item-list-entry {
+    margin-left: 20px;
+}
+
+/* ***** ALTURA DO SCROLL AUMENTADA AQUI ***** */
+
+/* Aplica um limite de altura e scroll para os containers dos logs */
+#log-morreu-placeholder,
+#log-matou-placeholder,
+#log-loot-rdm {
+    max-height: 600px; /* Define uma altura máxima maior para o card */
+    overflow-y: auto;  /* Adiciona a barra de rolagem vertical apenas se necessário */
+    padding-right: 10px; /* Adiciona um espaço para a barra de rolagem não cobrir o texto */
+}
+
+/* Ajuste fino para a aparência da barra de rolagem em navegadores WebKit (Chrome, Safari) */
+#log-morreu-placeholder::-webkit-scrollbar,
+#log-matou-placeholder::-webkit-scrollbar,
+#log-loot-rdm::-webkit-scrollbar {
+    width: 8px;
+}
+
+#log-morreu-placeholder::-webkit-scrollbar-track,
+#log-matou-placeholder::-webkit-scrollbar-track,
+#log-loot-rdm::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+#log-morreu-placeholder::-webkit-scrollbar-thumb,
+#log-matou-placeholder::-webkit-scrollbar-thumb,
+#log-loot-rdm::-webkit-scrollbar-thumb {
+    background-color: #5865F2;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+#log-morreu-placeholder::-webkit-scrollbar-thumb:hover,
+#log-matou-placeholder::-webkit-scrollbar-thumb:hover,
+#log-loot-rdm::-webkit-scrollbar-thumb:hover {
+    background-color: #4752c4;
+}

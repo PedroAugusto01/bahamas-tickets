@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Metas</title>
+    <link rel="icon" href="/images/bahamas.gif" type="image/gif">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="metas.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="nav-left">
+            <img src="/images/logo.png" alt="Logo" class="nav-logo">
+            <img src="/images/bahamas.gif" alt="Logo Bahamas" class="nav-logo">
+            <a href="/denuncia/" class="nav-button">Denuncia</a>
+            <a href="/relatorio/" class="nav-button">Ver ADV</a>
+            <a href="/calculadora/" class="nav-button">Calculadora</a>
+            <a href="/metas/" class="nav-button active">Metas</a>
+        </div>
+        <div class="nav-right">
+            <div id="nav-user-profile" class="nav-user-profile"></div>
+            <a href="/logout" class="nav-button logout-button">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Meu Painel de Metas</h1>
+
+        <div class="date-filter-container">
+            <div class="form-group">
+                <label for="date-range-picker">Intervalo de Tempo:</label>
+                <input type="text" id="date-range-picker">
+            </div>
+            <button id="btn-update-metas">Buscar</button>
+        </div>
+
+        <main id="goal-card-container">
+            <div class="loading-placeholder">
+                <div class="spinner"></div>
+                <p>A carregar dados das metas...</p>
+            </div>
+        </main>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+    <script src="config.js"></script>
+    <script src="atendimento.js"></script>
+    <script src="duvidas.js"></script>
+    <script src="tickets.js"></script>
+    <script src="devolucao.js"></script>
+    <script src="chamados.js"></script>
+    <script src="metas.js"></script>
+</body>
+</html>

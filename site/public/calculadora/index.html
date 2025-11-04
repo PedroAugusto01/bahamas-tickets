@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Itens</title>
+    <link rel="icon" href="/images/bahamas.gif" type="image/gif">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="calculadora.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-left">
+            <img src="/images/logo.png" alt="Logo" class="nav-logo">
+            <img src="/images/bahamas.gif" alt="Logo Bahamas" class="nav-logo">
+            <a href="/denuncia/" class="nav-button">Denuncia</a>
+            <a href="/relatorio/" class="nav-button">Ver ADV</a>
+            <a href="/calculadora/" class="nav-button active">Calculadora</a>
+            <a href="/metas/" class="nav-button">Metas</a>
+        </div>
+        <div class="nav-right">
+            <div id="nav-user-profile" class="nav-user-profile"></div>
+            <a href="/logout" class="nav-button logout-button">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Calculadora de Itens e Spawn</h1>
+        <div class="calculator-layout">
+            <div class="item-selection-panel">
+                <div class="log-parser-card">
+                    <label for="log-input">Cole os itens da log aqui:</label>
+                    <textarea id="log-input" placeholder="celular x 1&#10;WEAPON_PISTOL_MK2 x 100..."></textarea>
+                    <button id="process-log-btn">Calcular a partir da Log</button>
+                </div>
+                <div class="filter-container">
+                    <input type="text" id="item-filter" placeholder="Buscar item pelo nome ou log...">
+                </div>
+                <div id="item-list" class="item-list">
+                    <p>Carregando itens...</p>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <h2>Resumo dos Comandos</h2>
+                <div class="summary-section">
+                    <label>Nome Log x Quantidade</label>
+                    <div class="copy-wrapper">
+                        <textarea id="summary-log-quantity" readonly></textarea>
+                        <button class="copy-btn" data-target="summary-log-quantity">Copiar</button>
+                    </div>
+                </div>
+                <div class="summary-section">
+                    <label>Comando de Spawn (com ;)</label>
+                    <div class="copy-wrapper">
+                        <textarea id="summary-spawn-command" readonly></textarea>
+                        <button class="copy-btn" data-target="summary-spawn-command">Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <h2>Resumo dos Valores</h2>
+                <div class="summary-section">
+                    <label>Cálculo Detalhado</label>
+                    <div class="copy-wrapper">
+                        <textarea id="summary-value-details" readonly></textarea>
+                        <button class="copy-btn" data-target="summary-value-details">Copiar</button>
+                    </div>
+                </div>
+                <div class="summary-section">
+                    <label>Valor Total (Formatado)</label>
+                    <div class="copy-wrapper">
+                        <input type="text" id="summary-total-formatted" readonly>
+                        <button class="copy-btn" data-target="summary-total-formatted">Copiar</button>
+                    </div>
+                </div>
+                <div class="summary-section">
+                    <label>Valor Total (Puro)</label>
+                    <div class="copy-wrapper">
+                        <input type="text" id="summary-total-raw" readonly>
+                        <button class="copy-btn" data-target="summary-total-raw">Copiar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="calculadora.js"></script>
+</body>
+</html>

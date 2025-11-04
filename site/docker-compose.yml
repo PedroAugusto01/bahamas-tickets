@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: denuncia_app
+    restart: unless-stopped
+    ports:
+      - "3003:3003"
+    env_file:
+      - .env

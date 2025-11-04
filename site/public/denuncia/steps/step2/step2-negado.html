@@ -1,0 +1,39 @@
+<div id="step-2-negado" class="form-step">
+    <h2><span class="step-number">2</span>Detalhes do Ticket Negado</h2>
+    <div class="form-group">
+        <label for="denied-accused-game-id">ID in-game do Denunciado:</label>
+        <input type="text" id="denied-accused-game-id" placeholder="ID in-game do denunciado...">
+    </div>
+    <div class="form-group">
+        <label for="denied-reason">Motivo da Negação:</label>
+        <select id="denied-reason">
+            <option value="">-- Selecione o Motivo --</option>
+            </select>
+    </div>
+
+    <div id="denied-rules-container" class="form-group hidden">
+        <label for="denied-rule-filter">Regra Avaliada (para "Não houve quebra"):</label>
+        <div class="rules-selector">
+            <input type="text" id="denied-rule-filter" class="rule-filter-input" placeholder="Filtrar regras...">
+            <ul id="denied-rules-list" class="rules-list">
+                <li>Carregando regras...</li>
+            </ul>
+        </div>
+    </div>
+    <div class="form-group optional-log-container">
+        <div class="checkbox-group">
+            <input type="checkbox" id="optional-log-check-denied" class="optional-log-check">
+            <label for="optional-log-check-denied">Deseja consultar as logs?</label>
+        </div>
+    </div>
+
+    <div class="form-group log-date-container hidden">
+        <label for="log-date-denied">Data para Consulta (DD/MM/AAAA):</label>
+        <input type="text" id="log-date-denied" placeholder="DD/MM/AAAA">
+    </div>
+
+    <div class="form-navigation">
+        <button id="btn-back-to-step1" class="btn-secondary">Voltar</button>
+        <button id="btn-step2-negado-next" class="btn-primary" disabled>Avançar</button>
+    </div>
+</div>

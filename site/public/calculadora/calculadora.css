@@ -1,0 +1,158 @@
+/*
+ * TEMA: NEBULA (v4.2) - Calculadora de Itens
+ * Layout final com altura de viewport, scroll dedicado e painéis sincronizados.
+ */
+
+/* --- Configurações Globais --- */
+html, body {
+    margin: 0;
+    overflow: hidden; /* Impede o scroll da página inteira */
+    height: 100vh;
+    background: linear-gradient(-45deg, #1d1d2b, #2b2a3e, #1e2a44, #3c2a4c);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- Layout Principal --- */
+.container {
+    padding: 25px;
+    box-sizing: border-box;
+    max-width: 100%;
+    height: calc(100vh - 70px); /* Altura da viewport - altura da navbar */
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #ffffff;
+    font-size: 2.2em;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(118, 75, 224, 0.5);
+    flex-shrink: 0; /* Impede que o H1 encolha */
+}
+
+.calculator-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 30px;
+    flex-grow: 1; /* Faz o layout ocupar o espaço restante */
+    overflow: hidden; /* Garante que os painéis não ultrapassem o container */
+}
+
+/* --- PAINÉIS LATERAIS E DE RESUMO --- */
+.item-selection-panel, .summary-card {
+    background-color: rgba(30, 31, 44, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Impede conteúdo de vazar */
+}
+
+#item-filter {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+    border: 1px solid #4a4e69;
+    background-color: rgba(18, 19, 29, 0.8);
+    color: #f0f0f5;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    flex-shrink: 0; /* Impede que o filtro encolha */
+}
+#item-filter:focus {
+    border-color: #a07eff;
+    box-shadow: 0 0 15px rgba(160, 126, 255, 0.3);
+    outline: none;
+}
+
+/* --- Card de Parser de Log --- */
+.log-parser-card { margin-bottom: 25px; flex-shrink: 0; }
+.log-parser-card label { display: block; margin-bottom: 10px; font-weight: 600; color: #aeb2d5; }
+#log-input { width: 100%; min-height: 100px; background-color: rgba(18, 19, 29, 0.8); border: 1px solid #4a4e69; color: #f0f0f5; border-radius: 6px; padding: 12px; font-family: monospace; resize: vertical; box-sizing: border-box; margin-bottom: 15px; }
+#process-log-btn { width: 100%; padding: 12px 25px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; font-size: 0.9em; background: linear-gradient(135deg, #764be0, #6080f6); color: white; }
+#process-log-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(118, 75, 224, 0.4); }
+
+
+.item-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    overflow-y: auto; /* ADICIONA O SCROLL APENAS AQUI */
+    padding-right: 15px;
+    flex-grow: 1;
+}
+.item-list::-webkit-scrollbar { width: 8px; }
+.item-list::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+.item-list::-webkit-scrollbar-thumb { background-color: #4a4e69; border-radius: 4px; }
+
+.item-card {
+    background-color: #2a2c3a;
+    border: 1px solid #3a3d50;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    /* Adicionado para garantir que o card não encolha */
+    height: fit-content;
+}
+.item-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); border-color: #5a5f80; }
+.item-name { font-size: 1.2em; font-weight: 600; color: #ffffff; margin-bottom: 4px; word-break: break-word; text-transform: uppercase; }
+.item-log-name { font-family: monospace; font-size: 0.8em; color: #8a92b3; margin-bottom: 15px; word-break: break-all; }
+.item-price { font-size: 1.4em; font-weight: 700; color: #60f6a8; margin-bottom: 15px; }
+.item-actions { width: 100%; }
+.quantity-input { width: 100%; padding: 12px; text-align: center; background-color: rgba(18, 19, 29, 0.8); border: 1px solid #4a4e69; color: white; border-radius: 8px; font-size: 1.2em; font-weight: 600; transition: all 0.2s ease; box-sizing: border-box;}
+.quantity-input::-webkit-outer-spin-button, .quantity-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.quantity-input:focus { border-color: #a07eff; background-color: #12131d; outline: none; }
+.item-spawn { display: none; }
+
+
+/* --- Colunas da Direita (Resumos) --- */
+.summary-card h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+
+.summary-section { margin-bottom: 25px; }
+.summary-section label { display: block; margin-bottom: 10px; font-weight: 600; color: #aeb2d5; }
+.summary-section textarea, .summary-section input { width: 100%; background-color: rgba(18, 19, 29, 0.8); border: 1px solid #4a4e69; color: #f0f0f5; border-radius: 6px; padding: 14px; font-family: monospace; resize: vertical; box-sizing: border-box; }
+.summary-section textarea { min-height: 140px; }
+.copy-wrapper { position: relative; }
+.copy-btn { position: absolute; top: 10px; right: 10px; background: #4a4e69; color: white; border: none; border-radius: 4px; padding: 6px 12px; cursor: pointer; opacity: 0.7; transition: all 0.3s ease; }
+.copy-btn:hover { opacity: 1; background: #6080f6; }
+
+.summary-section:has(textarea) { flex-grow: 1; display: flex; flex-direction: column; }
+.summary-section:has(textarea) .copy-wrapper { flex-grow: 1; }
+.summary-section:has(textarea) textarea { height: 100%; }
+
+/* --- Responsividade --- */
+@media (max-width: 1400px) {
+    html, body { overflow: auto; }
+    .container { height: auto; }
+    .calculator-layout { grid-template-columns: 1fr 1fr; }
+    .item-selection-panel { grid-column: 1 / -1; }
+}
+@media (max-width: 800px) {
+    .calculator-layout { grid-template-columns: 1fr; }
+}

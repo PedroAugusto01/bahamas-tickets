@@ -1,0 +1,216 @@
+/* Estilos do Checkbox para garantir a consistência com o restante do projeto */
+.optional-log-container {
+    margin-top: 25px; /* Ajuste o espaçamento conforme necessário */
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-group input[type="checkbox"] {
+    /* Esconde o checkbox nativo */
+    display: none;
+}
+
+.checkbox-group label {
+    position: relative;
+    padding-left: 32px; /* Espaço para o checkbox customizado */
+    font-size: 1em; /* Tamanho da fonte do texto */
+    color: #aeb2d5; /* Cor do texto */
+    font-weight: 500;
+    line-height: 1.5; /* Ajusta a altura da linha para centralizar o texto */
+}
+
+.checkbox-group label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px; /* Largura do quadrado */
+    height: 22px; /* Altura do quadrado */
+    border: 2px solid #4a4e69; /* Borda do quadrado */
+    background-color: transparent; /* Fundo transparente */
+    border-radius: 6px; /* Borda mais arredondada */
+    transition: all 0.2s ease;
+}
+
+.checkbox-group label::after {
+    content: '✔'; /* Ícone de check */
+    position: absolute;
+    left: 5px; /* Posição do check */
+    top: 50%;
+    transform: translateY(-50%) scale(0); /* Esconde o check inicialmente */
+    font-size: 16px; /* Tamanho do check */
+    color: #a07eff; /* Cor do check */
+    transition: transform 0.2s ease;
+    font-weight: bold;
+}
+
+.checkbox-group input[type="checkbox"]:checked + label::before {
+    background-color: rgba(160, 126, 255, 0.2); /* Fundo sutilmente preenchido ao marcar */
+    border-color: #a07eff; /* Borda roxa ao marcar */
+}
+
+.checkbox-group input[type="checkbox"]:checked + label::after {
+    transform: translateY(-50%) scale(1); /* Mostra o check ao marcar */
+}
+
+/* Outros estilos existentes de step2-negado.css... */
+.punished-user-block {
+    background-color: rgba(18, 19, 29, 0.6);
+    padding: 25px 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid #4a4e69;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.punished-user-block h4 {
+    margin: 0 0 30px 0;
+    font-size: 1.2em;
+    color: #e0e0e0;
+    border-bottom: 1px solid #4a4e69;
+    padding-bottom: 15px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #aeb2d5;
+}
+
+.punished-user-block input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #4a4e69;
+    background-color: rgba(18, 19, 29, 0.8);
+    color: #f0f0f5;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.punished-user-block input[type="text"]:focus {
+    border-color: #a07eff;
+    box-shadow: 0 0 15px rgba(160, 126, 255, 0.3);
+    outline: none;
+}
+
+.rules-selector {
+    border-radius: 6px;
+    border: 1px solid #4a4e69;
+    background-color: rgba(18, 19, 29, 0.8);
+    overflow: hidden;
+}
+
+.rule-filter-input {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-bottom: 1px solid #4a4e69;
+    background-color: transparent;
+    color: #f0f0f5;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+.rule-filter-input:focus {
+    outline: none;
+    border-bottom-color: #a07eff;
+}
+
+.rules-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 220px;
+    overflow-y: auto;
+}
+.rules-list::-webkit-scrollbar { width: 8px; }
+.rules-list::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+.rules-list::-webkit-scrollbar-thumb { background-color: #4a4e69; border-radius: 4px; }
+
+.rules-list li {
+    padding: 12px 20px 12px 45px;
+    cursor: pointer;
+    border-bottom: 1px solid #3a3d52;
+    transition: background-color 0.2s;
+    position: relative;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    color: #aeb2d5;
+}
+.rules-list li:last-child { border-bottom: none; }
+.rules-list li:hover { background-color: rgba(118, 75, 224, 0.2); color: #ffffff; }
+.rules-list li.selected { background-color: rgba(96, 128, 246, 0.2); color: #ffffff; font-weight: 500; }
+.rules-selector .rules-list li.selected::before {
+    content: '✔';
+    position: absolute; left: 15px; top: 50%;
+    transform: translateY(-50%); color: #6080f6;
+    font-size: 1.2em; font-weight: bold;
+}
+
+.log-warning, .sub-rule-warning { font-size: 0.8em; margin-top: 5px; font-weight: normal; opacity: 0.8; }
+.log-warning { color: #f0ad4e; }
+.sub-rule-warning { color: #60a5fa; }
+.rules-list li.selected .log-warning, .rules-list li.selected .sub-rule-warning { opacity: 1; }
+
+.sub-rule-selector-container {
+    margin-top: 15px;
+}
+.sub-rule-selector {
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #a07eff;
+    background-color: rgba(18, 19, 29, 0.9);
+    color: #f0f0f5;
+    font-size: 1em;
+    cursor: pointer;
+}
+.sub-rule-selector:focus { outline: none; box-shadow: 0 0 15px rgba(160, 126, 255, 0.3); }
+
+/* Estilos para a data da log (visível apenas quando o checkbox está marcado) */
+.log-date-container {
+    margin-top: 25px;
+}
+
+.log-date-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #aeb2d5;
+}
+
+.log-date-container input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #4a4e69;
+    background-color: rgba(18, 19, 29, 0.8);
+    color: #f0f0f5;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.log-date-container input[type="text"]:focus {
+    border-color: #a07eff;
+    box-shadow: 0 0 15px rgba(160, 126, 255, 0.3);
+    outline: none;
+}
+
+/* Utilitário para esconder elementos */
+.hidden {
+    display: none !important;
+}

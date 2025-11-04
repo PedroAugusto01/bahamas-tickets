@@ -1,0 +1,341 @@
+body {
+    background: linear-gradient(-45deg, #1d1d2b, #2b2a3e, #1e2a44, #3c2a4c);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(118, 75, 224, 0.5);
+    margin-bottom: 20px;
+}
+
+/* --- Container de Filtro (metas.css) --- */
+.date-filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15px;
+    background-color: rgba(30, 31, 44, 0.7);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+}
+/* --- Container de Busca e Filtro (metas_teste.css) --- */
+.search-and-date-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 15px;
+    align-items: flex-end;
+    background-color: rgba(30, 31, 44, 0.7);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+}
+.search-form-group { width: 100%; }
+.search-form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #aeb2d5; }
+.search-form-group input { width: 100%; box-sizing: border-box; padding: 12px; border-radius: 6px; border: 1px solid #4a4e69; background-color: rgba(18, 19, 29, 0.8); color: #f0f0f5; font-family: inherit; font-size: 1em; }
+
+
+/* --- Estilos Comuns --- */
+.form-group { width: 100%; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #aeb2d5; }
+.form-group input { width: 100%; box-sizing: border-box; padding: 12px; border-radius: 6px; border: 1px solid #4a4e69; background-color: rgba(18, 19, 29, 0.8); color: #f0f0f5; font-family: inherit; font-size: 1em; text-align: center; }
+
+#btn-update-metas {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    background: linear-gradient(135deg, #764be0, #6080f6);
+    color: white;
+    flex-shrink: 0;
+}
+
+#btn-update-metas:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(118, 75, 224, 0.4);
+}
+
+#goal-card-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.initial-message { /* Apenas metas_teste.css */
+    text-align: center;
+    color: #aeb2d5;
+    margin-top: 40px;
+    font-size: 1.1em;
+}
+
+.staff-card {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    backdrop-filter: none;
+}
+
+.staff-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.staff-avatar-single {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #764be0;
+}
+
+.staff-name {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.all-metrics-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    align-items: stretch; /* Garante que os itens na mesma linha tenham a mesma altura */
+}
+
+/* Container do Card de Horas (Ocupa linha inteira) */
+.single-metric-container-card {
+    background-color: rgba(30, 31, 44, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 12px;
+    grid-column: 1 / -1; /* Força ocupar toda a largura da linha do grid */
+    width: 100%;
+    box-sizing: border-box;
+    display: flex; /* Usado para centralizar o card interno */
+    justify-content: center;
+}
+
+/* Card de Horas interno (sem fundo/borda próprios) */
+.single-metric-container-card .single-metric-card.hour-card {
+    background-color: transparent;
+    border: none;
+    backdrop-filter: none;
+    width: auto;
+    padding: 0;
+    margin-bottom: 0;
+    box-shadow: none;
+    display: flex; /* Necessário para centralização interna */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.single-metric-card.hour-card .metric-value {
+    font-size: 2.5em;
+    margin: 0; /* Remove margem padrão */
+}
+.single-metric-card.hour-card h4 {
+     margin: 0 0 10px 0; /* Restaura margem inferior do título */
+     font-size: 0.9em;
+     color: #aeb2d5;
+     text-transform: uppercase;
+     font-weight: 600;
+     text-align: center;
+}
+
+
+/* Cards de Grupo e Individuais */
+.metric-group-card,
+.single-metric-card { /* Seletor geral para aplicar a base a todos */
+    background-color: rgba(30, 31, 44, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 0; /* Gerenciado pelo gap do grid */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */ /* Removido para permitir centralização */
+    box-sizing: border-box;
+    min-height: 150px; /* Define uma altura mínima para ajudar no alinhamento */
+}
+
+/* Aplica centralização aos cards individuais que NÃO estão dentro do container de horas */
+.all-metrics-container > .single-metric-card {
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    text-align: center; /* Centraliza texto interno */
+}
+.all-metrics-container > .single-metric-card h4 {
+    margin: 0 0 10px 0;
+    font-size: 0.9em;
+    color: #aeb2d5;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.all-metrics-container > .single-metric-card .metric-value {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+
+/* Card de Grupo (Atendimento/Auxílio) */
+.metric-group-card {
+    justify-content: space-between; /* Mantém space-between aqui */
+}
+.metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.metric-card { /* Card interno do grupo */
+    background-color: rgba(18, 19, 29, 0.6);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #4a4e69;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.metric-card h4 {
+    margin: 0 0 10px 0;
+    font-size: 0.9em;
+    color: #aeb2d5;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.metric-value { /* Estilo base para todos os valores numéricos */
+    font-size: 2em;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+.card-divider { border: none; height: 1px; background-color: #4a4e69; margin: 20px 0; }
+.total-summary {
+    text-align: center;
+    padding-top: 15px;
+    margin-top: 20px;
+}
+.metric-group-card .total-summary {
+    border-top: 1px solid #4a4e69;
+}
+.total-summary h4 { margin: 0 0 8px 0; font-size: 1em; color: #aeb2d5; font-weight: 600; }
+.total-summary .total-value { font-size: 2.2em; font-weight: 700; color: #fff; margin: 0; }
+
+
+/* Card de Tickets (Ocupa linha inteira) */
+.tickets-container-card {
+    background-color: rgba(30, 31, 44, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 12px;
+    grid-column: 1 / -1;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex; /* Adicionado */
+    flex-direction: column; /* Adicionado */
+}
+
+.tickets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.ticket-sub-card { background-color: rgba(18, 19, 29, 0.6); padding: 20px; border-radius: 8px; border: 1px solid #4a4e69; text-align: center; }
+.ticket-sub-card h4 { margin: 0 0 10px 0; font-size: 0.9em; color: #aeb2d5; text-transform: uppercase; font-weight: 600; }
+.ticket-sub-card .ticket-total-value { font-size: 2.5em; font-weight: 700; margin: 0 0 15px 0; color: #fff; }
+.ticket-breakdown { display: flex; justify-content: center; gap: 20px; font-size: 0.9em; }
+.ticket-breakdown strong { font-size: 1.2em; font-weight: 700; margin-right: 5px; }
+.ticket-breakdown .aceitos { color: #aeb2d5; }
+.ticket-breakdown .aceitos strong { color: #4ade80; }
+.ticket-breakdown .negados { color: #aeb2d5; }
+.ticket-breakdown .negados strong { color: #ff6b6b; }
+.tickets-container-card .total-summary { /* Garante que o total dentro dos tickets também funcione */
+    border-top: 1px solid #4a4e69;
+}
+
+/* Estilos para estado 'needs-id' (Input de ID) */
+.single-metric-card.needs-id {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Garante centralização */
+    text-align: center;
+    background-color: rgba(18, 19, 29, 0.9); /* Fundo mais escuro */
+    min-height: 150px; /* Mantém altura mínima */
+}
+.needs-id-text { font-size: 0.9em; color: #aeb2d5; margin: 10px 0 15px 0; line-height: 1.4; }
+#in-game-id-input { width: 90%; max-width: 200px; padding: 10px; margin-bottom: 12px; border-radius: 6px; border: 1px solid #4a4e69; background-color: rgba(0, 0, 0, 0.3); color: #f0f0f5; text-align: center; font-size: 1em; }
+#btn-save-ingame-id { padding: 10px 20px; border: none; border-radius: 6px; background: #5865F2; color: white; cursor: pointer; font-weight: 600; transition: background-color 0.2s; }
+#btn-save-ingame-id:hover { background: #4752c4; }
+#btn-save-ingame-id:disabled { background: #4a4e69; cursor: not-allowed; }
+
+/* Cores das Metas (Aplicadas diretamente aos elementos <p>) */
+.metric-value.met-goal,
+.total-value.met-goal,
+.ticket-total-value.met-goal {
+    color: #4ade80 !important; /* Aumenta especificidade e usa !important */
+}
+.metric-value.unmet-goal,
+.total-value.unmet-goal,
+.ticket-total-value.unmet-goal {
+    color: #ff6b6b !important; /* Aumenta especificidade e usa !important */
+}
+
+/* Animação de Carregamento */
+.loading-placeholder { text-align: center; color: #aeb2d5; }
+.spinner { border: 4px solid rgba(255, 255, 255, 0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: #764be0; margin: 20px auto; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .search-and-date-container { grid-template-columns: 1fr; } /* Apenas metas_teste.css */
+    #goal-card-container { padding: 0 10px; }
+    .all-metrics-container, .tickets-grid, .metrics-grid { grid-template-columns: 1fr; }
+    .metric-value, .ticket-total-value, .total-value { font-size: 2em; } /* Tamanho unificado para telas menores */
+    .single-metric-card.hour-card .metric-value { font-size: 2.2em; } /* Levemente maior para horas */
+
+    /* Garante que itens de largura total ainda funcionem em coluna única */
+    .single-metric-container-card, .tickets-container-card {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Estilos Litepicker */
+.litepicker { background-color: #1e1f2c !important; border-color: #4a4e69 !important; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important; font-family: inherit !important; }
+.litepicker .container__months { background-color: #1e1f2c !important; }
+.litepicker .month-item-header, .litepicker .time-header { color: #f0f0f5 !important; }
+.litepicker .month-item-header select { background-color: #2b2a3e !important; border-color: #4a4e69 !important; color: #f0f0f5 !important; }
+.litepicker .day-item { color: #aeb2d5 !important; }
+.litepicker .day-item:hover { background-color: #2b2a3e !important; color: #fff !important; }
+.litepicker .day-item.is-start-date, .litepicker .day-item.is-end-date { background-color: #764be0 !important; color: #fff !important; }
+.litepicker .day-item.is-in-range { background-color: rgba(118, 75, 224, 0.2) !important; }
+.litepicker .button-cancel, .litepicker .button-apply { background-color: transparent !important; color: #aeb2d5 !important; border: 1px solid #4a4e69 !important; border-radius: 6px !important; padding: 8px 15px !important; font-weight: 600 !important; }
+.litepicker .button-apply { background: linear-gradient(135deg, #764be0, #6080f6) !important; border-color: transparent !important; color: white !important; }

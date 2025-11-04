@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: bahamas-bot-container
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env

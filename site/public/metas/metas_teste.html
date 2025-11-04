@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Metas - Teste</title>
+    <link rel="icon" href="/images/bahamas.gif" type="image/gif">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="metas.css">
+    <link rel="stylesheet" href="metas_teste.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="nav-left">
+            <img src="/images/logo.png" alt="Logo" class="nav-logo">
+            <img src="/images/bahamas.gif" alt="Logo Bahamas" class="nav-logo">
+            <a href="/denuncia/" class="nav-button">Denuncia</a>
+            <a href="/relatorio/" class="nav-button">Ver ADV</a>
+            <a href="/calculadora/" class="nav-button">Calculadora</a>
+            <a href="/metas/" class="nav-button active">Metas</a>
+        </div>
+        <div class="nav-right">
+            <div id="nav-user-profile" class="nav-user-profile"></div>
+            <a href="/logout" class="nav-button logout-button">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Painel de Metas (Busca)</h1>
+
+        <div class="search-and-date-container">
+            <div class="search-form-group">
+                <label for="discord-id-search">ID do Discord:</label>
+                <input type="text" id="discord-id-search" placeholder="Cole o ID do Discord do membro...">
+            </div>
+            <div class="form-group">
+                <label for="date-range-picker">Intervalo de Tempo:</label>
+                <input type="text" id="date-range-picker">
+            </div>
+            <button id="btn-update-metas">Buscar</button>
+        </div>
+
+        <main id="goal-card-container">
+            <p class="initial-message">Insira um ID do Discord e um intervalo de datas para buscar as metas.</p>
+        </main>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+    <script src="config.js"></script>
+    <script src="atendimento.js"></script>
+    <script src="duvidas.js"></script>
+    <script src="tickets.js"></script>
+    <script src="devolucao.js"></script>
+    <script src="chamados.js"></script>
+    <script src="metas_teste.js"></script>
+</body>
+</html>

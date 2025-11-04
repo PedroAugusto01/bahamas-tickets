@@ -1,0 +1,214 @@
+@import url('/css/base.css'); /* Importa estilos base */
+
+body {
+    background: linear-gradient(-45deg, #1d1d2b, #2b2a3e, #1e2a44, #3c2a4c);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    max-width: 800px; /* Ajuste a largura conforme necessário */
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(118, 75, 224, 0.5);
+    margin-bottom: 30px;
+}
+
+.profile-card {
+    background-color: rgba(30, 31, 44, 0.7);
+    padding: 30px 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    overflow: hidden; /* Garante que conteúdo interno não vaze */
+}
+
+.profile-header {
+    text-align: center;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #764be0;
+    margin-bottom: 15px;
+    background-color: #2b2a3e; /* Cor de fundo enquanto carrega */
+}
+.profile-name {
+    font-size: 1.8em;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+    color: #fff;
+}
+.profile-id {
+    font-size: 0.9em;
+    color: #8e9297;
+    margin-top: 5px;
+}
+
+.roles-section,
+.ingame-id-section {
+    margin-bottom: 30px;
+}
+
+.roles-section h3,
+.ingame-id-section h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.3em;
+    color: #e0e0e0;
+    text-align: center;
+    font-weight: 600;
+}
+
+.profile-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.role-tag {
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    border: 1px solid #5c6168; /* Borda padrão */
+    background-color: rgba(64, 68, 75, 0.5); /* Fundo padrão */
+    white-space: nowrap; /* Evita quebra de linha no nome do cargo */
+}
+/* Cores baseadas nas severidades do Ver ADV para Punições */
+.role-tag.severity-high { background-color: rgba(250, 100, 100, 0.15); border-color: #ff6b6b; color: #ffc9c9; }
+.role-tag.severity-medium { background-color: rgba(240, 173, 78, 0.15); border-color: #f0ad4e; color: #f8dca0; }
+.role-tag.severity-low { background-color: rgba(232, 232, 84, 0.15); border-color: #e8e854; color: #ffffc4; }
+/* Cor para cargos de Staff/Admin (Exemplo) */
+.role-tag.staff-role { background-color: rgba(88, 101, 242, 0.2); border-color: #5865F2; color: #c4caff; }
+
+.card-divider {
+    border: none;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 30px 0;
+}
+
+#ingame-id-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#ingame-id-content p {
+    color: #aeb2d5;
+    margin: 0;
+}
+#ingame-id-content strong {
+    color: #ffffff;
+    font-size: 1.1em;
+    background-color: rgba(18, 19, 29, 0.8);
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #4a4e69;
+}
+
+#ingame-id-input {
+    width: 100%;
+    max-width: 250px;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #4a4e69;
+    background-color: rgba(18, 19, 29, 0.8);
+    color: #f0f0f5;
+    font-size: 1em;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+#ingame-id-input:focus {
+    border-color: #a07eff;
+    box-shadow: 0 0 15px rgba(160, 126, 255, 0.3);
+    outline: none;
+}
+
+#save-id-btn, #update-id-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    background: linear-gradient(135deg, #764be0, #6080f6);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+#save-id-btn:hover, #update-id-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(118, 75, 224, 0.4);
+}
+#save-id-btn:disabled, #update-id-btn:disabled {
+    background: #4a4e69;
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
+    box-shadow: none;
+}
+#update-id-btn { /* Estilo ligeiramente diferente para o botão de atualizar */
+    background: transparent;
+    color: #aeb2d5;
+    border: 1px solid #4a4e69;
+    margin-left: 10px; /* Espaço se aparecer ao lado do ID */
+    padding: 6px 12px;
+    font-size: 0.8em;
+}
+#update-id-btn:hover {
+     background-color: #4a4e69;
+     color: #ffffff;
+     transform: translateY(-1px);
+}
+
+.message {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9em;
+    min-height: 1.2em; /* Reserva espaço para a mensagem */
+}
+.message.success { color: #4ade80; }
+.message.error { color: #ff6b6b; }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container { margin-top: 20px; }
+    .profile-card { padding: 20px; }
+}
+@media (max-width: 480px) {
+    h1 { font-size: 1.8em; }
+    .profile-name { font-size: 1.5em; }
+    .profile-avatar { width: 80px; height: 80px; }
+    .roles-section h3, .ingame-id-section h3 { font-size: 1.1em; }
+    .role-tag { font-size: 0.8em; padding: 5px 10px; }
+}
