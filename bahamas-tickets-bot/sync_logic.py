@@ -109,7 +109,7 @@ async def run_catchup_indexing(bot, initial_sync_complete_flag):
                     break
         else:
             print("  -> Nenhuma mensagem no DB. Iniciando sincronização completa (pode demorar)...")
-            async for message in channel.history(limit=50):
+            async for message in channel.history(limit=None):
                 messages_to_process.append(message)
                 if len(messages_to_process) % 1000 == 0:
                     print(f"  -> {len(messages_to_process)} mensagens históricas lidas...")
