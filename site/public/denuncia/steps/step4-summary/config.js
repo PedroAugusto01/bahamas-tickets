@@ -44,7 +44,8 @@
 **MOTIVO:** \`{motivo}\`{lootSection}`,
             devolution: `\`\`\`📦 SOLICITAR PENDÊNCIA 📦\`\`\`
 **ID:** {userId} | <@{discordId}>
-**ITENS:** {itens}
+**ITENS:** 
+{itens}
 **MOTIVO:** {motivo}
 **TICKET:** {ticketNumber}
 **PROVAS:** {provas}`

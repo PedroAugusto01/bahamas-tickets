@@ -108,7 +108,8 @@ window.reportRenderer = {
             .replace('{itens}', itemsText)
             .replace('{motivo}', motivo)
             .replace('{ticketNumber}', ticketNumber)
-            .replace('{staffId}', loggedInUserInfo.id);
+            .replace('{staffId}', loggedInUserInfo.id)
+            .replace('{provas}', handler.formData.videoLinks ? handler.formData.videoLinks.join(' ') : '');
         const section = handler.utils.createSection('Relatório de Devolucao', `<pre>${devolucaoReportContent}</pre>`, handler.sectionsEl, { id: 'devolucao-report-section' });
         section.style.display = 'none';
     },
@@ -192,7 +193,27 @@ window.reportRenderer = {
                 .replace('{staffId}', loggedInUserInfo.id)
                 .replace('{provas}', videoLinks.join(' '));
         }
-        handler.utils.createSection('Relatório ADV/BAN', `<pre>${finalReportContent}</pre>`, handler.sectionsEl, { id: 'adv-ban-section' });
+        
+        handler.utils.createSection('Relatório ADV/BAN (❌┇punições-aceitas)', `<pre>${finalReportContent}</pre>`, handler.sectionsEl, { id: 'adv-ban-section' });
+
+        const simpleReportBlocks = finalPunishedUsers.map((user, index) => {
+            const userInfo = finalPunishedInfos[index];
+            const discordId = userInfo?.user_info?.id || '';
+            const punicaoMultaText = generatePunishmentText(user, userInfo);
+            const motivoText = user.displayRules.join(' + ');
+
+            return `:label: **ADV/BAN** :label:
+            
+**ID:** \`${user.gameId}\`
+**DISCORD:** ${discordId ? `<@${discordId}>` : ''}
+**TICKET:** \`${ticketNumber}\`
+**MOTIVO:** ${motivoText}
+**PUNIÇÃO:** ${punicaoMultaText}`;
+        }).join('\n\n');
+
+        handler.utils.createSection('Relatório ADV/BAN (🔴┇advertências-e-banimentos)', `<pre>${simpleReportBlocks}</pre>`, handler.sectionsEl, { 
+            id: 'adv-ban-simple-section' 
+        });
     },
 
     renderRuleImages(handler, data) {

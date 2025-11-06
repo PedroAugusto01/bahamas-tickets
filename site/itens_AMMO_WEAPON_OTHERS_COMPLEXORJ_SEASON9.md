@@ -97,7 +97,7 @@
 - Spawna **Bastão de Beisebol**.
 
 /item WEAPON_BOTTLE
-- Spawna **Garrafa**.
+- Spawna **Garrafa quebrada**.
 
 /item WEAPON_BATTLEAXE
 - Spawna **Machado de Guerra**.
@@ -869,9 +869,6 @@
 /item tabletroubado
 - Spawna **Tablet Roubado**.
 
-/item dollars
-- Spawna **Dinheiro**.
-
 /item graos
 - Spawna **Grãos**.
 
@@ -943,9 +940,6 @@
 
 /item cinderela
 - Spawna **Cinderela**.
-
-/item ingresso
-- Spawna **Ingresso**.
 
 /item honrabm
 - Spawna **Honra BM**.
@@ -1255,3 +1249,30 @@
 
 /item cordaderapel
 - Spawna **cordaderapel**.
+
+/item sabonete
+- Spawna **sabonete**.
+
+/item dinheiro
+- Spawna **dinheiro**.
+
+/item ingresso
+- Spawna **ingresso**.
+
+/item ingresso vip
+- Spawna **ingressovip**.
+
+/item bau500kg1
+- Spawna **bau500kg1**.
+
+/item bau500kg2
+- Spawna **bau500kg2**.
+
+/item bau500kg3
+- Spawna **bau500kg3**.
+
+/item fogosazul
+- Spawna **fogos azul**.
+
+/item fogosrosa
+- Spawna **fogos rosa**.
