@@ -1,6 +1,4 @@
-// Variável global para armazenar o histórico completo da busca atual
 let fullReportHistory = [];
-// Variável global para armazenar os filtros ativos
 let activeFilters = new Set();
 
 function handleUnauthorized(response) {
@@ -36,8 +34,6 @@ document.getElementById('verify-form').addEventListener('submit', async (event) 
     const reportContentDiv = document.getElementById('report-content');
     reportContentDiv.innerHTML = '<p>Buscando relatório...</p>';
 
-    // --- CORREÇÃO APLICADA AQUI ---
-    // Verifica se o container de filtros existe antes de tentar limpá-lo
     const filtersContainer = document.getElementById('history-filters');
     if (filtersContainer) {
         filtersContainer.innerHTML = '';
@@ -75,10 +71,8 @@ function applyFilters() {
     if (!historyContainer) return;
 
     if (activeFilters.size === 0) {
-        // Se nenhum filtro estiver ativo, mostra todos os itens
         historyContainer.innerHTML = renderHistoryItems(fullReportHistory);
     } else {
-        // Filtra o histórico com base nos tipos ativos
         const filteredHistory = fullReportHistory.filter(entry => activeFilters.has(entry.type));
         historyContainer.innerHTML = renderHistoryItems(filteredHistory);
     }
@@ -88,7 +82,6 @@ function renderFilterButtons() {
     const filtersContainer = document.getElementById('history-filters');
     filtersContainer.innerHTML = '';
 
-    // Pega todos os tipos de evento únicos do histórico
     const eventTypes = [...new Set(fullReportHistory.map(entry => entry.type))];
     
     eventTypes.forEach(type => {
@@ -98,7 +91,6 @@ function renderFilterButtons() {
         button.dataset.filterType = type;
 
         button.addEventListener('click', () => {
-            // Adiciona ou remove o filtro do conjunto de filtros ativos
             if (activeFilters.has(type)) {
                 activeFilters.delete(type);
                 button.classList.remove('active');
@@ -106,7 +98,6 @@ function renderFilterButtons() {
                 activeFilters.add(type);
                 button.classList.add('active');
             }
-            // Reaplica os filtros para atualizar a lista exibida
             applyFilters();
         });
 
@@ -143,14 +134,25 @@ function renderReport(report) {
         return;
     }
 
-    // Armazena o histórico completo na variável global
     fullReportHistory = report.full_history || [];
 
     let unappliedPunishments = [];
-    if (report.active_punishments_from_history && report.current_roles_from_discord) {
-        report.active_punishments_from_history.forEach(punishment => {
-            if (!report.current_roles_from_discord.some(role => role.includes(punishment))) {
-                unappliedPunishments.push(punishment);
+    if (report.active_punishment_ids_from_history && report.current_role_ids_from_discord) {
+        
+        const punishmentMap = {
+            "1345133156361179208": "SERVIDOR・Advertência verbal",
+            "1345132696854073486": "SERVIDOR・Advertência¹",
+            "1345132420306833580": "SERVIDOR・Advertência²",
+            "1345132098394132481": "SERVIDOR・Banido",
+            "0": "TELAGEM・Banido",
+            "1430743561845866557": "SS-ALERTA",
+            "1345134004260569190": "CITIZEN-ATENÇÃO",
+            "1351597668404822106": "SS-ATENÇÃO"
+        };
+
+        report.active_punishment_ids_from_history.forEach(punishmentId => {
+            if (!report.current_role_ids_from_discord.includes(punishmentId)) {
+                unappliedPunishments.push(punishmentMap[punishmentId] || punishmentId);
             }
         });
     }
@@ -185,7 +187,6 @@ function renderReport(report) {
         </div>
     `;
 
-    // Renderiza os botões de filtro e a lista de histórico inicial
     renderFilterButtons();
     applyFilters();
 }

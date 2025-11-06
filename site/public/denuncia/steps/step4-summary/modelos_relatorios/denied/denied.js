@@ -13,7 +13,7 @@ Informamos que o seu ticket foi encerrado com o status Negado. Após as devidas 
 Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.
 
 -# Atenciosamente,
--# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`,
+-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`,
 
             'Clip com link expirado':`**DENÚNCIA NEGADA :check_91:**
 
@@ -24,7 +24,7 @@ Olá <@{id_discord_denunciante}>,
 Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.
 
 -# Atenciosamente,
--# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`,
+-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`,
 
             'Bug nas logs': `**DENÚNCIA NEGADA :check_91:**
 
@@ -35,7 +35,7 @@ Seu ticket está sendo encerrado com status de negado, pois, devido a um bug no 
 Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.
 
 -# Atenciosamente,
--# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`,
+-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`,
 
             'Não houve quebra de regras': `**DENÚNCIA NEGADA :check_91:**
 
@@ -46,7 +46,7 @@ Após a análise das informações e do vídeo relacionado a sua denúncia, info
 Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.
 
 -# Atenciosamente,
--# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`,
+-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`,
 
             'Abandono': `**DENÚNCIA NEGADA :check_91:**
 
@@ -57,7 +57,7 @@ Informamos que o ticket está sendo encerrado com o status **NEGADA**, em virtud
 Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.
 
 -# Atenciosamente,
--# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`,
+-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`,
 
             'Clip sem áudio': `**DENÚNCIA NEGADA :check_91:**
 
@@ -68,7 +68,7 @@ Seu ticket está sendo encerrado com status de **NEGADA**. Conforme as regras do
 Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.
 
 -# Atenciosamente,
--# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`,
+-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`,
 
             'Falta de provas': `**DENÚNCIA NEGADA :check_91:**
 
@@ -79,7 +79,7 @@ Seu ticket está sendo encerrado com status de **NEGADA** por falta de provas. C
 Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.
 
 -# Atenciosamente,
--# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`,
+-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`,
 
             'Prazo para denúncia expirado': `**DENÚNCIA NEGADA :check_91:**
 
@@ -90,7 +90,7 @@ Seu ticket está sendo encerrado com status de **NEGADA** pelo fato de já ter p
 Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.
 
 -# Atenciosamente,
--# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`,
+-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`,
 
             'Quebra de regras por ambas as partes': `**DENÚNCIA NEGADA :check_91:**
 
@@ -103,7 +103,7 @@ Lembrando que é importante sempre estar atento e seguindo as regras da cidade p
 Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.
 
 -# Atenciosamente,
--# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`
+-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`
         };
 
         this.deniedReportTemplate = `**🛠️TICKET-DENÚNCIA NEGADO**
@@ -181,7 +181,7 @@ Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é s
         const hasLootLogs = this.formData.selectedLogs && this.formData.selectedLogs.some(log => log.html.includes('[REVISTOU]'));
         const canHaveDevolucao = logMorte || hasLootLogs;
 
-        let messageTemplate = this.deniedMessages[this.formData.deniedInfo.reason] || `Olá <@{id_discord_denunciante}>,\n\nSeu ticket foi negado pelo seguinte motivo: ${this.formData.deniedInfo.reason}.\n\n-# Atenciosamente,\n-# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`;
+        let messageTemplate = this.deniedMessages[this.formData.deniedInfo.reason] || `Olá <@{id_discord_denunciante}>,\n\nSeu ticket foi negado pelo seguinte motivo: ${this.formData.deniedInfo.reason}.\n\n-# Atenciosamente,\n-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`;
         let messageContent = messageTemplate
             .replace('<@{id_discord_denunciante}>', `<@${reporterDiscordId}>`)
             .replace('<@{id_discord_user_logado}>', `<@${loggedInUserInfo.id}>`);

@@ -118,7 +118,7 @@ window.reportRenderer = {
         const finalPunishedUsers = handler.finalPunishedUsers || [];
         const finalPunishedInfos = handler.finalPunishedInfos || [];
 
-        const { advRoleIds, punishmentPrisonTimes, reportTemplates } = window.step4Config;
+        const { advRoleIds, punishmentPrisonTimes, reportTemplates, punishmentFines } = window.step4Config;
         const ticketChannelName = handler.formData.ticketChannelName || '';
         const ticketNumberMatch = ticketChannelName.match(/-(\d+)$/);
         const ticketNumber = ticketNumberMatch ? ticketNumberMatch[1] : handler.formData.ticketChannel;
@@ -127,17 +127,25 @@ window.reportRenderer = {
         const hasLoot = selectedLootLogs.length > 0;
         let finalReportContent;
 
-        const generatePunishmentText = (userInfo, basePunishment) => {
+        const generatePunishmentText = (user, userInfo) => {
+             const basePunishment = user.punicaoMinima || 'verbal';
              const nextPunishment = handler.utils.getNextPunishment(userInfo, basePunishment);
+             const fineAmount = punishmentFines[nextPunishment] || null;
+             const fineText = (fineAmount && nextPunishment !== 'banido') ? ` + multa de ${fineAmount}` : '';
+
+             if (user.punishmentType === 'prison') {
+                 return `${user.prisonTime} meses de prisao${fineText}`;
+             }
+            
              const roleId = advRoleIds[nextPunishment];
              const prisonTime = punishmentPrisonTimes[nextPunishment] || 0;
              const normalText = `<@&${roleId}>` + (nextPunishment !== 'banido' ? ` + ${prisonTime} meses de prisao` : '');
 
              if (userInfo && userInfo.user_info && userInfo.user_info.name && userInfo.user_info.name.includes('(Fora do Discord)')) {
                  const banRoleId = advRoleIds['banido'] || 'ID_CARGO_BANIDO';
-                 return `<@&${banRoleId}> até retornar para o servidor, após retornar reverter para ${normalText}`;
+                 return `<@&${banRoleId}> até retornar para o servidor, após retornar reverter para ${normalText}${fineText}`;
              }
-             return normalText;
+             return normalText + fineText;
         };
 
         const { itemsData, totalMulta } = hasLoot ? handler.utils.calculateItemsValue(selectedLootLogs, itemMapping, itemPrices) : { itemsData: [], totalMulta: 0 };
@@ -149,9 +157,7 @@ window.reportRenderer = {
             const user = finalPunishedUsers[0];
             const userInfo = finalPunishedInfos[0];
             const discordId = userInfo?.user_info?.id || (userInfo?.found_in_db ? `DB:${userInfo?.user_info?.id}` : 'ERRO');
-            const ruleInfo = rulesData.punicoes.find(r => r.regra === user.rules[0]);
-            const basePunishment = ruleInfo?.punicao_minima || 'verbal';
-            const punicaoMultaText = generatePunishmentText(userInfo, basePunishment);
+            const punicaoMultaText = generatePunishmentText(user, userInfo);
             const motivoText = user.displayRules.join(' + ');
             const includeLootSection = user.rules.includes('Loot Indevido') ? lootSectionText : "";
 
@@ -168,9 +174,7 @@ window.reportRenderer = {
             const reportBlocks = finalPunishedUsers.map((user, index) => {
                 const userInfo = finalPunishedInfos[index];
                 const discordId = userInfo?.user_info?.id || (userInfo?.found_in_db ? `DB:${userInfo?.user_info?.id}` : 'ERRO');
-                const ruleInfo = rulesData.punicoes.find(r => r.regra === user.rules[0]);
-                 const basePunishment = ruleInfo?.punicao_minima || 'verbal';
-                 const punicaoMultaText = generatePunishmentText(userInfo, basePunishment);
+                 const punicaoMultaText = generatePunishmentText(user, userInfo);
                  const motivoText = user.displayRules.join(' + ');
                  const includeLootSection = user.rules.includes('Loot Indevido') ? lootSectionText : "";
 

@@ -153,6 +153,7 @@ async def generate_user_report(bot, search_term):
         "current_roles_from_discord": current_roles_from_discord,
         "current_role_ids_from_discord": current_role_ids_from_discord,
         "active_punishments_from_history": active_punishments_from_history,
+        "active_punishment_ids_from_history": active_punishment_ids,
         "full_history": full_history,
         "found_in_db": found_in_db,
         "is_in_guild": usuario is not None
@@ -224,7 +225,7 @@ async def get_ingame_id(request):
 async def start_web_server(bot):
     app = web.Application(); app['bot'] = bot
     app.router.add_get('/api/verify', handle_verification_request)
-    app.router.add_post('/api/verify', handle_verification_request) # Added POST support
+    app.router.add_post('/api/verify', handle_verification_request)
     app.router.add_get('/api/get-ticket-channels', get_ticket_channels)
     app.router.add_post('/api/link-ids', handle_link_ids_request)
     app.router.add_get('/api/get-all-reports', get_all_reports)

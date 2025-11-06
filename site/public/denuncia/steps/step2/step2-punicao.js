@@ -3,6 +3,36 @@
     const container = document.getElementById('punished-users-container');
     const btnNext = document.getElementById('btn-step2-punicao-next');
 
+    const findRuleData = (ruleName) => {
+        if (!window.ruleData || !window.ruleData.fullRuleSet) return null;
+        let rule = window.ruleData.fullRuleSet.find(r => r.regra === ruleName);
+        if (rule) return rule;
+        
+        for (const mainRule of window.ruleData.fullRuleSet) {
+            if (mainRule.sub_regras) {
+                rule = mainRule.sub_regras.find(sr => sr.regra === ruleName);
+                if (rule) return rule;
+            }
+        }
+        return null;
+    };
+
+    const getHighestPunishment = (punishments) => {
+        const levels = ['verbal', 'adv1', 'adv2', 'banido'];
+        let maxIndex = -1;
+        let maxPunishment = 'verbal';
+
+        punishments.forEach(p => {
+            const index = levels.indexOf(p);
+            if (index > maxIndex) {
+                maxIndex = index;
+                maxPunishment = p;
+            }
+        });
+        return maxPunishment;
+    };
+
+
     const validateStep = () => {
         let allValid = true;
         for (let i = 1; i <= count; i++) {
@@ -21,7 +51,6 @@
                 break;
             }
 
-            // Verifica se alguma regra selecionada com sub-regras tem uma sub-regra por selecionar
             const selectedWithSubRules = block.querySelector('.rules-list li.selected[data-has-sub-rules="true"]');
             if (selectedWithSubRules) {
                 const subRuleSelector = block.querySelector('.sub-rule-selector');
@@ -30,15 +59,70 @@
                     break;
                 }
             }
+            
+            const punishmentChoiceContainer = block.querySelector('.punishment-choice-container');
+            if (punishmentChoiceContainer && punishmentChoiceContainer.innerHTML.trim() !== '') {
+                const choice = punishmentChoiceContainer.querySelector(`input[name="punish-choice-${i}"]:checked`);
+                if (!choice) {
+                    allValid = false;
+                    break;
+                }
+            }
         }
         btnNext.disabled = !allValid;
     };
+
+    const handlePunishmentChoice = (block) => {
+        const choiceContainer = block.querySelector('.punishment-choice-container');
+        const selectedRules = block.querySelectorAll('.rules-list li.selected');
+        const blockIndex = block.id.split('-').pop();
+
+        choiceContainer.innerHTML = '';
+
+        if (selectedRules.length === 0) {
+            block.dataset.highestPrisonTime = 0;
+            block.dataset.highestPunicaoMinima = 'verbal';
+            validateStep();
+            return;
+        }
+
+        const rulesWithPrison = Array.from(selectedRules).filter(li => parseInt(li.dataset.prisonTime || 0, 10) > 0);
+        const allPunishments = Array.from(selectedRules).map(li => li.dataset.punicaoMinima || 'verbal');
+        const allPrisonTimes = Array.from(selectedRules).map(li => parseInt(li.dataset.prisonTime || 0, 10));
+
+        const highestPunicaoMinima = getHighestPunishment(allPunishments);
+        const highestPrisonTime = Math.max(0, ...allPrisonTimes);
+
+        block.dataset.highestPrisonTime = highestPrisonTime;
+        block.dataset.highestPunicaoMinima = highestPunicaoMinima;
+
+        if (rulesWithPrison.length > 0) {
+            choiceContainer.innerHTML = `
+                <div class="choice-title">Opção de Punição:</div>
+                <div class="punishment-choice-group">
+                    <div class="punishment-choice-radio">
+                        <input type="radio" id="choice-prison-${blockIndex}" name="punish-choice-${blockIndex}" value="prison">
+                        <label for="choice-prison-${blockIndex}">Aplicar Prisão (<code><span class="prison-val">${highestPrisonTime} meses</span></code>)</label>
+                    </div>
+                    <div class="punishment-choice-radio">
+                        <input type="radio" id="choice-default-${blockIndex}" name="punish-choice-${blockIndex}" value="default" checked>
+                        <label for="choice-default-${blockIndex}">Aplicar Punição Padrão (<code><span class="default-val">${highestPunicaoMinima}</span></code>)</label>
+                    </div>
+                </div>
+            `;
+            choiceContainer.querySelectorAll(`input[name="punish-choice-${blockIndex}"]`).forEach(radio => {
+                radio.addEventListener('change', validateStep);
+            });
+        }
+        
+        validateStep();
+    };
+
 
     const handleRuleSelection = (li) => {
         const block = li.closest('.punished-user-block');
         const subRuleContainer = block.querySelector('.sub-rule-selector-container');
 
-        // Limpa e recria o seletor de sub-regras, se necessário
         subRuleContainer.innerHTML = '';
         const selectedWithSubRules = block.querySelector('.rules-list li.selected[data-has-sub-rules="true"]');
 
@@ -59,7 +143,7 @@
         }
 
         updateLogVisibility(block);
-        validateStep();
+        handlePunishmentChoice(block);
     };
 
     const updateLogVisibility = (userBlock) => {
@@ -88,17 +172,28 @@
         const block = document.createElement('div');
         block.className = 'punished-user-block';
         block.id = `punished-user-block-${i}`;
+        block.dataset.highestPrisonTime = 0;
+        block.dataset.highestPunicaoMinima = 'verbal';
+
 
         let rulesListHtml = window.ruleData.punishmentRules.map(rule => {
             const fullRule = window.ruleData.fullRuleSet.find(r => r.regra === rule.regra);
             const hasSubRules = !!(fullRule && fullRule.sub_regras && fullRule.sub_regras.length > 0);
             const needsLog = rule.consunta_log_morte || rule.consultar_log_matou || rule.auto_consultar_log_loot;
+            const prisonTime = rule.prisao || 0;
+            const punicaoMinima = rule.punicao_minima || 'verbal';
 
             let warnings = '';
             if (needsLog) warnings += `<small class="log-warning">OBS: Requer consulta de logs.</small>`;
             if (hasSubRules) warnings += `<small class="sub-rule-warning">OBS: Contém sub-regras.</small>`;
+            if (prisonTime > 0) warnings += `<small class="prison-warning">OBS: Prisão customizada (${prisonTime} meses).</small>`;
 
-            return `<li data-rule="${rule.regra}" data-needs-log="${needsLog}" data-has-sub-rules="${hasSubRules}"><span>${rule.regra}</span>${warnings}</li>`;
+            return `<li data-rule="${rule.regra}" 
+                        data-needs-log="${needsLog}" 
+                        data-has-sub-rules="${hasSubRules}" 
+                        data-prison-time="${prisonTime}"
+                        data-punicao-minima="${punicaoMinima}">
+                    <span>${rule.regra}</span>${warnings}</li>`;
         }).join('');
 
         block.innerHTML = `
@@ -114,6 +209,8 @@
                     <ul class="rules-list">${rulesListHtml}</ul>
                 </div>
                 <div class="sub-rule-selector-container"></div>
+                
+                <div class="form-group punishment-choice-container" id="punishment-choice-container-${i}"></div>
             </div>
             <div class="form-group optional-log-container hidden">
                 <div class="checkbox-group">
@@ -146,8 +243,21 @@
         list.addEventListener('click', (e) => {
             const li = e.target.closest('li');
             if (li) {
+                const hasSubRules = li.dataset.hasSubRules === 'true';
                 li.classList.toggle('selected');
-                handleRuleSelection(li);
+
+                if (li.classList.contains('selected')) {
+                    if (hasSubRules) {
+                        list.querySelectorAll('li.selected').forEach(otherLi => {
+                            if (otherLi !== li) otherLi.classList.remove('selected');
+                        });
+                    } else {
+                        list.querySelectorAll('li.selected[data-has-sub-rules="true"]').forEach(subLi => {
+                            subLi.classList.remove('selected');
+                        });
+                    }
+                }
+                handleRuleSelection(li); 
             }
         });
     });
@@ -164,6 +274,9 @@
 
             const displayRules = [];
             const lookupRules = [];
+            
+            const prisonTime = parseInt(block.dataset.highestPrisonTime || 0, 10);
+            const punicaoMinima = block.dataset.highestPunicaoMinima || 'verbal';
 
             selectedLis.forEach(li => {
                 if (li.dataset.hasSubRules === 'true') {
@@ -186,13 +299,19 @@
                 anyNeedsLog = true;
             }
 
+            const choiceRadio = block.querySelector(`input[name="punish-choice-${i}"]:checked`);
+            const punishmentType = (choiceRadio) ? choiceRadio.value : 'default';
+
             window.formData.punishedUsers.push({
                 index: i,
                 gameId: document.getElementById(`punished-game-id-${i}`).value,
-                displayRules: displayRules, // Para o texto do relatório
-                rules: lookupRules,      // Para encontrar prints e dados
+                displayRules: displayRules, 
+                rules: lookupRules,      
                 needsLog: needsLog,
-                logDate: needsLog ? document.getElementById(`log-date-${i}`).value : null
+                logDate: needsLog ? document.getElementById(`log-date-${i}`).value : null,
+                punishmentType: punishmentType, 
+                prisonTime: prisonTime, 
+                punicaoMinima: punicaoMinima 
             });
         }
 

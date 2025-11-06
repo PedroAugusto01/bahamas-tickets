@@ -1,4 +1,3 @@
-/* Card para cada pessoa punida */
 .punished-user-block {
     background-color: rgba(18, 19, 29, 0.6);
     padding: 25px 30px;
@@ -104,15 +103,14 @@
     font-size: 1.2em; font-weight: bold;
 }
 
-/* Avisos */
-.log-warning, .sub-rule-warning { font-size: 0.8em; margin-top: 5px; font-weight: normal; opacity: 0.8; }
+.log-warning, .sub-rule-warning, .prison-warning { font-size: 0.8em; margin-top: 5px; font-weight: normal; opacity: 0.8; }
 .log-warning { color: #f0ad4e; }
 .sub-rule-warning { color: #60a5fa; }
-.rules-list li.selected .log-warning, .rules-list li.selected .sub-rule-warning { opacity: 1; }
+.prison-warning { color: #ff6b6b; }
+.rules-list li.selected .log-warning, .rules-list li.selected .sub-rule-warning, .rules-list li.selected .prison-warning { opacity: 1; }
 
-/* Seletor de sub-regras */
 .sub-rule-selector-container {
-    margin-top: 15px; /* Espaço entre seletor principal e o de sub-regra */
+    margin-top: 15px; 
 }
 .sub-rule-selector {
     width: 100%;
@@ -126,7 +124,54 @@
 }
 .sub-rule-selector:focus { outline: none; box-shadow: 0 0 15px rgba(160, 126, 255, 0.3); }
 
-/* Checkbox personalizado (Mantido) */
+.punishment-choice-container {
+    background-color: rgba(18, 19, 29, 0.8);
+    border: 1px solid #a07eff;
+    padding: 15px 20px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+.punishment-choice-container .choice-title {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #aeb2d5;
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.punishment-choice-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.punishment-choice-radio { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.punishment-choice-radio input[type="radio"] {
+    appearance: none; -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border: 2px solid #4a4e69;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.punishment-choice-radio input[type="radio"]:checked {
+    background-color: #a07eff;
+    border-color: #a07eff;
+    background-clip: content-box;
+    padding: 3px;
+}
+.punishment-choice-radio label {
+    color: #f0f0f5;
+    font-weight: 500;
+    font-size: 1em;
+}
+.punishment-choice-radio label code {
+    background: rgba(0,0,0,0.3);
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.punishment-choice-radio label .prison-val { color: #ff6b6b; }
+.punishment-choice-radio label .default-val { color: #60a5fa; }
 .optional-log-container { margin-top: 25px; }
 .checkbox-group { display: flex; align-items: center; cursor: pointer; user-select: none; }
 .checkbox-group input[type="checkbox"] { display: none; }

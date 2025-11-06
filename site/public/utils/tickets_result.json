@@ -6,18 +6,29 @@
             "consultar_log_matou": true,
             "need_date": true,
             "print_name": "rdm.png",
-            "prisao/adv": false,
+            "prisao/adv": true,
             "prisao": 0,
             "multa": 0,
             "punicao_minima": "adv1"
+        },
+        {
+            "regra": "RDM em massa",
+            "consunta_log_morte": true,
+            "consultar_log_matou": true,
+            "need_date": true,
+            "print_name": "rdm_em_massa.png",
+            "prisao/adv": true,
+            "prisao": 0,
+            "multa": 0,
+            "punicao_minima": "banido"
         },
         {
             "regra": "VDM - Veichle Deathmatch",
             "consunta_log_morte": true,
             "consultar_log_matou": true,
             "need_date": true,
-            "print_name": "vdm.png",
-            "prisao/adv": false,
+            "print_name": "rdm.png",
+            "prisao/adv": true,
             "prisao": 0,
             "multa": 0,
             "punicao_minima": "adv1"
@@ -50,7 +61,7 @@
             "consultar_log_matou": false,
             "need_date": false,
             "print_name": "abuso_de_poder.png",
-            "prisao/adv": false,
+            "prisao/adv": true,
             "prisao": 0,
             "multa": 0,
             "punicao_minima": "verbal"
@@ -104,8 +115,8 @@
             "need_date": false,
             "print_name": "fake_empregos.png",
             "prisao/adv": true,
-            "prisao": 100,
-            "multa": 0,
+            "prisao": 300,
+            "multa": 500000,
             "punicao_minima": "verbal"
         },
         {
@@ -114,9 +125,9 @@
             "consultar_log_matou": false,
             "need_date": false,
             "print_name": "flaming.png",
-            "prisao": 0,
+            "prisao": 100,
             "multa": 0,
-            "punicao_minima": "adv1"
+            "punicao_minima": "verbal"
         },
         {
             "regra": "Lembrar de ação",
@@ -124,17 +135,17 @@
             "consultar_log_matou": false,
             "need_date": false,
             "print_name": "lembrar_de_acao.png",
-            "prisao/adv": false,
+            "prisao/adv": true,
             "prisao": 100,
             "multa": 0,
-            "punicao_minima": "verbal"
+            "punicao_minima": ""
         },
         {
-            "regra": "Mal uso do chat",
+            "regra": "Mal uso do chat ilegal",
             "consunta_log_morte": false,
             "consultar_log_matou": false,
             "need_date": false,
-            "print_name": "mal_uso_do_chat.png",
+            "print_name": "mal_uso_do_chat_ilegal.png",
             "prisao/adv": true,
             "prisao": 50,
             "multa": 0,
@@ -166,10 +177,10 @@
             "consultar_log_matou": false,
             "need_date": false,
             "print_name": "quebra_de_imersao.png",
-            "prisao/adv": false,
+            "prisao/adv": true,
             "prisao": 100,
             "multa": 0,
-            "punicao_minima": "verbal"
+            "punicao_minima": ""
         },
         {
             "regra": "Regras de ações e pista",
@@ -180,7 +191,7 @@
                 {
                     "regra": "Ação errada de assalto",
                     "print_name": "acao_errada_assalto.png",
-                    "prisao/adv": false,
+                    "prisao/adv": true,
                     "prisao": 0,
                     "multa": 0,
                     "punicao_minima": "verbal"
@@ -189,7 +200,7 @@
                 {
                     "regra": "Ação errada de sequestro",
                     "print_name": "acao_errada_sequestro.png",
-                    "prisao/adv": false,
+                    "prisao/adv": true,
                     "prisao": 0,
                     "multa": 0,
                     "punicao_minima": "verbal"
@@ -198,7 +209,7 @@
                 {
                     "regra": "Proíbido sequestar medicos e policiais em serviço",
                     "print_name": "sequestrar_medicos_policiais.png",
-                    "prisao/adv": false,
+                    "prisao/adv": true,
                     "prisao": 0,
                     "multa": 0,
                     "punicao_minima": "verbal"
@@ -207,7 +218,7 @@
                 {
                     "regra": "Proíbido fugir para favelas e ou areas de dominio",
                     "print_name": "fugir_para_favelas.png",
-                    "prisao/adv": false,
+                    "prisao/adv": true,
                     "prisao": 0,
                     "multa": 0,
                     "punicao_minima": "verbal"
@@ -215,11 +226,10 @@
                 {
                     "regra": "Ação sem mochila",
                     "print_name": "sem_mochila.png",
-                    "prisao/adv": false,
+                    "prisao/adv": true,
                     "prisao": 0,
                     "multa": 0,
-                    "punicao_minima": "verbal"
-                    
+                    "punicao_minima": "verbal" 
                 }
             ]
         },
@@ -227,17 +237,28 @@
             "regra": "Caixa 2",
             "consunta_log_morte": false,
             "consultar_log_matou": false,
-            "need_date": false,
+            "need_date": true,
             "print_name": "caixa2.png",
             "prisao": 0,
             "multa": 0,
             "punicao_minima": "adv1"
         },
         {
-            "regra": "DARK-RP",
+            "regra": "Invasão área vermelha / DP",
             "consunta_log_morte": false,
             "consultar_log_matou": false,
             "need_date": false,
+            "print_name": "invasao_fac_dp.png",
+            "prisao/adv": true,
+            "prisao": 700,
+            "multa": 0,
+            "punicao_minima": ""
+        },
+        {
+            "regra": "DARK-RP",
+            "consunta_log_morte": false,
+            "consultar_log_matou": false,
+            "need_date": true,
             "print_name": "dark.png",
             "prisao": 0,
             "multa": 0,
@@ -247,55 +268,18 @@
             "regra": "Comércio externo",
             "consunta_log_morte": false,
             "consultar_log_matou": false,
-            "need_date": false,
+            "need_date": true,
             "print_name": "comercio_externo.png",
             "prisao": 0,
             "multa": 0,
             "punicao_minima": "banido"
         },
         {
-            "regra": "Safe-Zone",
+            "regra": "Safezone",
             "consunta_log_morte": false,
             "consultar_log_matou": false,
-            "need_date": false,
+            "need_date": true,
             "print_name": "safe.png",
-            "prisao/adv": true,
-            "prisao": 150,
-            "multa": 0,
-            "punicao_minima": "verbal"
-        },
-        {
-            "regra": "Regras gerais",
-            "consunta_log_morte": false,
-            "consultar_log_matou": false,
-            "need_date": false,
-            "sub_regras": [
-                {
-                    "regra": "Uso do instagram",
-                    "print_name": "uso_do_instagram.png",
-                    "prisao/adv": false,
-                    "prisao": 0,
-                    "multa": 0,
-                    "punicao_minima": "verbal"
-                    
-                },
-                {
-                    "regra": "Clips manipulados",
-                    "print_name": "clips_manipulados.png",
-                    "prisao/adv": false,
-                    "prisao": 0,
-                    "multa": 0,
-                    "punicao_minima": "verbal"
-                }
-            ]
-        },
-        {
-            "regra": "Regras de empregos legais",
-            "consunta_log_morte": false,
-            "consultar_log_matou": false,
-            "need_date": false,
-            "print_name": "regras_de_empregos_gerais.png",
-            "prisao/adv": true,
             "prisao": 150,
             "multa": 0,
             "punicao_minima": "verbal"

@@ -32,22 +32,30 @@ class VdmHandler extends BaseReportHandler {
         const finalPunishedInfos = this.finalPunishedInfos || [];
         const reporterInfo = data.reporterInfo;
 
-        const { advRoleIds, punishmentPrisonTimes } = window.step4Config;
+        const { advRoleIds, punishmentPrisonTimes, punishmentFines } = window.step4Config;
         const reporterDiscordId = reporterInfo?.user_info?.id;
         const isValidDiscordId = reporterDiscordId && /^\d{17,19}$/.test(reporterDiscordId);
         const reporterMention = isValidDiscordId ? `<@${reporterDiscordId}>` : `ID ${this.formData.reporterId}`;
 
-        const generatePunishmentTextForMessage = (userInfo, basePunishment) => {
+        const generatePunishmentTextForMessage = (user, userInfo) => {
+             const basePunishment = user.punicaoMinima || 'verbal';
              const nextPunishment = this.utils.getNextPunishment(userInfo, basePunishment);
+             const fineAmount = punishmentFines[nextPunishment] || null;
+             const fineText = (fineAmount && nextPunishment !== 'banido') ? ` + multa de **${fineAmount}**` : '';
+
+             if (user.punishmentType === 'prison') {
+                 return `será aplicado **${user.prisonTime} meses de prisao**${fineText}`;
+             }
+             
              const roleId = advRoleIds[nextPunishment];
              const prisonTime = punishmentPrisonTimes[nextPunishment] || 0;
              const normalText = `será aplicado **<@&${roleId}>**` + (nextPunishment !== 'banido' ? ` e ${prisonTime} meses de prisao` : '');
 
              if (userInfo && userInfo.user_info && userInfo.user_info.name && userInfo.user_info.name.includes('(Fora do Discord)')) {
                  const banRoleId = advRoleIds['banido'] || 'ID_CARGO_BANIDO';
-                 return `será aplicado <@&${banRoleId}> até retornar para o servidor, após retornar reverter para **<@&${roleId}>**` + (nextPunishment !== 'banido' ? ` e ${prisonTime} meses de prisao` : '');
+                 return `será aplicado <@&${banRoleId}> até retornar para o servidor, após retornar reverter para **<@&${roleId}>**` + (nextPunishment !== 'banido' ? ` e ${prisonTime} meses de prisao` : '') + fineText;
              }
-             return normalText;
+             return normalText + fineText;
         };
 
         let msgIntro = `Olá ${reporterMention},\n\nApós analisar o seu vídeo da sua denúncia,`;
@@ -55,9 +63,7 @@ class VdmHandler extends BaseReportHandler {
         const punishmentMessages = finalPunishedUsers.map((user, index) => {
             const userInfo = finalPunishedInfos[index];
             const ruleName = user.displayRules.join(', ');
-            const ruleInfo = rulesData.punicoes.find(r => r.regra === user.rules[0]);
-             const basePunishment = ruleInfo?.punicao_minima || 'verbal';
-             const punishmentText = generatePunishmentTextForMessage(userInfo, basePunishment);
+             const punishmentText = generatePunishmentTextForMessage(user, userInfo);
             return `considero que o **ID ${user.gameId}** praticou **${ruleName}**, conforme as regras da cidade. ${punishmentText} de acordo com o histórico de punições do jogador.`;
         });
 
@@ -68,7 +74,7 @@ class VdmHandler extends BaseReportHandler {
         const msgDevolucao = itemsTextParaDevolucao ? `Seus itens serão solicitados para devolução em breve, só aguardar que chegará para você. Os itens são:\n${itemsTextParaDevolucao}` : '';
         const localizacaoMatch = logMorte?.text.match(/\[Localização\]:\s*([^\n]+)/);
         const localizacao = localizacaoMatch ? localizacaoMatch[1].trim() : 'N/A';
-        const msgFinal = `\n\n**CDS DA MORTE:**\n\`${localizacao}\`\n\nAgradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Complexo RJ.`;
+        const msgFinal = `\n\n**CDS DA MORTE:**\n\`${localizacao}\`\n\nAgradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Bahamas.`;
         const messageSectionContent = `<div class="devolucao-toggle"><input type="checkbox" id="devolucao-check" ${itemsTextParaDevolucao ? '' : 'disabled'}><label for="devolucao-check">Vai ocorrer devolução?</label></div><pre id="message-preview-main">${msgIntro}</pre><div id="devolucao-msg-content-wrapper" style="display:none;"><pre id="devolucao-msg-content">${msgDevolucao}</pre></div><pre id="message-preview-final">${msgFinal}</pre>`;
         this.utils.createSection('Mensagem ao Denunciante', messageSectionContent, this.sectionsEl, { onCopy: this.utils.copyMessageContent });
         if (itemsTextParaDevolucao) {

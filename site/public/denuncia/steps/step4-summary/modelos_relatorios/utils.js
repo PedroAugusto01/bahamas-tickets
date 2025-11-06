@@ -52,24 +52,22 @@ window.reportUtils = {
         const res = await fetch('/utils/tickets_result.json');
         if (!res.ok) {
              console.error("Falha ao carregar tickets_result.json");
-             return { punicoes: [], negados: [] }; // Retorna estrutura vazia
+             return { punicoes: [], negados: [] }; 
         }
         const data = await res.json();
-        // Garante que a regra 'Loot Indevido' exista para consulta de punição mínima
         if (data.punicoes && !data.punicoes.some(p => p.regra === 'Loot Indevido')) {
              const defaultLootRule = window.ruleData.fullRuleSet.find(r => r.regra === 'Loot Indevido');
              if (defaultLootRule) {
                  data.punicoes.push({
                      regra: 'Loot Indevido',
-                     punicao_minima: defaultLootRule.punicao_minima || 'verbal' // Usa o valor do JSON original ou fallback
+                     punicao_minima: defaultLootRule.punicao_minima || 'verbal'
                  });
              } else {
-                 data.punicoes.push({ regra: 'Loot Indevido', punicao_minima: 'verbal' }); // Fallback total
+                 data.punicoes.push({ regra: 'Loot Indevido', punicao_minima: 'verbal' }); 
              }
         }
         return data;
     },
-
 
     async fetchUserInfo(userId) {
         console.log(`[DEBUG_CLIENT] Chamando fetchUserInfo para ID: ${userId}`);
@@ -103,32 +101,45 @@ window.reportUtils = {
     },
 
     getNextPunishment(punishedInfo, basePunishment) {
-        if (!punishedInfo || basePunishment === 'banido') return 'banido';
+        if (!punishedInfo) return basePunishment; 
+        if (basePunishment === 'banido') return 'banido';
+
         const activePunishmentNames = new Set(punishedInfo.active_punishments_from_history || []);
+        const currentDiscordRoleNames = new Set(punishedInfo.current_roles_from_discord || []);
+
         const levels = ['verbal', 'adv1', 'adv2', 'banido'];
-        const roleIds = window.step4Config.advRoleIds;
         const nameToLevelMap = {
-            "servidor・advertência verbal": "verbal", "servidor・advertência¹": "adv1",
-            "servidor・advertência²": "adv2", "servidor・banido": "banido",
+            "servidor・advertência verbal": "verbal",
+            "servidor・advertência¹": "adv1",
+            "servidor・advertência²": "adv2",
+            "servidor・banido": "banido",
             "telagem・banido": "banido"
         };
         const userPunishmentLevels = new Set();
-        activePunishmentNames.forEach(name => {
+
+        const processName = (name) => {
             const lowerCaseName = name.toLowerCase();
             for (const key in nameToLevelMap) {
-                if (lowerCaseName.includes(key.toLowerCase())) { // Comparação case-insensitive
+                if (lowerCaseName.includes(key.toLowerCase())) {
                     userPunishmentLevels.add(nameToLevelMap[key]);
-                    break;
+                    break; 
                 }
             }
-        });
+        };
+
+        activePunishmentNames.forEach(processName);
+        currentDiscordRoleNames.forEach(processName);
 
         if (userPunishmentLevels.has('banido')) return 'banido';
+
         let levelIndex = levels.indexOf(basePunishment);
-        if (levelIndex === -1) levelIndex = 0;
+        if (levelIndex === -1) levelIndex = 0; 
+
         while (levelIndex < levels.length) {
             const currentLevel = levels[levelIndex];
-            if (!userPunishmentLevels.has(currentLevel)) return currentLevel;
+            if (!userPunishmentLevels.has(currentLevel)) {
+                return currentLevel;
+            }
             levelIndex++;
         }
         return 'banido';
