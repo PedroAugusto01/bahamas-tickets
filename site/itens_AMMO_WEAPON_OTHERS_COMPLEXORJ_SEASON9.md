@@ -401,6 +401,9 @@
 /item mochila
 - Spawna **Mochila**.
 
+/item mochilax
+- Spawna **Mochila X**.
+
 /item celular
 - Spawna **Celular**.
 

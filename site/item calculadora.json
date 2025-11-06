@@ -349,7 +349,7 @@
     },
     {
         "name": "mochilax",
-        "price": 156000
+        "price": 120000
     },
     {
         "name": "paraquedas",
@@ -769,13 +769,11 @@
         "price": 990    
     },
     {
-        "name": " fogosazul",
+        "name": "fogosazul",
         "price": 100000    
     },
     {
-        "name": " fogosrosa",
+        "name": "fogosrosa",
         "price": 100000    
-
-    
     }
 ]
