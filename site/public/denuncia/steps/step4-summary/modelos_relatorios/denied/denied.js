@@ -106,14 +106,14 @@ Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é s
 -# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`
         };
 
-        this.deniedReportTemplate = `**🛠️TICKET-DENÚNCIA NEGADO**
--# Temporada/Season 9
+        this.deniedReportTemplate = `## *** :red_circle: REVISÃO NEGADO :red_circle: ***
 
-**DENUNCIANTE:** ID {id_ingame_denunciante} | <@{id_discord_denunciante}>
+**PLAYER SOLICITANTE:** <@{id_discord_denunciante}> **|** \`{id_ingame_denunciante}\`
 **STAFF QUE JULGOU:** <@{id_discord_user_logado}>
-**NÚMERO DO TICKET:** {numero_do_ticket}
+**STAFF QUE AUXILIOU:** 
+**NÚMERO DO TICKET:** \`{numero_do_ticket}\`
 **MOTIVO:** {regra_selecionada}
-**RESULTADO:** NEGADO`;
+**RESULTADO:** Negado`;
     }
 
     extractItemsFromDeathLog(logText) {

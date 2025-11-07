@@ -252,10 +252,6 @@
         "price": 78000
     },
     {
-        "name": "chavealgemas",
-        "price": 20000
-    },
-    {
         "name": "masterpick",
         "price": 900000
     },
@@ -349,7 +345,7 @@
     },
     {
         "name": "mochilax",
-        "price": 120000
+        "price": 156000
     },
     {
         "name": "paraquedas",
@@ -381,23 +377,7 @@
     },
     {
         "name": "adrenalina",
-        "price": 500000
-    },
-    {
-        "name": "pedradecrack",
-        "price": 0
-    },
-    {
-        "name": "lancaperfume",
-        "price": 0
-    },
-    {
-        "name": "ecstasy",
-        "price": 0
-    },
-    {
-        "name": "skunk",
-        "price": 0
+        "price": 150000
     },
     {
         "name": "primeirossocorros",
@@ -412,32 +392,8 @@
         "price": 40000
     },
     {
-        "name": "cpxcoin",
-        "price": 100000
-    },
-    {
         "name": "rastreador",
         "price": 100000
-    },
-    {
-        "name": "caminhao750kg",
-        "price": 10000000
-    },
-    {
-        "name": "bombarelogio",
-        "price": 180000
-    },
-    {
-        "name": "tuningilegal",
-        "price": 700000
-    },
-    {
-        "name": "maconha [para uso]",
-        "price": 2640
-    },
-    {
-        "name": "maconha [para venda]",
-        "price": 11000
     },
     {
         "name": "maconha",
@@ -446,10 +402,6 @@
     {
         "name": "cocaina",
         "price": 2000
-    },
-    {
-        "name": "cocainaparavenda",
-        "price": 10000
     },
     {
         "name": "lsd",
@@ -556,33 +508,16 @@
         "price": 1530
     },
     {
-        "name": "molas",
-        "price": 1000
-    },
-    {
-        "name": "placa-metal",
-        "price": 1000
-    },
-    {
         "name": "metal",
         "price": 135
     },
     {
-        "name": "gatilho",
-        "price": 1000
-    },
-    {
         "name": "dinheirosujo",
         "price": 1
-    
     },
     {
         "name": "aluminio",
         "price": 135
-    },
-    {
-        "name": "tinta",
-        "price": 1000
     },
     {
         "name": "papel",
@@ -597,28 +532,12 @@
         "price": 1000
     },
     {
-        "name": "cafeina",
-        "price": 1000
-    },
-    {
         "name": "soda",
-        "price": 1000
-    },
-    {
-        "name": "bicarbonatodesodio",
         "price": 1000
     },
     {
         "name": "anfetamina",
         "price": 990
-    },
-    {
-        "name": "medalhadominacao",
-        "price": 1000
-    },
-    {
-        "name": "moedadominas",
-        "price": 1000
     },
     {
         "name": "sabonete",

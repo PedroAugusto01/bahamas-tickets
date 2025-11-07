@@ -491,12 +491,6 @@
 /item pecadearma
 - Spawna **Peça de arma**.
 
-/item molas
-- Spawna **Molas**.
-
-/item gatilho
-- Spawna **Gatilho**.
-
 /item m-malha
 - Spawna **Malha**.
 
@@ -547,9 +541,6 @@
 
 /item tiner
 - Spawna **Tiner**.
-
-/item lancaperfume
-- Spawna **Lança Perfume**.
 
 /item opiopapoula
 - Spawna **Pó de Ópio**.
@@ -1004,9 +995,6 @@
 /item defibrillator
 - Spawna **Desfibrilador**.
 
-/item ecstasy
-- Spawna **Ecstasy**.
-
 /item aliancacasamento
 - Spawna **Aliança de Casamento**.
 
@@ -1021,9 +1009,6 @@
 
 /item pasta-impura
 - Spawna **Pasta Impura**.
-
-/item cocainaparavenda
-- Spawna **Cocaína para Venda**.
 
 /item cocaina-malote
 - Spawna **Malote de Cocaína**.
@@ -1040,9 +1025,6 @@
 /item armacao
 - Spawna **Armação**.
 
-/item placademetal
-- Spawna **Placa de Metal**.
-
 /item docedeecstasy
 - Spawna **Doce de Ecstasy**.
 
@@ -1057,9 +1039,6 @@
 
 /item taurina
 - Spawna **Taurina**.
-
-/item cafeina
-- Spawna **Cafeína**.
 
 /item cristalrefinado
 - Spawna **Cristal Refinado**.
@@ -1078,9 +1057,6 @@
 
 /item pastadecrack
 - Spawna **Pasta de Crack**.
-
-/item maconhaparavenda
-- Spawna **Maconha para Venda**.
 
 /item sementedeabobora
 - Spawna **Semente de Abóbora**.
@@ -1126,9 +1102,6 @@
 
 /item cannabismed
 - Spawna **Cannabis Medicinal**.
-
-/item primeirossocorros
-- Spawna **Primeiros Socorros**.
 
 /item rosquinha
 - Spawna **rosquinha**.
@@ -1279,3 +1252,6 @@
 
 /item fogosrosa
 - Spawna **fogos rosa**.
+
+/item adrenalina
+- Spawna **adrenalina**.
