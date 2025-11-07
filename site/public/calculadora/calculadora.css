@@ -3,10 +3,9 @@
  * Layout final com altura de viewport, scroll dedicado e painéis sincronizados.
  */
 
-/* --- Configurações Globais --- */
 html, body {
     margin: 0;
-    overflow: hidden; /* Impede o scroll da página inteira */
+    overflow: hidden;
     height: 100vh;
     background: linear-gradient(-45deg, #1d1d2b, #2b2a3e, #1e2a44, #3c2a4c);
     background-size: 400% 400%;
@@ -19,12 +18,11 @@ html, body {
     100% { background-position: 0% 50%; }
 }
 
-/* --- Layout Principal --- */
 .container {
     padding: 25px;
     box-sizing: border-box;
     max-width: 100%;
-    height: calc(100vh - 70px); /* Altura da viewport - altura da navbar */
+    height: calc(100vh - 70px);
     display: flex;
     flex-direction: column;
 }
@@ -36,18 +34,17 @@ h1 {
     font-size: 2.2em;
     font-weight: 700;
     text-shadow: 0 0 10px rgba(118, 75, 224, 0.5);
-    flex-shrink: 0; /* Impede que o H1 encolha */
+    flex-shrink: 0;
 }
 
 .calculator-layout {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     gap: 30px;
-    flex-grow: 1; /* Faz o layout ocupar o espaço restante */
-    overflow: hidden; /* Garante que os painéis não ultrapassem o container */
+    flex-grow: 1;
+    overflow: hidden;
 }
 
-/* --- PAINÉIS LATERAIS E DE RESUMO --- */
 .item-selection-panel, .summary-card {
     background-color: rgba(30, 31, 44, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -57,7 +54,7 @@ h1 {
     backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Impede conteúdo de vazar */
+    overflow: hidden;
 }
 
 #item-filter {
@@ -71,7 +68,7 @@ h1 {
     font-size: 1em;
     transition: all 0.3s ease;
     box-sizing: border-box;
-    flex-shrink: 0; /* Impede que o filtro encolha */
+    flex-shrink: 0;
 }
 #item-filter:focus {
     border-color: #a07eff;
@@ -79,7 +76,6 @@ h1 {
     outline: none;
 }
 
-/* --- Card de Parser de Log --- */
 .log-parser-card { margin-bottom: 25px; flex-shrink: 0; }
 .log-parser-card label { display: block; margin-bottom: 10px; font-weight: 600; color: #aeb2d5; }
 #log-input { width: 100%; min-height: 100px; background-color: rgba(18, 19, 29, 0.8); border: 1px solid #4a4e69; color: #f0f0f5; border-radius: 6px; padding: 12px; font-family: monospace; resize: vertical; box-sizing: border-box; margin-bottom: 15px; }
@@ -91,7 +87,7 @@ h1 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
-    overflow-y: auto; /* ADICIONA O SCROLL APENAS AQUI */
+    overflow-y: auto;
     padding-right: 15px;
     flex-grow: 1;
 }
@@ -99,13 +95,12 @@ h1 {
 .item-list::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
 .item-list::-webkit-scrollbar-thumb { background-color: #4a4e69; border-radius: 4px; }
 
-/* --- NOVO ESTILO --- */
 .item-list-placeholder {
     color: #6a6f8b;
     font-size: 1.1em;
     text-align: center;
     margin-top: 40px;
-    grid-column: 1 / -1; /* Faz ocupar todo o grid */
+    grid-column: 1 / -1;
 }
 
 .item-card {
@@ -119,7 +114,6 @@ h1 {
     justify-content: space-between;
     transition: all 0.2s ease-in-out;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    /* Adicionado para garantir que o card não encolha */
     height: fit-content;
 }
 .item-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); border-color: #5a5f80; }
@@ -132,8 +126,6 @@ h1 {
 .quantity-input:focus { border-color: #a07eff; background-color: #12131d; outline: none; }
 .item-spawn { display: none; }
 
-
-/* --- Colunas da Direita (Resumos) --- */
 .summary-card h2 {
     margin-top: 0;
     font-size: 1.5em;
@@ -151,9 +143,8 @@ h1 {
 .copy-btn { position: absolute; top: 10px; right: 10px; background: #4a4e69; color: white; border: none; border-radius: 4px; padding: 6px 12px; cursor: pointer; opacity: 0.7; transition: all 0.3s ease; }
 .copy-btn:hover { opacity: 1; background: #6080f6; }
 
-/* --- NOVOS ESTILOS PARA O BOTÃO LIMPAR --- */
 .summary-section.clear-all-section {
-    margin-top: auto; /* Empurra o botão para o final do card */
+    margin-top: auto;
     margin-bottom: 0;
     padding-top: 20px;
     border-top: 1px solid #4a4e69;
@@ -169,24 +160,21 @@ h1 {
     transition: all 0.3s ease;
     text-transform: uppercase;
     font-size: 0.9em;
-    background-color: #4a4e69; /* Cor secundária/cinza */
+    background-color: #4a4e69;
     color: #aeb2d5;
 }
 
 .clear-btn:hover {
-    background-color: #ff6b6b; /* Vermelho no hover */
+    background-color: #ff6b6b;
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
 }
-/* --- FIM DOS NOVOS ESTILOS --- */
-
 
 .summary-section:has(textarea) { flex-grow: 1; display: flex; flex-direction: column; }
 .summary-section:has(textarea) .copy-wrapper { flex-grow: 1; }
 .summary-section:has(textarea) textarea { height: 100%; }
 
-/* --- Responsividade --- */
 @media (max-width: 1400px) {
     html, body { overflow: auto; }
     .container { height: auto; }
