@@ -99,6 +99,15 @@ h1 {
 .item-list::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
 .item-list::-webkit-scrollbar-thumb { background-color: #4a4e69; border-radius: 4px; }
 
+/* --- NOVO ESTILO --- */
+.item-list-placeholder {
+    color: #6a6f8b;
+    font-size: 1.1em;
+    text-align: center;
+    margin-top: 40px;
+    grid-column: 1 / -1; /* Faz ocupar todo o grid */
+}
+
 .item-card {
     background-color: #2a2c3a;
     border: 1px solid #3a3d50;
@@ -141,6 +150,37 @@ h1 {
 .copy-wrapper { position: relative; }
 .copy-btn { position: absolute; top: 10px; right: 10px; background: #4a4e69; color: white; border: none; border-radius: 4px; padding: 6px 12px; cursor: pointer; opacity: 0.7; transition: all 0.3s ease; }
 .copy-btn:hover { opacity: 1; background: #6080f6; }
+
+/* --- NOVOS ESTILOS PARA O BOTÃO LIMPAR --- */
+.summary-section.clear-all-section {
+    margin-top: auto; /* Empurra o botão para o final do card */
+    margin-bottom: 0;
+    padding-top: 20px;
+    border-top: 1px solid #4a4e69;
+}
+
+.clear-btn {
+    width: 100%;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    background-color: #4a4e69; /* Cor secundária/cinza */
+    color: #aeb2d5;
+}
+
+.clear-btn:hover {
+    background-color: #ff6b6b; /* Vermelho no hover */
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+/* --- FIM DOS NOVOS ESTILOS --- */
+
 
 .summary-section:has(textarea) { flex-grow: 1; display: flex; flex-direction: column; }
 .summary-section:has(textarea) .copy-wrapper { flex-grow: 1; }

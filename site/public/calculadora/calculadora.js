@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const summaryTotalRawEl = document.getElementById('summary-total-raw');
     const logInputEl = document.getElementById('log-input');
     const processLogBtn = document.getElementById('process-log-btn');
+    const clearAllBtn = document.getElementById('clear-all-btn');
     
     let itemsData = [];
 
@@ -83,8 +84,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         summaryLogQuantityEl.value = itemsWithQuantity.map(item => `${item.logName} x${item.quantity}`).join('\n');
         
-        // --- ALTERAÇÃO AQUI ---
-        // Gera o comando de spawn substituindo WEAPON_ por PACKAGE_
         summarySpawnCommandEl.value = itemsWithQuantity.map(item => {
             const finalLogName = item.logName.replace(/^WEAPON_/, 'PACKAGE_');
             return `/item ${finalLogName} ${item.quantity};`;
@@ -116,17 +115,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             const quantity = parseInt(parts[1].trim(), 10);
             if (isNaN(quantity)) return;
 
-            // --- ALTERAÇÃO AQUI ---
-            // Agora reconhece tanto WEAPON_ quanto PACKAGE_ como uma arma
             if (logName.startsWith('WEAPON_') || logName.startsWith('PACKAGE_')) {
                 const weaponName = logName.replace(/^(WEAPON_|PACKAGE_)/, '');
                 const ammoName = `AMMO_${weaponName}`;
                 
-                // Adiciona a arma com o prefixo WEAPON_ para consistência interna
                 const fullWeaponLogName = `WEAPON_${weaponName}`;
                 quantitiesMap.set(fullWeaponLogName, (quantitiesMap.get(fullWeaponLogName) || 0) + 1);
                 
-                // Adiciona a munição
                 quantitiesMap.set(ammoName, (quantitiesMap.get(ammoName) || 0) + quantity);
             } else {
                 quantitiesMap.set(logName, (quantitiesMap.get(logName) || 0) + quantity);
@@ -144,7 +139,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateSummaries();
     }
 
-    // --- EVENT LISTENERS (sem alterações aqui) ---
+    function clearAllData() {
+        itemsData.forEach(item => item.quantity = 0);
+
+        logInputEl.value = '';
+        
+        updateSummaries();
+        renderItemList();
+    }
+
     itemListEl.addEventListener('input', (e) => {
         if (e.target.classList.contains('quantity-input')) {
             const logName = e.target.dataset.logName;
@@ -160,6 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     itemFilterEl.addEventListener('input', renderItemList);
     processLogBtn.addEventListener('click', processLog);
+    clearAllBtn.addEventListener('click', clearAllData); 
 
     document.querySelector('.calculator-layout').addEventListener('click', (e) => {
         if (e.target.classList.contains('copy-btn')) {
