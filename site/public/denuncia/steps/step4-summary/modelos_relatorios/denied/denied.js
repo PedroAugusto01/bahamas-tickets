@@ -106,11 +106,10 @@ Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é s
 -# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`
         };
 
-        this.deniedReportTemplate = `## *** :red_circle: REVISÃO NEGADO :red_circle: ***
+        this.deniedReportTemplate = `## ** :x: DENÚNCIA NEGADO :x: ** 
 
-**PLAYER SOLICITANTE:** <@{id_discord_denunciante}> **|** \`{id_ingame_denunciante}\`
+**DENUNCIANTE:** <@{id_discord_denunciante}> **|** \`{id_ingame_denunciante}\`
 **STAFF QUE JULGOU:** <@{id_discord_user_logado}>
-**STAFF QUE AUXILIOU:** 
 **NÚMERO DO TICKET:** \`{numero_do_ticket}\`
 **MOTIVO:** {regra_selecionada}
 **RESULTADO:** Negado`;
