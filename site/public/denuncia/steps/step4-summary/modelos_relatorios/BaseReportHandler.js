@@ -108,8 +108,7 @@ window.reportRenderer = {
             .replace('{itens}', itemsText)
             .replace('{motivo}', motivo)
             .replace('{ticketNumber}', ticketNumber)
-            .replace('{staffId}', loggedInUserInfo.id)
-            .replace('{provas}', handler.formData.videoLinks ? handler.formData.videoLinks.join(' ') : '');
+            .replace('{staffId}', loggedInUserInfo.id);
         const section = handler.utils.createSection('Relatório de Devolucao', `<pre>${devolucaoReportContent}</pre>`, handler.sectionsEl, { id: 'devolucao-report-section' });
         section.style.display = 'none';
     },
@@ -194,26 +193,36 @@ window.reportRenderer = {
                 .replace('{provas}', videoLinks.join(' '));
         }
         
-        handler.utils.createSection('Relatório ADV/BAN (❌┇punições-aceitas)', `<pre>${finalReportContent}</pre>`, handler.sectionsEl, { id: 'adv-ban-section' });
+        handler.utils.createSection('Relatório ADV/BAN (Padrão)', `<pre>${finalReportContent}</pre>`, handler.sectionsEl, { id: 'adv-ban-section' });
 
-        const simpleReportBlocks = finalPunishedUsers.map((user, index) => {
+        // --- INÍCIO DOS NOVOS RELATÓRIOS (LÓGICA ATUALIZADA) ---
+
+        // Loop para criar seções separadas para o relatório simplificado
+        finalPunishedUsers.forEach((user, index) => {
             const userInfo = finalPunishedInfos[index];
             const discordId = userInfo?.user_info?.id || '';
             const punicaoMultaText = generatePunishmentText(user, userInfo);
             const motivoText = user.displayRules.join(' + ');
 
-            return `:label: **ADV/BAN** :label:
-            
+            const simpleReportContent = `:label: **ADV/BAN** :label:
+
 **ID:** \`${user.gameId}\`
 **DISCORD:** ${discordId ? `<@${discordId}>` : ''}
 **TICKET:** \`${ticketNumber}\`
 **MOTIVO:** ${motivoText}
 **PUNIÇÃO:** ${punicaoMultaText}`;
-        }).join('\n\n');
 
-        handler.utils.createSection('Relatório ADV/BAN (🔴┇advertências-e-banimentos)', `<pre>${simpleReportBlocks}</pre>`, handler.sectionsEl, { 
-            id: 'adv-ban-simple-section' 
+            // Cria um título dinâmico se houver mais de um
+            const reportTitle = finalPunishedUsers.length > 1
+                ? `Relatório ADV/BAN (Simplificado ${index + 1}/${finalPunishedUsers.length})`
+                : `Relatório ADV/BAN (Simplificado)`;
+
+            handler.utils.createSection(reportTitle, `<pre>${simpleReportContent}</pre>`, handler.sectionsEl, {
+                id: `adv-ban-simple-section-${index}`
+            });
         });
+        
+        // --- FIM DOS NOVOS RELATÓRIOS ---
     },
 
     renderRuleImages(handler, data) {
