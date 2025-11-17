@@ -182,7 +182,7 @@ async def gerar_relatorio(ctx, data_inicio_str: str, data_fim_str: str):
             if staff_id in members_with_role_ids:
                 stats = staff_stats[staff_id]; stats['ID Discord'] = staff_id; stats['ID Cidade'] = staff_game_ids.get(staff_id, '')
                 if report_type == 'adv_applied': stats['Ticket Denúncia'] += 1
-                elif report_type in ('adv_removed', 'adv_reverted') and tipo_relatorio == 'RELATÓRIO REVISÃO-ACEITO': stats['Tickets Revisão'] += 1
+                elif report_type in ('adv_removed', 'adv_reverted') and tipo_relatorio == 'RELATÓRIO REVISÃO-ACEITA': stats['Tickets Revisão'] += 1
                 elif report_type == 'ticket_denied' and tipo_relatorio == 'TICKET-DENÚNCIA NEGADO': stats['Denúncia Negada'] += 1
                 elif report_type == 'ticket_denied' and tipo_relatorio == 'TICKET-REVISÃO NEGADO': stats['Revisão Negada'] += 1
                 elif report_type == 'ss_review': stats['SS Lupa'] += 1

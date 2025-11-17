@@ -94,21 +94,22 @@ window.reportRenderer = {
 
     renderDevolucaoReport(handler, data, reporterId, reporterDiscordId, itemsText) {
         if (!itemsText || itemsText.trim() === '') return;
-        const { loggedInUserInfo } = data;
         const { reportTemplates } = window.step4Config;
         const ticketChannelName = handler.formData.ticketChannelName || '';
         const ticketNumberMatch = ticketChannelName.match(/-(\d+)$/);
         const ticketNumber = ticketNumberMatch ? ticketNumberMatch[1] : handler.formData.ticketChannel;
+        const videoLinks = handler.formData.videoLinks || [];
         const idLine = `**ID:** ${reporterId}` + (reporterDiscordId ? ` | <@${reporterDiscordId}>` : '');
         let motivo = '';
         if (handler.formData.flow === 'denied') motivo = handler.formData.deniedInfo.reason;
         else motivo = (handler.finalPunishedUsers || handler.formData.punishedUsers || []).map(user => user.displayRules.join(' + ')).join(' / ');
+        
         const devolucaoReportContent = reportTemplates.devolution
             .replace('**ID:** {userId} | <@{discordId}>', idLine)
             .replace('{itens}', itemsText)
             .replace('{motivo}', motivo)
             .replace('{ticketNumber}', ticketNumber)
-            .replace('{staffId}', loggedInUserInfo.id);
+            .replace('{provas}', videoLinks.join(' ')); 
         const section = handler.utils.createSection('Relatório de Devolucao', `<pre>${devolucaoReportContent}</pre>`, handler.sectionsEl, { id: 'devolucao-report-section' });
         section.style.display = 'none';
     },

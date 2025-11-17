@@ -79,7 +79,7 @@ async def parse(message, add_report_func, link_user_ids_func, get_role_name_func
             return False
             
     # Cenário 3: Remoção Genérica
-    if tipo_relatorio == "RELATÓRIO REVISÃO-ACEITO":
+    if tipo_relatorio == "RELATÓRIO REVISÃO-ACEITA":
         try:
             await add_report_func(message.id, user_id, ticket_id, 'adv_removed', message.jump_url, "Punição Removida (Admin)", staff_mencionado=staff_mencionados_ids, tipo_relatorio=tipo_relatorio)
             return True

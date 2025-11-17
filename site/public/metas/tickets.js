@@ -42,7 +42,7 @@ function calculateTicketsStats(userId, reportsData, startDate, endDate) {
             ticketsDenunciaNegados++;
         }
         // REVISÃO ACEITA
-        if (report.tipo_relatorio === 'RELATÓRIO REVISÃO-ACEITO') {
+        if (report.tipo_relatorio === 'RELATÓRIO REVISÃO-ACEITA') {
             ticketsRevisaoAceitos++;
         }
         // REVISÃO NEGADA
