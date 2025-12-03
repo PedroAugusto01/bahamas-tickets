@@ -19,18 +19,20 @@ DB_CONFIG = {
 
 # --- CANAIS E CARGOS ---
 CHANNELS = {
-    'punições': 1404338257734664222, #OK
-    'punições-removidas': 1404338906312478871, #OK
-    'ban-hack': 1404340288599887992, #OK
-    'banidos-telagem': 0, 
-    'aprovados-wl': 1404586815624839289, #OK
-    'pagou-adv': 1404340640220975134, #OK
-    'tickets-negados': 1404339539794989167, #OK
+    'punições': 1444200953023696948, #OK
+    'punições-removidas': 1444202847359995984, #OK
+    'ban-hack': 1444206794384736337, #OK
+    'banidos-telagem': 0,
+    'aprovados-wl': 1438251375631794289, # OK
+    'pagou-adv': 1444208702235213897, #OK
+    'tickets-negados': 1444204699917226046, #OK
     'denuncia-ss': 0,
     'revisao-ss': 0,
     'relatorio-spawn': 1404337954998059018, #OK
     'registro-suporte': 1404466529533431828, #OK
     'duvidas': 1404335963177488488, #OK
+    'ticket-bug': 0, 
+    'ticket-suporte': 0,
 }
 
 # --- CONTROLE DE PARSERS ---
@@ -38,15 +40,17 @@ PARSERS_ENABLED = {
     'punições': True,
     'punições-removidas': True,
     'ban-hack': True,
-    'banidos-telagem': True,
+    'banidos-telagem': False,
     'aprovados-wl': True,
     'pagou-adv': True,
     'tickets-negados': True,
-    'denuncia-ss': True,
-    'revisao-ss': True,
+    'denuncia-ss': False,
+    'revisao-ss': False,
     'relatorio-spawn': True,
     'registro-suporte': True,
     'duvidas': True,
+    'ticket-bug': False,
+    'ticket-suporte': False,
 }
 
 # IDs dos cargos relacionados a punições

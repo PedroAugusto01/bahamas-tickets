@@ -6,10 +6,9 @@ from parsers import (
     aprovados_wl_parser, pagou_adv_parser, punições_parser,
     removidas_parser, ban_hack_parser, banidos_telagem_parser,
     tickets_negados_parser, denuncia_ss_parser, revisao_ss_parser,
-    relatorio_spawn_parser, registro_suporte_parser, duvidas_parser
+    relatorio_spawn_parser, registro_suporte_parser, duvidas_parser,
+    ticket_bug_parser, ticket_suporte_parser
 )
-import asyncio
-import aiomysql
 
 PARSER_MAPPING = {
     CHANNELS['aprovados-wl']: aprovados_wl_parser,
@@ -24,6 +23,8 @@ PARSER_MAPPING = {
     CHANNELS['relatorio-spawn']: relatorio_spawn_parser,
     CHANNELS['registro-suporte']: registro_suporte_parser,
     CHANNELS['duvidas']: duvidas_parser,
+    CHANNELS['ticket-bug']: ticket_bug_parser,
+    CHANNELS['ticket-suporte']: ticket_suporte_parser,
 }
 
 async def get_role_name(guild, role_id):

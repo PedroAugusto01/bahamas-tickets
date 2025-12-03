@@ -26,9 +26,16 @@ async def parse(message, add_report_func, link_user_ids_func, get_role_name_func
         normalized_line = normalize_text(line)
 
         if KEY_TICKET in normalized_line:
-            ticket_match = re.search(r'(\d+)', line)
-            if ticket_match:
-                ticket_id = ticket_match.group(1)
+            text_match = re.search(r':\s*(.*)', line)
+            if text_match:
+                raw_value = text_match.group(1).strip()
+                clean_value = raw_value.replace('*', '').replace('`', '').strip()
+                if clean_value:
+                    ticket_id = clean_value
+            if not ticket_id:
+                ticket_match = re.search(r'(\d+)', line)
+                if ticket_match:
+                    ticket_id = ticket_match.group(1)
 
         if KEY_PLAYER in normalized_line:
             user_match = re.search(r'<@(\d+)>', line)
@@ -79,7 +86,7 @@ async def parse(message, add_report_func, link_user_ids_func, get_role_name_func
             return False
             
     # Cenário 3: Remoção Genérica
-    if tipo_relatorio == "RELATÓRIO REVISÃO-ACEITO":
+    if tipo_relatorio == "RELATÓRIO REVISÃO-ACEITA" or tipo_relatorio == "RELATÓRIO REVISÃO-ACEITO":
         try:
             await add_report_func(message.id, user_id, ticket_id, 'adv_removed', message.jump_url, "Punição Removida (Admin)", staff_mencionado=staff_mencionados_ids, tipo_relatorio=tipo_relatorio)
             return True

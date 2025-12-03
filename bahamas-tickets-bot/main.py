@@ -1,4 +1,3 @@
-# bahamas-tickets-bot/main.py
 import discord
 from discord.ext import commands
 import asyncio
@@ -136,7 +135,18 @@ async def gerar_relatorio(ctx, data_inicio_str: str, data_fim_str: str):
                 for row in results: staff_game_ids[str(row['discord_id'])] = row['in_game_id']
     except Exception as e: print(f"Erro ao buscar IDs da cidade para staff: {e}")
 
-    staff_stats = defaultdict(lambda: {'ID Discord': '', 'ID Cidade': '', 'Ticket Denúncia': 0, 'Tickets Revisão': 0, 'Denúncia Negada': 0, 'Revisão Negada': 0, 'SS Lupa': 0})
+    # ATUALIZADO: Incluindo Ticket Suporte e Ticket Bug na inicialização
+    staff_stats = defaultdict(lambda: {
+        'ID Discord': '', 
+        'ID Cidade': '', 
+        'Ticket Denúncia': 0, 
+        'Tickets Revisão': 0, 
+        'Ticket Suporte': 0, 
+        'Ticket Bug': 0, 
+        'Denúncia Negada': 0, 
+        'Revisão Negada': 0, 
+        'SS Lupa': 0
+    })
     message_cache = {}
     print(f"Processando {len(db_reports)} relatórios de atividade...")
     processed_count, skipped_fetch = 0, 0
@@ -181,18 +191,30 @@ async def gerar_relatorio(ctx, data_inicio_str: str, data_fim_str: str):
         for staff_id in actor_ids:
             if staff_id in members_with_role_ids:
                 stats = staff_stats[staff_id]; stats['ID Discord'] = staff_id; stats['ID Cidade'] = staff_game_ids.get(staff_id, '')
-                if report_type == 'adv_applied': stats['Ticket Denúncia'] += 1
-                elif report_type in ('adv_removed', 'adv_reverted') and tipo_relatorio == 'RELATÓRIO REVISÃO-ACEITO': stats['Tickets Revisão'] += 1
-                elif report_type == 'ticket_denied' and tipo_relatorio == 'TICKET-DENÚNCIA NEGADO': stats['Denúncia Negada'] += 1
-                elif report_type == 'ticket_denied' and tipo_relatorio == 'TICKET-REVISÃO NEGADO': stats['Revisão Negada'] += 1
-                elif report_type == 'ss_review': stats['SS Lupa'] += 1
+                
+                if report_type == 'adv_applied': 
+                    stats['Ticket Denúncia'] += 1
+                elif report_type in ('adv_removed', 'adv_reverted') and tipo_relatorio == 'RELATÓRIO REVISÃO-ACEITO': 
+                    stats['Tickets Revisão'] += 1
+                elif report_type == 'ticket_denied' and tipo_relatorio == 'TICKET-DENÚNCIA NEGADO': 
+                    stats['Denúncia Negada'] += 1
+                elif report_type == 'ticket_denied' and tipo_relatorio == 'TICKET-REVISÃO NEGADO': 
+                    stats['Revisão Negada'] += 1
+                elif report_type == 'ss_review': 
+                    stats['SS Lupa'] += 1
+                # ATUALIZADO: Novas condições para Suporte e Bug
+                elif report_type == 'ticket_support':
+                    stats['Ticket Suporte'] += 1
+                elif report_type == 'ticket_bug':
+                    stats['Ticket Bug'] += 1
 
     print(f"Processamento de atividades concluído. {skipped_fetch} buscas de autor puladas/falharam.")
     if not staff_stats: await ctx.send(f"Nenhuma atividade encontrada para membros com o cargo '{role.name}' no período."); return
 
     try:
         final_data = list(staff_stats.values()); df = pd.DataFrame(final_data)
-        colunas_esperadas = ['ID Discord', 'ID Cidade', 'Ticket Denúncia', 'Tickets Revisão', 'Denúncia Negada', 'Revisão Negada', 'SS Lupa']
+        # ATUALIZADO: Colunas esperadas
+        colunas_esperadas = ['ID Discord', 'ID Cidade', 'Ticket Denúncia', 'Tickets Revisão', 'Ticket Suporte', 'Ticket Bug', 'Denúncia Negada', 'Revisão Negada', 'SS Lupa']
         for col in colunas_esperadas:
             if col not in df.columns: df[col] = 0
         df = df[colunas_esperadas]; df['ID Discord'] = df['ID Discord'].astype(str); df['ID Cidade'] = df['ID Cidade'].astype(str).replace('<NA>', '').replace('nan', '')
@@ -214,7 +236,7 @@ async def gerar_relatorio_chamados(ctx, data_inicio_str: str, data_fim_str: str)
     Formato das datas: DD/MM/AAAA
     Exemplo: !gerar_relatorio_chamados 01/10/2025 21/10/2025
     """
-    REQUIRED_ROLE_ID = 1057449425728974989 # Cargo "Obrigatório"
+    REQUIRED_ROLE_ID = 912040119198953513 # Cargo "Obrigatório"
     LOG_API_URL = "https://logs.fusionhost.com.br/getLogs"
     LOG_TYPE = "FEEDBACK-CHAMADOS"
 
