@@ -14,7 +14,7 @@ window.logRenderer = {
             await this.renderLogImageSection(handler, 'Imagem da Log de Morte', logMorte.html);
         }
         if (logMatou) {
-            utils.createSection(':setabranca: **LOG DE Matou**', '', sectionsEl, { copyText: ':setabranca: **LOG DE Matou**' });
+            utils.createSection(':setabranca: **LOG DE MATOU**', '', sectionsEl, { copyText: ':setabranca: **LOG DE MATOU**' });
             await this.renderLogImageSection(handler, 'Imagem da Log de Matou', logMatou.html);
         }
         if (logsLootHTML) {
@@ -259,23 +259,22 @@ window.reportRenderer = {
 
     renderDevolucaoReport(handler, data, reporterId, reporterDiscordId, itemsText) {
         if (!itemsText || itemsText.trim() === '') return;
+        const { loggedInUserInfo } = data;
         const { reportTemplates } = window.step4Config;
         const ticketChannelName = handler.formData.ticketChannelName || '';
-        const ticketNumberMatch = ticketChannelName.match(/-(\d+)$/);
+        const ticketNumberMatch = ticketChannelName.match(/-(\d{4,})/);
+
         const ticketNumber = ticketNumberMatch ? ticketNumberMatch[1] : handler.formData.ticketChannel;
-        const videoLinks = handler.formData.videoLinks || [];
         const idLine = `**ID:** ${reporterId}` + (reporterDiscordId ? ` | <@${reporterDiscordId}>` : '');
         let motivo = '';
         if (handler.formData.flow === 'denied') motivo = handler.formData.deniedInfo.reason;
         else motivo = (handler.finalPunishedUsers || handler.formData.punishedUsers || []).map(user => user.displayRules.join(' + ')).join(' / ');
-        
         const devolucaoReportContent = reportTemplates.devolution
             .replace('**ID:** {userId} | <@{discordId}>', idLine)
             .replace('{itens}', itemsText)
             .replace('{motivo}', motivo)
             .replace('{ticketNumber}', ticketNumber)
-            .replace('{staffId}', loggedInUserInfo.id)
-            .replace('{provas}', handler.formData.videoLinks ? handler.formData.videoLinks.join(' ') : '');
+            .replace('{staffId}', loggedInUserInfo.id);
         const section = handler.utils.createSection('Relatório de Devolucao', `<pre>${devolucaoReportContent}</pre>`, handler.sectionsEl, { id: 'devolucao-report-section' });
         section.style.display = 'none';
     },
@@ -287,7 +286,8 @@ window.reportRenderer = {
 
         const { advRoleIds, punishmentPrisonTimes, reportTemplates, punishmentFines } = window.step4Config;
         const ticketChannelName = handler.formData.ticketChannelName || '';
-        const ticketNumberMatch = ticketChannelName.match(/-(\d+)$/);
+        const ticketNumberMatch = ticketChannelName.match(/-(\d{4,})/);
+
         const ticketNumber = ticketNumberMatch ? ticketNumberMatch[1] : handler.formData.ticketChannel;
         const videoLinks = handler.formData.videoLinks || [];
         const selectedLootLogs = (handler.formData.selectedLogs || []).filter(log => log.html.includes('[REVISTOU]'));
@@ -295,24 +295,24 @@ window.reportRenderer = {
         let finalReportContent;
 
         const generatePunishmentText = (user, userInfo) => {
-             const basePunishment = user.punicaoMinima || 'verbal';
-             const nextPunishment = handler.utils.getNextPunishment(userInfo, basePunishment);
-             const fineAmount = punishmentFines[nextPunishment] || null;
-             const fineText = (fineAmount && nextPunishment !== 'banido') ? ` + multa de ${fineAmount}` : '';
+            const basePunishment = user.punicaoMinima || 'verbal';
+            const nextPunishment = handler.utils.getNextPunishment(userInfo, basePunishment);
+            const fineAmount = punishmentFines[nextPunishment] || null;
+            const fineText = (fineAmount && nextPunishment !== 'banido') ? ` + multa de ${fineAmount}` : '';
 
-             if (user.punishmentType === 'prison') {
-                 return `${user.prisonTime} meses de prisao${fineText}`;
-             }
+            if (user.punishmentType === 'prison') {
+                return `${user.prisonTime} meses de prisao${fineText}`;
+            }
+
+            const roleId = advRoleIds[nextPunishment];
             
-             const roleId = advRoleIds[nextPunishment];
-             const prisonTime = punishmentPrisonTimes[nextPunishment] || 0;
-             const normalText = `<@&${roleId}>` + (nextPunishment !== 'banido' ? ` + ${prisonTime} meses de prisao` : '');
+            const prisonTime = (user.prisonTime && user.prisonTime > 0) 
+                ? user.prisonTime 
+                : (punishmentPrisonTimes[nextPunishment] || 0);
 
-             if (userInfo && userInfo.user_info && userInfo.user_info.name && userInfo.user_info.name.includes('(Fora do Discord)')) {
-                 const banRoleId = advRoleIds['banido'] || 'ID_CARGO_BANIDO';
-                 return `<@&${banRoleId}> até retornar para o servidor, após retornar reverter para ${normalText}${fineText}`;
-             }
-             return normalText + fineText;
+            const normalText = `<@&${roleId}>` + (nextPunishment !== 'banido' ? ` + ${prisonTime} meses de prisao` : '');
+
+            return normalText + fineText;
         };
 
         const { itemsData, totalMulta } = hasLoot ? handler.utils.calculateItemsValue(selectedLootLogs, itemMapping, itemPrices) : { itemsData: [], totalMulta: 0 };
@@ -323,7 +323,18 @@ window.reportRenderer = {
         if (finalPunishedUsers.length === 1) {
             const user = finalPunishedUsers[0];
             const userInfo = finalPunishedInfos[0];
-            const discordId = userInfo?.user_info?.id || (userInfo?.found_in_db ? `DB:${userInfo?.user_info?.id}` : 'ERRO');
+
+            let discordId = 'ERROR';
+            if (userInfo && userInfo.user_info && userInfo.user_info.id) {
+                discordId = userInfo.user_info.id;
+            } else if (userInfo && userInfo.error) {
+                if (user.gameId) {
+                    discordId = `ID Jogo: ${user.gameId}`;
+                } else {
+                    console.warn(`Erro ao buscar info para ID ${user.gameId}, usando ERROR.`);
+                }
+            }
+
             const punicaoMultaText = generatePunishmentText(user, userInfo);
             const motivoText = user.displayRules.join(' + ');
             const includeLootSection = user.rules.includes('Loot Indevido') ? lootSectionText : "";
@@ -340,10 +351,20 @@ window.reportRenderer = {
         } else {
             const reportBlocks = finalPunishedUsers.map((user, index) => {
                 const userInfo = finalPunishedInfos[index];
-                const discordId = userInfo?.user_info?.id || (userInfo?.found_in_db ? `DB:${userInfo?.user_info?.id}` : 'ERRO');
-                 const punicaoMultaText = generatePunishmentText(user, userInfo);
-                 const motivoText = user.displayRules.join(' + ');
-                 const includeLootSection = user.rules.includes('Loot Indevido') ? lootSectionText : "";
+                let discordId = 'ERROR';
+                if (userInfo && userInfo.user_info && userInfo.user_info.id) {
+                    discordId = userInfo.user_info.id;
+                } else if (userInfo && userInfo.error) {
+                     if (user.gameId) {
+                        discordId = `ID Jogo: ${user.gameId}`;
+                    } else {
+                        console.warn(`Erro ao buscar info para ID ${user.gameId}, usando ERROR.`);
+                    }
+                }
+
+                const punicaoMultaText = generatePunishmentText(user, userInfo);
+                const motivoText = user.displayRules.join(' + ');
+                const includeLootSection = user.rules.includes('Loot Indevido') ? lootSectionText : "";
 
                 return reportTemplates.punishedBlock
                     .replace('{userId}', user.gameId)
@@ -359,7 +380,6 @@ window.reportRenderer = {
                 .replace('{staffId}', loggedInUserInfo.id)
                 .replace('{provas}', videoLinks.join(' '));
         }
-        
         handler.utils.createSection('Relatório ADV/BAN (Padrão)', `<pre>${finalReportContent}</pre>`, handler.sectionsEl, { id: 'adv-ban-section' });
 
         // --- INÍCIO DOS NOVOS RELATÓRIOS (LÓGICA ATUALIZADA) ---
@@ -388,8 +408,6 @@ window.reportRenderer = {
                 id: `adv-ban-simple-section-${index}`
             });
         });
-        
-        // --- FIM DOS NOVOS RELATÓRIOS ---
     },
 
     renderRuleImages(handler, data) {

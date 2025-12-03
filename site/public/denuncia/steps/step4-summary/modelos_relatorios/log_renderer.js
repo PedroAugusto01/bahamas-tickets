@@ -13,7 +13,7 @@ window.logRenderer = {
             await this.renderLogImageSection(handler, 'Imagem da Log de Morte', logMorte.html);
         }
         if (logMatou) {
-            utils.createSection(':setabranca: **LOG DE Matou**', '', sectionsEl, { copyText: ':setabranca: **LOG DE Matou**' });
+            utils.createSection(':setabranca: **LOG DE MATOU**', '', sectionsEl, { copyText: ':setabranca: **LOG DE MATOU**' });
             await this.renderLogImageSection(handler, 'Imagem da Log de Matou', logMatou.html);
         }
         if (logsLootHTML) {
