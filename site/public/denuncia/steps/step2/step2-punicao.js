@@ -1,13 +1,16 @@
+// cpx-tickets/site/public/denuncia/steps/step2/step2-punicao.js
+
 (function () {
     const count = parseInt(window.formData.punishedCount, 10);
     const container = document.getElementById('punished-users-container');
     const btnNext = document.getElementById('btn-step2-punicao-next');
 
+    // Função para buscar dados da regra
     const findRuleData = (ruleName) => {
         if (!window.ruleData || !window.ruleData.fullRuleSet) return null;
         let rule = window.ruleData.fullRuleSet.find(r => r.regra === ruleName);
         if (rule) return rule;
-        
+
         for (const mainRule of window.ruleData.fullRuleSet) {
             if (mainRule.sub_regras) {
                 rule = mainRule.sub_regras.find(sr => sr.regra === ruleName);
@@ -17,6 +20,7 @@
         return null;
     };
 
+    // Função para determinar a maior punição
     const getHighestPunishment = (punishments) => {
         const levels = ['verbal', 'adv1', 'adv2', 'banido'];
         let maxIndex = -1;
@@ -32,18 +36,15 @@
         return maxPunishment;
     };
 
-
+    // Função de Validação Principal
     const validateStep = () => {
         let allValid = true;
         for (let i = 1; i <= count; i++) {
             const block = document.querySelector(`#punished-user-block-${i}`);
+            
+            // NOTA: ID não é mais verificado aqui, pois pode ser opcional.
 
-            const idInput = block.querySelector(`#punished-game-id-${i}`);
-            if (!idInput || !idInput.value.trim()) {
-                allValid = false;
-                break;
-            }
-
+            // 1. Valida seleção de regras (Obrigatório)
             const mainRuleList = block.querySelector('.rules-list');
             const selectedMainRules = mainRuleList.querySelectorAll('li.selected');
             if (selectedMainRules.length === 0) {
@@ -51,6 +52,7 @@
                 break;
             }
 
+            // 2. Valida sub-regras (Obrigatório se a regra exigir)
             const selectedWithSubRules = block.querySelector('.rules-list li.selected[data-has-sub-rules="true"]');
             if (selectedWithSubRules) {
                 const subRuleSelector = block.querySelector('.sub-rule-selector');
@@ -59,7 +61,8 @@
                     break;
                 }
             }
-            
+
+            // 3. Valida escolha de punição (Se houver opções visíveis)
             const punishmentChoiceContainer = block.querySelector('.punishment-choice-container');
             if (punishmentChoiceContainer && punishmentChoiceContainer.innerHTML.trim() !== '') {
                 const choice = punishmentChoiceContainer.querySelector(`input[name="punish-choice-${i}"]:checked`);
@@ -68,10 +71,25 @@
                     break;
                 }
             }
+
+            // 4. Valida DATA DO LOG (CRÍTICO: Obrigatório se for buscar logs)
+            // Se a regra exige log OU se o checkbox opcional está marcado, a data TEM que existir.
+            const hasMandatoryLogRule = Array.from(selectedMainRules).some(li => li.dataset.needsLog === 'true');
+            const optionalLogCheck = block.querySelector('.optional-log-check');
+            const needsLog = hasMandatoryLogRule || (optionalLogCheck && optionalLogCheck.checked);
+            
+            if (needsLog) {
+                const dateInput = block.querySelector(`#log-date-${i}`);
+                if (!dateInput || dateInput.value.trim() === '') {
+                    allValid = false;
+                    break;
+                }
+            }
         }
         btnNext.disabled = !allValid;
     };
 
+    // Gerencia a exibição das opções de punição (Prisão vs Padrão)
     const handlePunishmentChoice = (block) => {
         const choiceContainer = block.querySelector('.punishment-choice-container');
         const selectedRules = block.querySelectorAll('.rules-list li.selected');
@@ -86,7 +104,6 @@
             return;
         }
 
-        const rulesWithPrison = Array.from(selectedRules).filter(li => parseInt(li.dataset.prisonTime || 0, 10) > 0);
         const allPunishments = Array.from(selectedRules).map(li => li.dataset.punicaoMinima || 'verbal');
         const allPrisonTimes = Array.from(selectedRules).map(li => parseInt(li.dataset.prisonTime || 0, 10));
 
@@ -96,7 +113,12 @@
         block.dataset.highestPrisonTime = highestPrisonTime;
         block.dataset.highestPunicaoMinima = highestPunicaoMinima;
 
-        if (rulesWithPrison.length > 0) {
+        // Filtra regras que permitem escolha
+        const rulesWithPrisonChoice = Array.from(selectedRules).filter(li => 
+            parseInt(li.dataset.prisonTime || 0, 10) > 0 && li.dataset.allowChoice === 'true'
+        );
+
+        if (rulesWithPrisonChoice.length > 0) {
             choiceContainer.innerHTML = `
                 <div class="choice-title">Opção de Punição:</div>
                 <div class="punishment-choice-group">
@@ -114,10 +136,9 @@
                 radio.addEventListener('change', validateStep);
             });
         }
-        
+
         validateStep();
     };
-
 
     const handleRuleSelection = (li) => {
         const block = li.closest('.punished-user-block');
@@ -144,6 +165,7 @@
 
         updateLogVisibility(block);
         handlePunishmentChoice(block);
+        validateStep(); 
     };
 
     const updateLogVisibility = (userBlock) => {
@@ -166,6 +188,7 @@
             dateContainer.classList.add('hidden');
             optionalLogCheck.checked = false;
         }
+        validateStep(); 
     };
 
     for (let i = 1; i <= count; i++) {
@@ -175,31 +198,38 @@
         block.dataset.highestPrisonTime = 0;
         block.dataset.highestPunicaoMinima = 'verbal';
 
-
         let rulesListHtml = window.ruleData.punishmentRules.map(rule => {
             const fullRule = window.ruleData.fullRuleSet.find(r => r.regra === rule.regra);
             const hasSubRules = !!(fullRule && fullRule.sub_regras && fullRule.sub_regras.length > 0);
             const needsLog = rule.consunta_log_morte || rule.consultar_log_matou || rule.auto_consultar_log_loot;
             const prisonTime = rule.prisao || 0;
             const punicaoMinima = rule.punicao_minima || 'verbal';
+            const allowChoice = rule['prisao/adv'] !== false;
 
             let warnings = '';
             if (needsLog) warnings += `<small class="log-warning">OBS: Requer consulta de logs.</small>`;
             if (hasSubRules) warnings += `<small class="sub-rule-warning">OBS: Contém sub-regras.</small>`;
-            if (prisonTime > 0) warnings += `<small class="prison-warning">OBS: Prisão customizada (${prisonTime} meses).</small>`;
+            if (prisonTime > 0) {
+                if(allowChoice) {
+                    warnings += `<small class="prison-warning">OBS: Permite Prisão (${prisonTime} meses).</small>`;
+                } else {
+                    warnings += `<small class="prison-warning">OBS: Prisão Fixa (${prisonTime} meses).</small>`;
+                }
+            }
 
             return `<li data-rule="${rule.regra}" 
                         data-needs-log="${needsLog}" 
                         data-has-sub-rules="${hasSubRules}" 
                         data-prison-time="${prisonTime}"
-                        data-punicao-minima="${punicaoMinima}">
+                        data-punicao-minima="${punicaoMinima}"
+                        data-allow-choice="${allowChoice}">
                     <span>${rule.regra}</span>${warnings}</li>`;
         }).join('');
 
         block.innerHTML = `
             <h4>Pessoa Punida #${i}</h4>
             <div class="form-group">
-                <label for="punished-game-id-${i}">ID in-game:</label>
+                <label for="punished-game-id-${i}">ID in-game (Opcional):</label>
                 <input type="text" id="punished-game-id-${i}" placeholder="ID in-game do jogador...">
             </div>
             <div class="form-group">
@@ -219,13 +249,14 @@
                 </div>
             </div>
             <div class="form-group log-date-container hidden">
-                <label for="log-date-${i}">Data para Consulta (DD/MM/AAAA):</label>
+                <label for="log-date-${i}">Data para Consulta (DD/MM/AAAA) *Obrigatório se buscar Logs:</label>
                 <input type="text" id="log-date-${i}" placeholder="DD/MM/AAAA">
             </div>`;
         container.appendChild(block);
 
         block.querySelector(`#punished-game-id-${i}`).addEventListener('input', validateStep);
         block.querySelector('.optional-log-check').addEventListener('change', () => updateLogVisibility(block));
+        block.querySelector(`#log-date-${i}`).addEventListener('input', validateStep);
     }
 
     document.querySelectorAll('.rule-filter-input').forEach(input => {
@@ -257,7 +288,7 @@
                         });
                     }
                 }
-                handleRuleSelection(li); 
+                handleRuleSelection(li);
             }
         });
     });
@@ -274,7 +305,7 @@
 
             const displayRules = [];
             const lookupRules = [];
-            
+
             const prisonTime = parseInt(block.dataset.highestPrisonTime || 0, 10);
             const punicaoMinima = block.dataset.highestPunicaoMinima || 'verbal';
 
@@ -304,14 +335,14 @@
 
             window.formData.punishedUsers.push({
                 index: i,
-                gameId: document.getElementById(`punished-game-id-${i}`).value,
-                displayRules: displayRules, 
-                rules: lookupRules,      
+                gameId: document.getElementById(`punished-game-id-${i}`).value.trim(),
+                displayRules: displayRules,
+                rules: lookupRules,
                 needsLog: needsLog,
                 logDate: needsLog ? document.getElementById(`log-date-${i}`).value : null,
-                punishmentType: punishmentType, 
-                prisonTime: prisonTime, 
-                punicaoMinima: punicaoMinima 
+                punishmentType: punishmentType,
+                prisonTime: prisonTime,
+                punicaoMinima: punicaoMinima
             });
         }
 

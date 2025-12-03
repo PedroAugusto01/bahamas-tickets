@@ -23,13 +23,15 @@ class LootIndevidoHandler extends BaseReportHandler {
              }
              
              const roleId = advRoleIds[nextPunishment];
-             const prisonTime = punishmentPrisonTimes[nextPunishment] || 0;
+             
+             // Verifica prisonTime fixo
+             const prisonTime = (user.prisonTime && user.prisonTime > 0) 
+                ? user.prisonTime 
+                : (punishmentPrisonTimes[nextPunishment] || 0);
+
              const normalText = `será aplicada a punição de **<@&${roleId}>**` + (nextPunishment !== 'banido' ? ` com **${prisonTime} meses de prisao**` : '');
 
-             if (userInfo && userInfo.user_info && userInfo.user_info.name && userInfo.user_info.name.includes('(Fora do Discord)')) {
-                 const banRoleId = advRoleIds['banido'] || 'ID_CARGO_BANIDO';
-                  return `será aplicado <@&${banRoleId}> até retornar para o servidor, após retornar reverter para **<@&${roleId}>**` + (nextPunishment !== 'banido' ? ` com **${prisonTime} meses de prisao**` : '') + fineText;
-             }
+             // MODIFICADO: Removida lógica de forçar ban para usuário fora do Discord.
              return normalText + fineText;
         };
 
@@ -49,7 +51,7 @@ class LootIndevidoHandler extends BaseReportHandler {
         const msgDevolucao = itemsTextParaDevolucao ? `Seus itens serão solicitados para devolução. Os itens são:\n${itemsTextParaDevolucao}` : '';
         const uniqueCds = [...new Set(this.formData.selectedLogs.map(s => s.text.match(/\[CDS\]:\s*(.*)/)?.[1].trim()).filter(Boolean))];
         const cdsText = uniqueCds.length > 0 ? `\`${uniqueCds.join('`\n`')}\`` : '`N/A`';
-        const msgFinal = `\n\n**CDS DA REVISTA:**\n${cdsText}\n\nAgradecemos pela paciência e compreensão. Nosso compromisso é com a melhor experiência para nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Bahamas.`;
+        const msgFinal = `\n\n**CDS DA REVISTA:**\n${cdsText}\n\nAgradecemos pela paciência e compreensão. Nosso compromisso é com a melhor experiência para nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Complexo RJ.`;
         const messageSectionContent = `<div class="devolucao-toggle"><input type="checkbox" id="devolucao-check" ${itemsTextParaDevolucao ? '' : 'disabled'}><label for="devolucao-check">Vai ocorrer devolução?</label></div><pre id="message-preview-main">${msgIntro}</pre><div id="devolucao-msg-content-wrapper" style="display:none;"><pre id="devolucao-msg-content">${msgDevolucao}</pre></div><pre id="message-preview-final">${msgFinal}</pre>`;
         this.utils.createSection('Mensagem ao Denunciante', messageSectionContent, this.sectionsEl, { onCopy: this.utils.copyMessageContent });
         if (itemsTextParaDevolucao) {

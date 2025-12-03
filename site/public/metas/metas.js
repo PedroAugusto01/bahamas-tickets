@@ -45,7 +45,14 @@ async function calculateUserStats(userId, reportsData, startDate, endDate) {
 
     const { atendimentoRealizado, auxilioRealizado } = calculateAtendimentoStats(userId, filteredReports, startDate, endDate);
     const { duvidasRespondidas } = calculateDuvidasStats(userId, filteredReports, startDate, endDate);
-    const { ticketsDenunciaAceitos, ticketsDenunciaNegados, ticketsRevisaoAceitos, ticketsRevisaoNegados } = calculateTicketsStats(userId, filteredReports, startDate, endDate);
+    
+    // ATUALIZADO: Recebe os novos valores de Bug e Suporte
+    const { 
+        ticketsDenunciaAceitos, ticketsDenunciaNegados, 
+        ticketsRevisaoAceitos, ticketsRevisaoNegados,
+        ticketsBug, ticketsSuporte 
+    } = calculateTicketsStats(userId, filteredReports, startDate, endDate);
+    
     const { devolucoesRealizadas } = calculateDevolucaoStats(userId, filteredReports, startDate, endDate);
     const { chamadosRealizados, needsId } = await calculateChamadosStats(userId, startDate, endDate);
 
@@ -59,6 +66,8 @@ async function calculateUserStats(userId, reportsData, startDate, endDate) {
         ticketsDenunciaNegados,
         ticketsRevisaoAceitos,
         ticketsRevisaoNegados,
+        ticketsBug, // Novo retorno
+        ticketsSuporte, // Novo retorno
         devolucoesRealizadas,
         chamadosRealizados,
         needsChamadoId: needsId
@@ -74,6 +83,7 @@ function renderUserGoalCard(user, cargoInfo, stats) {
         userHours, userMinutes,
         atendimentoRealizado, auxilioRealizado, duvidasRespondidas,
         ticketsDenunciaAceitos, ticketsDenunciaNegados, ticketsRevisaoAceitos, ticketsRevisaoNegados,
+        ticketsBug, ticketsSuporte, // Desestrutura aqui
         devolucoesRealizadas, chamadosRealizados, needsChamadoId
     } = stats;
 
@@ -92,7 +102,10 @@ function renderUserGoalCard(user, cargoInfo, stats) {
     const metaTotalAtendimento = metaAtendimento + metaAuxilio;
     const totalTicketsDenuncia = ticketsDenunciaAceitos + ticketsDenunciaNegados;
     const totalTicketsRevisao = ticketsRevisaoAceitos + ticketsRevisaoNegados;
-    const totalGeralTickets = totalTicketsDenuncia + totalTicketsRevisao;
+    
+    // ATUALIZADO: Soma Bug e Suporte ao total geral
+    const totalGeralTickets = totalTicketsDenuncia + totalTicketsRevisao + ticketsBug + ticketsSuporte;
+    
     const userTotalHoursDecimal = userHours + (userMinutes / 60);
 
     const getGoalStatusClass = (current, goal) => {
@@ -178,6 +191,14 @@ function renderUserGoalCard(user, cargoInfo, stats) {
                             <span class="aceitos"><strong>${ticketsRevisaoAceitos}</strong> Aceitos</span>
                             <span class="negados"><strong>${ticketsRevisaoNegados}</strong> Negados</span>
                         </div>
+                    </div>
+                    <div class="ticket-sub-card">
+                        <h4>Tickets Bug</h4>
+                        <p class="ticket-total-value">${ticketsBug}</p>
+                    </div>
+                    <div class="ticket-sub-card">
+                        <h4>Tickets Suporte</h4>
+                        <p class="ticket-total-value">${ticketsSuporte}</p>
                     </div>
                 </div>
                 <hr class="card-divider">

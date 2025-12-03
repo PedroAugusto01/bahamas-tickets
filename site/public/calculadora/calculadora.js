@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // Mapeamento de elementos do DOM
     const itemListEl = document.getElementById('item-list');
     const itemFilterEl = document.getElementById('item-filter');
     const summaryLogQuantityEl = document.getElementById('summary-log-quantity');
@@ -35,8 +34,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
 
                 return {
-                    spawnName: spawnName,
-                    logName: logName,
+                    spawnName: spawnName, // O nome em minúsculo do LUA (ex: 'pacote sns pistol mk2')
+                    logName: logName,   // O código do LUA (ex: 'PACKAGE_WEAPON_SNSPISTOL_MK2')
                     price: price,
                     quantity: 0
                 };
@@ -111,7 +110,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!line.trim()) return;
             const parts = line.split(' x ');
             if (parts.length < 2) return;
-            const logName = parts[0].trim();
+
+            // ########## CORREÇÃO APLICADA AQUI ##########
+            // Remove o prefixo "[PEGOU]: " (case-insensitive) do texto colado
+            let logName = parts[0].trim();
+            logName = logName.replace(/\[PEGOU\]:\s*/i, '').trim();
+            // Agora logName será "Pacote SNS Pistol MK2" em vez de "[PEGOU]: Pacote SNS Pistol MK2"
+            // ########## FIM DA CORREÇÃO ##########
+
             const quantity = parseInt(parts[1].trim(), 10);
             if (isNaN(quantity)) return;
 
@@ -129,7 +135,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         quantitiesMap.forEach((quantity, logName) => {
-            const item = itemsData.find(i => i.logName === logName);
+            const lowerLogName = logName.toLowerCase();
+            // Agora 'lowerLogName' (ex: 'pacote sns pistol mk2')
+            // vai corresponder ao 'i.spawnName' (ex: 'pacote sns pistol mk2')
+            const item = itemsData.find(i => i.logName === logName || i.spawnName === lowerLogName);
             if (item) {
                 item.quantity = quantity;
             }

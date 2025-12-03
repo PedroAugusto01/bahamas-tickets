@@ -1,3 +1,4 @@
+// cpx-tickets/site/public/denuncia/steps/step3-logs/modules/revistou/revistou.js
 (function() {
     if (!window.logUtils) {
         console.error("Erro crítico: o módulo log-utils.js não foi carregado a tempo.");

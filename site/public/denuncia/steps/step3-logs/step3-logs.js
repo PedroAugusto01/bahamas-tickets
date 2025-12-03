@@ -1,3 +1,4 @@
+// cpx-tickets/site/public/denuncia/steps/step3-logs/step3-logs.js
 (function () {
     console.log('--- [step3-logs.js] Script Iniciado (Refatorado v2 - Usando RDM como Padrão) ---');
 

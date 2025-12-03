@@ -60,13 +60,16 @@ class GenericHandler extends BaseReportHandler {
              }
 
              const roleId = advRoleIds[nextPunishment];
-             const prisonTime = punishmentPrisonTimes[nextPunishment] || 0;
+             
+             // Verifica prisonTime fixo
+             const prisonTime = (user.prisonTime && user.prisonTime > 0) 
+                ? user.prisonTime 
+                : (punishmentPrisonTimes[nextPunishment] || 0);
+
              const normalText = `será aplicado **<@&${roleId}>**` + (nextPunishment !== 'banido' ? ` e ${prisonTime} meses de prisao` : '');
 
-             if (userInfo && userInfo.user_info && userInfo.user_info.name && userInfo.user_info.name.includes('(Fora do Discord)')) {
-                 const banRoleId = advRoleIds['banido'] || 'ID_CARGO_BANIDO';
-                 return `será aplicado <@&${banRoleId}> até retornar para o servidor, após retornar reverter para **<@&${roleId}>**` + (nextPunishment !== 'banido' ? ` e ${prisonTime} meses de prisao` : '') + fineText;
-             }
+             // MODIFICADO: Removida lógica de forçar ban para usuário fora do Discord.
+             // Aplica a punição normal.
              return normalText + fineText;
         };
 
@@ -97,7 +100,7 @@ class GenericHandler extends BaseReportHandler {
         }
 
         const msgDevolucao = itemsTextParaDevolucao ? `Seus itens serão solicitados para devolução em breve, só aguardar que chegará para você. Os itens são:\n${itemsTextParaDevolucao}` : '';
-        const msgFinal = `\n\nAgradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Bahamas.`;
+        const msgFinal = `\n\nAgradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Complexo RJ.`;
 
         const messageSectionContent =
             (itemsTextParaDevolucao ? `<div class="devolucao-toggle"><input type="checkbox" id="devolucao-check"><label for="devolucao-check">Vai ocorrer devolução?</label></div>` : '') +

@@ -51,20 +51,20 @@ window.reportUtils = {
     async loadRulesJson() {
         const res = await fetch('/utils/tickets_result.json');
         if (!res.ok) {
-             console.error("Falha ao carregar tickets_result.json");
-             return { punicoes: [], negados: [] }; 
+            console.error("Falha ao carregar tickets_result.json");
+            return { punicoes: [], negados: [] };
         }
         const data = await res.json();
         if (data.punicoes && !data.punicoes.some(p => p.regra === 'Loot Indevido')) {
-             const defaultLootRule = window.ruleData.fullRuleSet.find(r => r.regra === 'Loot Indevido');
-             if (defaultLootRule) {
-                 data.punicoes.push({
-                     regra: 'Loot Indevido',
-                     punicao_minima: defaultLootRule.punicao_minima || 'verbal'
-                 });
-             } else {
-                 data.punicoes.push({ regra: 'Loot Indevido', punicao_minima: 'verbal' }); 
-             }
+            const defaultLootRule = window.ruleData.fullRuleSet.find(r => r.regra === 'Loot Indevido');
+            if (defaultLootRule) {
+                data.punicoes.push({
+                    regra: 'Loot Indevido',
+                    punicao_minima: defaultLootRule.punicao_minima || 'verbal'
+                });
+            } else {
+                data.punicoes.push({ regra: 'Loot Indevido', punicao_minima: 'verbal' });
+            }
         }
         return data;
     },
@@ -72,26 +72,32 @@ window.reportUtils = {
     async fetchUserInfo(userId) {
         console.log(`[DEBUG_CLIENT] Chamando fetchUserInfo para ID: ${userId}`);
         if (!userId || !/^\d+$/.test(userId)) {
-             console.log(`[DEBUG_CLIENT] ID inválido ou vazio: ${userId}`);
-             return { error: `ID inválido fornecido: ${userId}`, user_info: null };
-         }
+            console.log(`[DEBUG_CLIENT] ID inválido ou vazio: ${userId}`);
+            return { error: `ID inválido fornecido: ${userId}`, user_info: null, found_in_db: false, is_in_guild: false };
+        }
         try {
             const res = await fetch(`/api/verificar-usuario`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId })
             });
+
             const userData = await res.json();
-            console.log(`[DEBUG_CLIENT] Dados recebidos para ${userId}:`, JSON.stringify(userData, null, 2));
-            if (res.ok) return userData;
-            else {
+
+            if (res.ok) {
+                console.log(`[DEBUG_CLIENT] Dados recebidos para ${userId}:`, JSON.stringify(userData, null, 2));
+                return userData;
+            } else {
                 console.error(`[DEBUG_CLIENT] Erro do servidor para ${userId}:`, userData);
                 return {
                     error: userData.error || `Falha na requisição com status ${res.status}`,
                     found_in_db: userData.found_in_db || false,
-                    is_in_guild: userData.is_in_guild === false ? false : true,
+                    is_in_guild: userData.is_in_guild || false,
                     user_info: userData.user_info
                 };
             }
-        } catch (e) { console.error(`[DEBUG_CLIENT] Falha crítica na requisição fetch para ${userId}:`, e); return { error: `Falha de rede ao buscar ID ${userId}`, user_info: null }; }
+        } catch (e) {
+            console.error(`[DEBUG_CLIENT] Falha crítica na requisição fetch para ${userId}:`, e);
+            return { error: `Falha de rede ao buscar ID ${userId}`, user_info: null, found_in_db: false, is_in_guild: false };
+        }
     },
 
     extractRevisitorId(logText) {
@@ -101,7 +107,7 @@ window.reportUtils = {
     },
 
     getNextPunishment(punishedInfo, basePunishment) {
-        if (!punishedInfo) return basePunishment; 
+        if (!punishedInfo) return basePunishment;
         if (basePunishment === 'banido') return 'banido';
 
         const activePunishmentNames = new Set(punishedInfo.active_punishments_from_history || []);
@@ -122,7 +128,7 @@ window.reportUtils = {
             for (const key in nameToLevelMap) {
                 if (lowerCaseName.includes(key.toLowerCase())) {
                     userPunishmentLevels.add(nameToLevelMap[key]);
-                    break; 
+                    break;
                 }
             }
         };
@@ -133,7 +139,7 @@ window.reportUtils = {
         if (userPunishmentLevels.has('banido')) return 'banido';
 
         let levelIndex = levels.indexOf(basePunishment);
-        if (levelIndex === -1) levelIndex = 0; 
+        if (levelIndex === -1) levelIndex = 0;
 
         while (levelIndex < levels.length) {
             const currentLevel = levels[levelIndex];
@@ -145,14 +151,18 @@ window.reportUtils = {
         return 'banido';
     },
 
-
     calculateItemsValue(selectedLogs, itemMapping, itemPrices) {
         let totalMulta = 0;
         const priceMap = itemPrices.reduce((acc, item) => { acc[item.name.toLowerCase()] = item.price; return acc; }, {});
+
         const itemsData = selectedLogs.map(s => {
-            const spawnNameMatch = s.text.match(/\[PEGOU\]:\s*([^\[\n]+)/); const spawnName = spawnNameMatch ? spawnNameMatch[1].trim() : null;
-            const quantityMatch = s.text.match(/\[QUANTIDADE\]:\s*(\d+)/); const quantity = quantityMatch ? parseInt(quantityMatch[1], 10) : null;
-            if (spawnName && quantity) {
+            const regex = /\[(PEGOU|CONFISCOU)\]:\s*(.+?)\s*x\s*(\d+)/i;
+            const match = s.text.match(regex);
+
+            const spawnName = match ? match[2].trim() : null;
+            const quantity = match ? parseInt(match[3], 10) : null;
+
+            if (spawnName && quantity !== null) {
                 let itemCode = itemMapping[spawnName.toLowerCase()] || spawnName;
                 if (itemCode.startsWith('WEAPON_')) itemCode = itemCode.replace('WEAPON_', '');
                 const price = priceMap[itemCode.toLowerCase()] || 0;

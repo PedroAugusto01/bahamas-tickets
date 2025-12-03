@@ -1,8 +1,14 @@
+// cpx-tickets/site/public/metas/tickets.js
+
 function calculateTicketsStats(userId, reportsData, startDate, endDate) {
     let ticketsDenunciaAceitos = 0;
     let ticketsDenunciaNegados = 0;
     let ticketsRevisaoAceitos = 0;
     let ticketsRevisaoNegados = 0;
+    
+    // Novos contadores
+    let ticketsBug = 0;
+    let ticketsSuporte = 0;
 
     // Garante que a data final inclui o dia inteiro
     endDate.setHours(23, 59, 59, 999);
@@ -31,7 +37,7 @@ function calculateTicketsStats(userId, reportsData, startDate, endDate) {
             return;
         }
 
-        // --- LÓGICA DE CONTAGEM CORRIGIDA ---
+        // --- LÓGICA DE CONTAGEM ---
 
         // DENÚNCIA ACEITA
         if (report.report_type === 'adv_applied') {
@@ -49,7 +55,22 @@ function calculateTicketsStats(userId, reportsData, startDate, endDate) {
         if (report.report_type === 'ticket_denied' && report.tipo_relatorio === 'TICKET-REVISÃO NEGADO') {
             ticketsRevisaoNegados++;
         }
+        
+        // NOVOS TIPOS
+        if (report.report_type === 'ticket_bug') {
+            ticketsBug++;
+        }
+        if (report.report_type === 'ticket_support') {
+            ticketsSuporte++;
+        }
     });
 
-    return { ticketsDenunciaAceitos, ticketsDenunciaNegados, ticketsRevisaoAceitos, ticketsRevisaoNegados };
+    return { 
+        ticketsDenunciaAceitos, 
+        ticketsDenunciaNegados, 
+        ticketsRevisaoAceitos, 
+        ticketsRevisaoNegados,
+        ticketsBug,      // Novo retorno
+        ticketsSuporte   // Novo retorno
+    };
 }

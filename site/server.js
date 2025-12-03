@@ -220,17 +220,38 @@ app.get('/api/item-prices', (req, res) => {
     else res.status(404).json({ error: 'Arquivo de preços não encontrado' });
 });
 
+// ########## SEÇÃO MODIFICADA ##########
+// Altera o /api/item-mapping para ler o shared_items.lua
 app.get('/api/item-mapping', (req, res) => {
     try {
-        const mdPath = path.join(__dirname, 'itens_AMMO_WEAPON_OTHERS_COMPLEXORJ_SEASON9.md');
-        const md = fs.readFileSync(mdPath, 'utf8');
-        const map = {}; const regex = /\/item\s+([A-Za-z0-9_\-]+)[\s\S]*?-\s*Spawna\s*\*\*([^*]+)\*\*/g; let m;
-        while ((m = regex.exec(md)) !== null) map[m[2].trim().toLowerCase()] = m[1].trim();
+        // 1. Define o caminho para o novo arquivo .lua
+        const luaPath = path.join(__dirname, 'shared_items.lua');
+        // 2. Lê o conteúdo do arquivo
+        const lua = fs.readFileSync(luaPath, 'utf8');
+        
+        const map = {};
+        // 3. Regex atualizada para o formato LUA: ['ITEM_CODE'] = { ... name = 'Item Name' ... }
+        // Captura [1]: ITEM_CODE (ex: 'PACKAGE_WEAPON_SNSPISTOL_MK2')
+        // Captura [2]: Item Name (ex: 'Pacote SNS Pistol MK2')
+        const regex = /\[\s*'([A-Za-z0-9_\-]+)'\s*\]\s*=\s*\{[\s\S]*?name\s*=\s*'([^']+)'/g;
+        let m;
+
+        while ((m = regex.exec(lua)) !== null) {
+            const itemCode = m[1].trim();
+            const itemName = m[2].trim();
+            
+            // 4. Cria o mapa no formato esperado: { "item name em minúsculo": "ITEM_CODE" }
+            map[itemName.toLowerCase()] = itemCode;
+        }
+        
         res.json(map);
     } catch (e) {
-        res.status(500).json({ error: 'Erro interno ao gerar mapeamento' });
+        // Adiciona um log de erro no console do servidor para debugging
+        console.error("Erro ao processar shared_items.lua para /api/item-mapping:", e);
+        res.status(500).json({ error: 'Erro interno ao gerar mapeamento de itens' });
     }
 });
+// ########## FIM DA SEÇÃO MODIFICADA ##########
 
 app.get('/api/reports-data', verifyAccessByBot, async (req, res) => {
     try {
@@ -300,11 +321,31 @@ app.get('/api/user-profile', verifyAccessByBot, async (req, res) => {
     }
 });
 
+app.get('/api/get-org-data', verifyAccessByBot, async (req, res) => {
+    try {
+        // Define o URL da API do bot (considerando o ambiente)
+        const botApiHost = (process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : 'http://bot:8081');
+        const botApiUrl = `${botApiHost}/api/get-org-chart`;
+
+        const response = await axios.get(botApiUrl, { 
+            headers: { 'Authorization': `Bearer ${BOT_API_SECRET_KEY}` } 
+        });
+
+        // Apenas repassa a resposta do bot (que é a lista de membros)
+        res.json(response.data);
+
+    } catch (error) {
+        console.error("Erro ao buscar dados do organograma no bot:", error.message);
+        res.status(500).json({ error: "Falha ao comunicar com a API do bot para buscar o organograma." });
+    }
+});
+
 app.get('/denuncia/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/denuncia/index.html')); });
 app.get('/relatorio/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/relatorio/index.html')); });
 app.get('/calculadora/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/calculadora/index.html')); });
 app.get('/metas/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/metas/index.html')); });
 app.get('/metas/teste', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/metas/metas_teste.html')); });
+app.get('/fluxograma/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/fluxograma/index.html')); });
 app.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'public/index.html')); });
 
 app.listen(port, () => { console.log(`[LOG] Site iniciado e a rodar em http://localhost:${port}`); });

@@ -6,18 +6,18 @@
     <title>Painel - Nova Denúncia</title>
     <link rel="icon" href="/images/bahamas.gif" type="image/gif">
     <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="denuncia.css">
+    <link rel="stylesheet" href="fluxograma.css">
 </head>
 <body>
     <nav class="top-nav">
         <div class="nav-left">
             <img src="/images/logo.png" alt="Logo" class="nav-logo">
             <img src="/images/bahamas.gif" alt="Logo Bahamas" class="nav-logo">
-            <a href="/denuncia/" class="nav-button active">Denuncia</a>
+            <a href="/denuncia/" class="nav-button">Denuncia</a>
             <a href="/relatorio/" class="nav-button">Ver ADV</a>
             <a href="/calculadora/" class="nav-button">Calculadora</a>
             <a href="/metas/" class="nav-button">Metas</a>
-            <a href="/fluxograma/" class="nav-button">Fluxograma</a>
+            <a href="/fluxograma/" class="nav-button active">Fluxograma</a>
         </div>
         <div class="nav-right">
             <div id="nav-user-profile" class="nav-user-profile"></div>
@@ -25,11 +25,29 @@
         </div>
     </nav>
     <div class="container">
-        <div class="form-container">
-            <h1>Criar Nova Denúncia</h1>
-            <div id="step-content"><p>Carregando formulário...</p></div>
+        <h1>Fluxograma Organizacional</h1>
+        <div id="view-container">
+            <div id="loading-view">
+                <div class="spinner"></div>
+                <p>Carregando dados da organização...</p>
+            </div>
+            
+            <div id="pastas-view" class="hidden">
+                </div>
+
+            <div id="summary-table-container" class="hidden">
+                </div>
+
+            <div id="chart-view" class="hidden">
+                <div class="chart-header">
+                    <button id="back-to-pastas-btn" class="btn-secondary">← Voltar para Pastas</button>
+                    <h2 id="chart-title"></h2>
+                </div>
+                <div id="chart-container">
+                    </div>
+            </div>
         </div>
     </div>
-    <script src="denuncia.js"></script>
+    <script src="fluxograma.js"></script>
 </body>
 </html>

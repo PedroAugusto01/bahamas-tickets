@@ -37,7 +37,6 @@ async function calculateUserStats(userId, reportsData, startDate, endDate) {
         console.error('Erro ao processar horas:', error);
     }
 
-
     const filteredReports = reportsData.filter(report => {
         const reportDate = new Date(report.timestamp);
         return reportDate >= startDate && reportDate <= endDate;
@@ -45,7 +44,14 @@ async function calculateUserStats(userId, reportsData, startDate, endDate) {
 
     const { atendimentoRealizado, auxilioRealizado } = calculateAtendimentoStats(userId, filteredReports, startDate, endDate);
     const { duvidasRespondidas } = calculateDuvidasStats(userId, filteredReports, startDate, endDate);
-    const { ticketsDenunciaAceitos, ticketsDenunciaNegados, ticketsRevisaoAceitos, ticketsRevisaoNegados } = calculateTicketsStats(userId, filteredReports, startDate, endDate);
+    
+    // ATUALIZADO: Recebe os novos valores de Bug e Suporte
+    const { 
+        ticketsDenunciaAceitos, ticketsDenunciaNegados, 
+        ticketsRevisaoAceitos, ticketsRevisaoNegados,
+        ticketsBug, ticketsSuporte 
+    } = calculateTicketsStats(userId, filteredReports, startDate, endDate);
+    
     const { devolucoesRealizadas } = calculateDevolucaoStats(userId, filteredReports, startDate, endDate);
     const { chamadosRealizados, needsId } = await calculateChamadosStats(userId, startDate, endDate);
 
@@ -59,6 +65,8 @@ async function calculateUserStats(userId, reportsData, startDate, endDate) {
         ticketsDenunciaNegados,
         ticketsRevisaoAceitos,
         ticketsRevisaoNegados,
+        ticketsBug,      // Novo
+        ticketsSuporte,  // Novo
         devolucoesRealizadas,
         chamadosRealizados,
         needsChamadoId: needsId
@@ -74,6 +82,7 @@ function renderUserGoalCard(user, cargoInfo, stats) {
         userHours, userMinutes,
         atendimentoRealizado, auxilioRealizado, duvidasRespondidas,
         ticketsDenunciaAceitos, ticketsDenunciaNegados, ticketsRevisaoAceitos, ticketsRevisaoNegados,
+        ticketsBug, ticketsSuporte, // Desestrutura aqui
         devolucoesRealizadas, chamadosRealizados, needsChamadoId
     } = stats;
 
@@ -92,7 +101,10 @@ function renderUserGoalCard(user, cargoInfo, stats) {
     const metaTotalAtendimento = metaAtendimento + metaAuxilio;
     const totalTicketsDenuncia = ticketsDenunciaAceitos + ticketsDenunciaNegados;
     const totalTicketsRevisao = ticketsRevisaoAceitos + ticketsRevisaoNegados;
-    const totalGeralTickets = totalTicketsDenuncia + totalTicketsRevisao;
+    
+    // ATUALIZADO: Soma Bug e Suporte ao total geral
+    const totalGeralTickets = totalTicketsDenuncia + totalTicketsRevisao + ticketsBug + ticketsSuporte;
+    
     const userTotalHoursDecimal = userHours + (userMinutes / 60);
 
     const getGoalStatusClass = (current, goal) => {
@@ -122,6 +134,7 @@ function renderUserGoalCard(user, cargoInfo, stats) {
     const card = document.createElement('div');
     card.className = 'staff-card';
 
+    // ATUALIZADO: HTML incluíndo os novos cards na grid de tickets
     card.innerHTML = `
         <div class="staff-info">
             <img src="${user.avatarUrl}" alt="Avatar do Staff" class="staff-avatar-single">
@@ -179,6 +192,14 @@ function renderUserGoalCard(user, cargoInfo, stats) {
                             <span class="negados"><strong>${ticketsRevisaoNegados}</strong> Negados</span>
                         </div>
                     </div>
+                    <div class="ticket-sub-card">
+                        <h4>Tickets Bug</h4>
+                        <p class="ticket-total-value">${ticketsBug}</p>
+                    </div>
+                    <div class="ticket-sub-card">
+                        <h4>Tickets Suporte</h4>
+                        <p class="ticket-total-value">${ticketsSuporte}</p>
+                    </div>
                 </div>
                 <hr class="card-divider">
                 <div class="total-summary tickets-gerais">
@@ -209,6 +230,7 @@ function renderUserGoalCard(user, cargoInfo, stats) {
         if (saveBtn && input) {
             saveBtn.addEventListener('click', async () => {
                 const gameId = input.value.trim();
+                // Lógica diferente do metas.js: Busca o ID do input de pesquisa, não da sessão
                 const discordIdInput = document.getElementById('discord-id-search');
                 const discordId = discordIdInput ? discordIdInput.value.trim() : user.id;
 

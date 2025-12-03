@@ -180,7 +180,7 @@ Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é s
         const hasLootLogs = this.formData.selectedLogs && this.formData.selectedLogs.some(log => log.html.includes('[REVISTOU]'));
         const canHaveDevolucao = logMorte || hasLootLogs;
 
-        let messageTemplate = this.deniedMessages[this.formData.deniedInfo.reason] || `Olá <@{id_discord_denunciante}>,\n\nSeu ticket foi negado pelo seguinte motivo: ${this.formData.deniedInfo.reason}.\n\n-# Atenciosamente,\n-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`;
+        let messageTemplate = this.deniedMessages[this.formData.deniedInfo.reason] || `Olá <@{id_discord_denunciante}>,\n\nSeu ticket foi negado pelo seguinte motivo: ${this.formData.deniedInfo.reason}.\n\n-# Atenciosamente,\n-# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`;
         let messageContent = messageTemplate
             .replace('<@{id_discord_denunciante}>', `<@${reporterDiscordId}>`)
             .replace('<@{id_discord_user_logado}>', `<@${loggedInUserInfo.id}>`);
@@ -219,9 +219,8 @@ Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é s
         }
 
         const ticketChannelName = this.formData.ticketChannelName || '';
-        const ticketNumberMatch = ticketChannelName.match(/-(\d+)$/);
+        const ticketNumberMatch = ticketChannelName.match(/-(\d+)/);
         const ticketNumber = ticketNumberMatch ? ticketNumberMatch[1] : this.formData.ticketChannel;
-
         const reportReason = this.formData.deniedInfo.reason === 'Não houve quebra de regras' ? this.formData.deniedInfo.evaluatedRule || this.formData.deniedInfo.reason : this.formData.deniedInfo.reason;
 
         const reportContent = this.deniedReportTemplate
@@ -229,7 +228,7 @@ Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é s
             .replace('{id_discord_denunciante}', reporterDiscordId)
             .replace('{id_discord_user_logado}', loggedInUserInfo.id)
             .replace('{numero_do_ticket}', ticketNumber)
-            .replace('{regra_selecionada}', reportReason); // Usa a regra ou o motivo
+            .replace('{regra_selecionada}', reportReason);
 
         this.utils.createSection(
             'Relatório de Ticket Negado',
