@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metas Gerais - Dashboard</title>
+    <link rel="icon" href="/images/cpx.gif" type="image/gif">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="metas_gerais.css">
+    <!-- Litepicker CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SheetJS (xlsx) para exportar Excel -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="nav-left">
+            <img src="/images/logo.png" alt="Logo" class="nav-logo">
+            <img src="/images/bahamas.gif" alt="Logo Bahamas" class="nav-logo">
+            <a href="/denuncia/" class="nav-button">Denuncia</a>
+            <a href="/relatorio/" class="nav-button">Ver ADV</a>
+            <a href="/calculadora/" class="nav-button">Calculadora</a>
+            <a href="/metas/" class="nav-button">Metas</a>
+            <a href="/metas-gerais/" class="nav-button active">Metas Gerais</a>
+            <a href="/fluxograma/" class="nav-button">Fluxograma</a>
+        </div>
+        <div class="nav-right">
+            <div id="nav-user-profile" class="nav-user-profile"></div>
+            <a href="/logout" class="nav-button logout-button">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <header class="dashboard-header">
+            <h1>Dashboard de Metas Gerais</h1>
+            <div class="controls">
+                <div class="date-filter">
+                    <label for="date-range-picker">Período:</label>
+                    <input type="text" id="date-range-picker">
+                </div>
+                
+                <button id="btn-update-dashboard" class="btn-primary">
+                    <span class="icon">🔄</span> Atualizar Dados
+                </button>
+                
+                <button id="btn-sync-chamados" class="btn-warning" title="Pode levar alguns minutos para processar na API de Logs">
+                    <span class="icon">☁️</span> Sincronizar Chamados
+                </button>
+
+                <button id="btn-export-excel" class="btn-success">
+                    <span class="icon">📊</span> Exportar Excel
+                </button>
+            </div>
+        </header>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="spinner"></div>
+            <p id="loading-text">Carregando dados da equipe...</p>
+        </div>
+
+        <!-- KPI Cards (Top Stats) -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <h3>Total Atendimentos</h3>
+                <p class="kpi-value" id="kpi-total-atendimentos">0</p>
+                <span class="kpi-sub">Top 1: <strong id="top-atendimento">-</strong></span>
+            </div>
+            <div class="kpi-card">
+                <h3>Total Tickets</h3>
+                <p class="kpi-value" id="kpi-total-tickets">0</p>
+                <span class="kpi-sub">Top 1: <strong id="top-tickets">-</strong></span>
+            </div>
+            <div class="kpi-card">
+                <h3>Total Horas</h3>
+                <p class="kpi-value" id="kpi-total-horas">0h</p>
+                <span class="kpi-sub">Top 1: <strong id="top-horas">-</strong></span>
+            </div>
+            <div class="kpi-card">
+                <h3>Total Dúvidas</h3>
+                <p class="kpi-value" id="kpi-total-duvidas">0</p>
+                <span class="kpi-sub">Top 1: <strong id="top-duvidas">-</strong></span>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-row">
+            <div class="chart-container">
+                <canvas id="ticketsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="attendanceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Main Ranking Table -->
+        <div class="ranking-section">
+            <h2>Ranking Geral da Equipe</h2>
+            <div class="table-responsive">
+                <table class="ranking-table" id="ranking-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Staff</th>
+                            <th>Cargo</th>
+                            <th>Pasta</th>
+                            <th>Horas</th>
+                            <th>Chamados</th> <!-- Nova Coluna -->
+                            <th>Reg. Sup.</th>
+                            <th>Aux. Sup.</th>
+                            <th>T. Denúncia</th>
+                            <th>T. Revisão</th>
+                            <th>T. Bug</th>
+                            <th>T. Suporte</th>
+                            <th>Ban Hack</th>
+                            <th>Dúvidas</th>
+                            <th>Devoluções</th>
+                            <th>Total Geral</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Linhas geradas via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Sincronização -->
+    <div id="sync-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Sincronizando Chamados</h3>
+                <button id="btn-close-modal" class="btn-close hidden">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="progress-info">
+                    <span id="sync-status-text">Iniciando...</span>
+                    <span id="sync-counter">0/0</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="sync-progress-bar" class="progress-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="sync-logs-container">
+                    <ul id="sync-logs-list">
+                        <!-- Logs entram aqui -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bibliotecas de Data e Cálculos (Reutilizando as existentes) -->
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+    <script src="/metas/config.js"></script>
+    <script src="/metas/atendimento.js"></script>
+    <script src="/metas/duvidas.js"></script>
+    <script src="/metas/tickets.js"></script>
+    <script src="/metas/devolucao.js"></script>
+    
+    <script src="metas_gerais.js"></script>
+</body>
+</html>

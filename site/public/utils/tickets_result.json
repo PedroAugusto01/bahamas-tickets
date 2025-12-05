@@ -7,7 +7,7 @@
             "need_date": true,
             "print_name": "rdm.png",
             "prisao/adv": false,
-            "prisao": 1000,
+            "prisao": 0,
             "punicao_minima": "adv1"
         },
         {
@@ -17,7 +17,7 @@
             "need_date": true,
             "print_name": "vdm.png",
             "prisao/adv": false,
-            "prisao": 500,
+            "prisao": 0,
             "punicao_minima": "adv1"
         },
         {
@@ -37,7 +37,7 @@
             "need_date": false,
             "print_name": "abuso_de_bug.png",
             "prisao/adv": false,
-            "prisao": 300,
+            "prisao": 0,
             "punicao_minima": "verbal"
         },
         {
@@ -66,7 +66,7 @@
             "consultar_log_matou": false,
             "need_date": false,
             "print_name": "bait.png",
-            "prisao": 500,
+            "prisao": 0,
             "punicao_minima": "adv1"
         },
         {
@@ -76,7 +76,7 @@
             "need_date": false,
             "print_name": "bind_em_acao.png",
             "prisao/adv": false,
-            "prisao": 1000,
+            "prisao": 0,
             "punicao_minima": "adv1"
         },
         {
@@ -86,7 +86,7 @@
             "need_date": false,
             "print_name": "cl.png",
             "prisao/adv": false,
-            "prisao": 2500,
+            "prisao": 0,
             "punicao_minima": "verbal"
         },
         {
@@ -114,7 +114,7 @@
             "consultar_log_matou": false,
             "need_date": false,
             "print_name": "lembrar_de_acao.png",
-            "prisao/adv": false,
+            "prisao/adv": true,
             "prisao": 100,
             "punicao_minima": "verbal"
         },
@@ -135,7 +135,7 @@
             "need_date": false,
             "print_name": "metagaming.png",
             "prisao/adv": false,
-            "prisao": 1000,
+            "prisao": 0,
             "punicao_minima": "adv1"
         },
         {
@@ -153,7 +153,7 @@
             "consultar_log_matou": false,
             "need_date": false,
             "print_name": "quebra_de_imersao.png",
-            "prisao/adv": false,
+            "prisao/adv": true,
             "prisao": 100,
             "punicao_minima": "verbal"
         },
@@ -167,7 +167,7 @@
                     "regra": "Ação errada de assalto",
                     "print_name": "acao_errada_assalto.png",
                     "prisao/adv": false,
-                    "prisao": 300,
+                    "prisao": 0,
                     "punicao_minima": "verbal"
                     
                 },
@@ -175,7 +175,7 @@
                     "regra": "Ação errada de sequestro",
                     "print_name": "acao_errada_sequestro.png",
                     "prisao/adv": false,
-                    "prisao": 300,
+                    "prisao": 0,
                     "punicao_minima": "verbal"
                     
                 },
@@ -183,7 +183,7 @@
                     "regra": "Forçar ação contra a polícia",
                     "print_name": "forçar_acao.png",
                     "prisao/adv": false,
-                    "prisao": 1000,
+                    "prisao": 0,
                     "punicao_minima": "verbal"
                     
                 },
@@ -191,7 +191,7 @@
                     "regra": "Proíbido sequestar medicos e policiais em serviço",
                     "print_name": "sequestrar_medicos_policiais.png",
                     "prisao/adv": false,
-                    "prisao": 300,
+                    "prisao": 0,
                     "punicao_minima": "verbal"
                     
                 },
@@ -199,14 +199,14 @@
                     "regra": "Proíbido fugir para favelas e ou areas de dominio",
                     "print_name": "fugir_para_favelas.png",
                     "prisao/adv": false,
-                    "prisao": 300,
+                    "prisao": 0,
                     "punicao_minima": "verbal"
                 },
                 {
                     "regra": "Ação sem mochila",
                     "print_name": "sem_mochila.png",
                     "prisao/adv": false,
-                    "prisao": 300,
+                    "prisao": 0,
                     "punicao_minima": "verbal"
                     
                 }
@@ -246,7 +246,7 @@
             "need_date": false,
             "print_name": "safe.png",
             "prisao/adv": false,
-            "prisao": 100,
+            "prisao": 0,
             "punicao_minima": "verbal"
         },
         {

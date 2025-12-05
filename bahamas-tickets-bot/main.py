@@ -236,7 +236,7 @@ async def gerar_relatorio_chamados(ctx, data_inicio_str: str, data_fim_str: str)
     Formato das datas: DD/MM/AAAA
     Exemplo: !gerar_relatorio_chamados 01/10/2025 21/10/2025
     """
-    REQUIRED_ROLE_ID = 912040119198953513 # Cargo "Obrigatório"
+    REQUIRED_ROLE_ID = 1057449425728974989 # Cargo "Obrigatório"
     LOG_API_URL = "https://logs.fusionhost.com.br/getLogs"
     LOG_TYPE = "FEEDBACK-CHAMADOS"
 

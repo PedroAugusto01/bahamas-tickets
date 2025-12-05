@@ -31,8 +31,8 @@ CHANNELS = {
     'relatorio-spawn': 1404337954998059018, #OK
     'registro-suporte': 1404466529533431828, #OK
     'duvidas': 1404335963177488488, #OK
-    'ticket-bug': 0, 
-    'ticket-suporte': 0,
+    'ticket-bug': 1445963683862675596, #OK
+    'ticket-suporte': 1445963942416482458, #OK
 }
 
 # --- CONTROLE DE PARSERS ---
@@ -49,8 +49,8 @@ PARSERS_ENABLED = {
     'relatorio-spawn': True,
     'registro-suporte': True,
     'duvidas': True,
-    'ticket-bug': False,
-    'ticket-suporte': False,
+    'ticket-bug': True,
+    'ticket-suporte': True,
 }
 
 # IDs dos cargos relacionados a punições

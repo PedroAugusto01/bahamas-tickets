@@ -340,12 +340,54 @@ app.get('/api/get-org-data', verifyAccessByBot, async (req, res) => {
     }
 });
 
+// Rota para iniciar a sincronização
+app.post('/api/trigger-chamados-sync', verifyAccessByBot, async (req, res) => {
+    try {
+        const botApiUrl = (process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : 'http://bot:8081') + '/api/sync-chamados';
+        const response = await axios.post(botApiUrl, req.body, { 
+            headers: { 'Authorization': `Bearer ${BOT_API_SECRET_KEY}` } 
+        });
+        res.json(response.data);
+    } catch (error) {
+        console.error("Erro sync:", error.message);
+        res.status(500).json({ error: "Falha ao iniciar sync." });
+    }
+});
+
+// NOVA ROTA: Verificar Status do Sync (Polling)
+app.get('/api/chamados-sync-status', verifyAccessByBot, async (req, res) => {
+    try {
+        const botApiUrl = (process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : 'http://bot:8081') + '/api/sync-status';
+        const response = await axios.get(botApiUrl, { 
+            headers: { 'Authorization': `Bearer ${BOT_API_SECRET_KEY}` } 
+        });
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao buscar status." });
+    }
+});
+
+// Rota para buscar cache
+app.get('/api/get-cached-chamados', verifyAccessByBot, async (req, res) => {
+    try {
+        const { start_date, end_date } = req.query;
+        const botApiUrl = (process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : 'http://bot:8081') + `/api/get-cached-chamados?start_date=${start_date}&end_date=${end_date}`;
+        const response = await axios.get(botApiUrl, { 
+            headers: { 'Authorization': `Bearer ${BOT_API_SECRET_KEY}` } 
+        });
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: "Erro ao buscar cache." });
+    }
+});
+
 app.get('/denuncia/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/denuncia/index.html')); });
 app.get('/relatorio/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/relatorio/index.html')); });
 app.get('/calculadora/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/calculadora/index.html')); });
 app.get('/metas/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/metas/index.html')); });
 app.get('/metas/teste', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/metas/metas_teste.html')); });
 app.get('/fluxograma/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/fluxograma/index.html')); });
+app.get('/metas-gerais/', verifyAccessByBot, (req, res) => { res.sendFile(path.join(__dirname, 'public/metas_gerais/index.html')); });
 app.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'public/index.html')); });
 
 app.listen(port, () => { console.log(`[LOG] Site iniciado e a rodar em http://localhost:${port}`); });

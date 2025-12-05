@@ -3,11 +3,9 @@ from config import DB_CONFIG
 import asyncio
 import json
 
-# Pool de conexões global
 pool = None
 
 async def init_db_pool():
-    """Inicializa o pool de conexões com o banco de dados."""
     global pool
     try:
         pool = await aiomysql.create_pool(
@@ -21,74 +19,79 @@ async def init_db_pool():
             pool_recycle=600,
             autocommit=True
         )
-        print("Pool de conexões com o banco de dados (aiomysql) criado com sucesso.")
+        
+        # Cria a tabela de cache de chamados se não existir
+        async with pool.acquire() as conn:
+            async with conn.cursor() as cursor:
+                await cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS chamados_cache (
+                        staff_id VARCHAR(50),
+                        date_ref DATE,
+                        count INT,
+                        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                        PRIMARY KEY (staff_id, date_ref)
+                    )
+                """)
+        
+        print("Pool de conexões e tabela de cache iniciados com sucesso.")
         return True
     except Exception as e:
-        print(f"!!! ERRO CRÍTICO ao criar o pool de conexões com aiomysql: {e}")
+        print(f"!!! ERRO CRÍTICO ao criar o pool de conexões: {e}")
         pool = None
         return False
 
 async def add_report_to_db(message_id, user_id, ticket_id, report_type, jump_url, message_timestamp, details=None, staff_mencionado=None, tipo_relatorio=None):
-    """Adiciona um relatório ao banco de dados de forma assíncrona."""
-    if not pool:
-        print("[DB LOG] ERRO: Pool de conexões não está disponível.")
-        return
-
-    # Converte a lista de staff para uma string JSON se for uma lista
+    if not pool: return
     staff_json = json.dumps(staff_mencionado) if isinstance(staff_mencionado, list) else staff_mencionado
-
     sql = """
         INSERT IGNORE INTO reports (message_id, user_id, ticket_id, report_type, jump_url, details, `timestamp`, staff_mencionado, tipo_relatorio)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
     values = (str(message_id), user_id, ticket_id, report_type, jump_url, details, message_timestamp, staff_json, tipo_relatorio)
-    
     async with pool.acquire() as conn:
         async with conn.cursor() as cursor:
             try:
                 await cursor.execute(sql, values)
-                if cursor.rowcount > 0:
-                    print(f"  -> SUCESSO: 1 linha inserida na base de dados (aiomysql).")
-                else:
-                    print(f"  -> AVISO: Nenhuma linha inserida (INSERT IGNORE).")
-            except Exception as e:
-                print(f"  -> ERRO de MySQL (aiomysql): {e} | Dados: {values}")
-
+                if cursor.rowcount > 0: print(f"  -> SUCESSO: 1 linha inserida.")
+            except Exception as e: print(f"  -> ERRO MySQL: {e}")
 
 async def link_user_ids(discord_id, in_game_id, username=None):
-    """Vincula IDs de usuário de forma assíncrona."""
     if not pool: return
-
     sql = """
         INSERT INTO users (discord_id, in_game_id, last_known_username)
         VALUES (%s, %s, %s)
         ON DUPLICATE KEY UPDATE in_game_id=VALUES(in_game_id), last_known_username=VALUES(last_known_username)
     """
-    values = (discord_id, in_game_id, username)
-
     async with pool.acquire() as conn:
         async with conn.cursor() as cursor:
-            await cursor.execute(sql, values)
+            await cursor.execute(sql, (discord_id, in_game_id, username))
 
 async def delete_reports_by_message_id(message_id):
-    """Exclui todos os relatórios associados a um message_id."""
-    if not pool:
-        print("[DB LOG] ERRO: Pool de conexões não está disponível.")
-        return 0
-    
-    # A query SQL para deletar os registros
+    if not pool: return 0
     sql = "DELETE FROM reports WHERE message_id LIKE %s"
-    # Usamos LIKE para cobrir casos onde um ID de mensagem gera múltiplos relatórios (ex: message_id-0, message_id-1)
-    pattern = f"{message_id}%"
-    
     async with pool.acquire() as conn:
         async with conn.cursor() as cursor:
-            try:
-                await cursor.execute(sql, (pattern,))
-                deleted_rows = cursor.rowcount
-                if deleted_rows > 0:
-                    print(f"  -> SUCESSO: {deleted_rows} registro(s) deletado(s) para a message_id {message_id}.")
-                return deleted_rows
-            except Exception as e:
-                print(f"  -> ERRO de MySQL (aiomysql) ao deletar: {e} | message_id: {message_id}")
-                return 0
+            await cursor.execute(sql, (f"{message_id}%",))
+            return cursor.rowcount
+
+# --- NOVAS FUNÇÕES PARA CHAMADOS ---
+
+async def update_chamados_cache(staff_id, date_ref, count):
+    if not pool: return
+    sql = """
+        INSERT INTO chamados_cache (staff_id, date_ref, count)
+        VALUES (%s, %s, %s)
+        ON DUPLICATE KEY UPDATE count = VALUES(count)
+    """
+    async with pool.acquire() as conn:
+        async with conn.cursor() as cursor:
+            await cursor.execute(sql, (str(staff_id), date_ref, count))
+
+async def get_chamados_from_cache(date_start, date_end):
+    if not pool: return []
+    # Soma todos os registros encontrados no range de datas para cada staff
+    sql = "SELECT staff_id, SUM(count) as total FROM chamados_cache WHERE date_ref BETWEEN %s AND %s GROUP BY staff_id"
+    async with pool.acquire() as conn:
+        async with conn.cursor(aiomysql.DictCursor) as cursor:
+            await cursor.execute(sql, (date_start, date_end))
+            return await cursor.fetchall()
