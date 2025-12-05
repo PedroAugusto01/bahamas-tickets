@@ -100,7 +100,7 @@ class GenericHandler extends BaseReportHandler {
         }
 
         const msgDevolucao = itemsTextParaDevolucao ? `Seus itens serão solicitados para devolução em breve, só aguardar que chegará para você. Os itens são:\n${itemsTextParaDevolucao}` : '';
-        const msgFinal = `\n\nAgradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Complexo RJ.`;
+        const msgFinal = `\n\nAgradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Bahamas.`;
 
         const messageSectionContent =
             (itemsTextParaDevolucao ? `<div class="devolucao-toggle"><input type="checkbox" id="devolucao-check"><label for="devolucao-check">Vai ocorrer devolução?</label></div>` : '') +

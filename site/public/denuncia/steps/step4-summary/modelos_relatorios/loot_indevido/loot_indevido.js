@@ -51,7 +51,7 @@ class LootIndevidoHandler extends BaseReportHandler {
         const msgDevolucao = itemsTextParaDevolucao ? `Seus itens serão solicitados para devolução. Os itens são:\n${itemsTextParaDevolucao}` : '';
         const uniqueCds = [...new Set(this.formData.selectedLogs.map(s => s.text.match(/\[CDS\]:\s*(.*)/)?.[1].trim()).filter(Boolean))];
         const cdsText = uniqueCds.length > 0 ? `\`${uniqueCds.join('`\n`')}\`` : '`N/A`';
-        const msgFinal = `\n\n**CDS DA REVISTA:**\n${cdsText}\n\nAgradecemos pela paciência e compreensão. Nosso compromisso é com a melhor experiência para nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Complexo RJ.`;
+        const msgFinal = `\n\n**CDS DA REVISTA:**\n${cdsText}\n\nAgradecemos pela paciência e compreensão. Nosso compromisso é com a melhor experiência para nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Bahamas.`;
         const messageSectionContent = `<div class="devolucao-toggle"><input type="checkbox" id="devolucao-check" ${itemsTextParaDevolucao ? '' : 'disabled'}><label for="devolucao-check">Vai ocorrer devolução?</label></div><pre id="message-preview-main">${msgIntro}</pre><div id="devolucao-msg-content-wrapper" style="display:none;"><pre id="devolucao-msg-content">${msgDevolucao}</pre></div><pre id="message-preview-final">${msgFinal}</pre>`;
         this.utils.createSection('Mensagem ao Denunciante', messageSectionContent, this.sectionsEl, { onCopy: this.utils.copyMessageContent });
         if (itemsTextParaDevolucao) {

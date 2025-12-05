@@ -180,7 +180,7 @@ Agradecemos pela paciência e compreensão nesse momento. Nosso compromisso é s
         const hasLootLogs = this.formData.selectedLogs && this.formData.selectedLogs.some(log => log.html.includes('[REVISTOU]'));
         const canHaveDevolucao = logMorte || hasLootLogs;
 
-        let messageTemplate = this.deniedMessages[this.formData.deniedInfo.reason] || `Olá <@{id_discord_denunciante}>,\n\nSeu ticket foi negado pelo seguinte motivo: ${this.formData.deniedInfo.reason}.\n\n-# Atenciosamente,\n-# ** <@{id_discord_user_logado}> ** - Equipe Complexo RJ.`;
+        let messageTemplate = this.deniedMessages[this.formData.deniedInfo.reason] || `Olá <@{id_discord_denunciante}>,\n\nSeu ticket foi negado pelo seguinte motivo: ${this.formData.deniedInfo.reason}.\n\n-# Atenciosamente,\n-# ** <@{id_discord_user_logado}> ** - Equipe Bahamas.`;
         let messageContent = messageTemplate
             .replace('<@{id_discord_denunciante}>', `<@${reporterDiscordId}>`)
             .replace('<@{id_discord_user_logado}>', `<@${loggedInUserInfo.id}>`);

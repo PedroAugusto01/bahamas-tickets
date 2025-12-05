@@ -76,7 +76,7 @@ class RdmHandler extends BaseReportHandler {
         const msgDevolucao = itemsTextParaDevolucao ? `Seus itens serão solicitados para devolução em breve, só aguardar que chegará para você. Os itens são:\n${itemsTextParaDevolucao}` : '';
         const localizacaoMatch = logMorte?.text.match(/\[Localização\]:\s*([^\n]+)/);
         const localizacao = localizacaoMatch ? localizacaoMatch[1].trim() : 'N/A';
-        const msgFinal = `\n\n**CDS DA MORTE:**\n\`${localizacao}\`\n\nAgradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Complexo RJ.`;
+        const msgFinal = `\n\n**CDS DA MORTE:**\n\`${localizacao}\`\n\nAgradecemos pela paciência e compreensão nesse momento. Nosso compromisso é sempre proporcionar a melhor experiência possível aos nossos jogadores.\n\n-# Atenciosamente,\n-# **<@${loggedInUserInfo.id}>** - Equipe Bahamas.`;
         const messageSectionContent = `<div class="devolucao-toggle"><input type="checkbox" id="devolucao-check" ${itemsTextParaDevolucao ? '' : 'disabled'}><label for="devolucao-check">Vai ocorrer devolução?</label></div><pre id="message-preview-main">${msgIntro}</pre><div id="devolucao-msg-content-wrapper" style="display:none;"><pre id="devolucao-msg-content">${msgDevolucao}</pre></div><pre id="message-preview-final">${msgFinal}</pre>`;
         this.utils.createSection('Mensagem ao Denunciante', messageSectionContent, this.sectionsEl, { onCopy: this.utils.copyMessageContent });
         if (itemsTextParaDevolucao) {
